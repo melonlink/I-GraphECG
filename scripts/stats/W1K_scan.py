@@ -332,7 +332,8 @@ for name in COHORTS:
                            for c, v in r["code_hist"].most_common()},
     }
 dump["_meta"] = {
-    "label_map": str(DEFAULT_MAP_CSV),
+    # relative to the tree root: a registered file must not carry the machine it was made on
+    "label_map": _Path(DEFAULT_MAP_CSV).resolve().relative_to(repro.repo()).as_posix(),
     "controls_all_pass": bool(ok),
     "header_only_scan": True,
     "n_mi_mapped_codes_in_map": sum(1 for m in SNOMED.values() if m == "MI"),

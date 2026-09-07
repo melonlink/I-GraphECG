@@ -29,3 +29,7 @@ dist/
 *.swp
 .DS_Store
 Thumbs.db
+
+# By-products of the documented commands that the lock does not register
+/outputs/figures/
+/outputs/runs/*/figures/

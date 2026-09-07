@@ -89,7 +89,7 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 "$PY" scripts/stats/W1O_summarize.py
 "$PY" scripts/stats/W1O_headline.py
 "$PY" scripts/stats/W1F_headline.py                # fold-10 disposition + headline, after 70_multilabel_eval
-"$PY" scripts/stats/W1F_multilabel_numeric_provenance.py   # after scripts 101 and 102
+"$PY" scripts/stats/W1F_multilabel_numeric_provenance.py   # after 11_prepare_ptbxl_multilabel and 70_multilabel_eval
 "$PY" scripts/stats/w1_stats.py                    # MI operating points, paired ablation FDR
 "$PY" scripts/stats/w1e_inclusion.py
 # External cohort label composition (Supplementary): header-only SNOMED scan of the
@@ -99,7 +99,7 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 
 # Figures. One command regenerates every data figure the manuscript includes, into
 # <output root>/figures/. Figures 6-7 come from scripts/83_fig_identifiability_selection.py (the published
-# versions); 61_split draws the earlier Revision-v6 versions and is not used here.
+# versions).
 # fig_overview (Figure 1) is a hand-authored schematic with no generator.
 # tests/test_figures_match_manuscript.py compares what this command draws with the files the
 # manuscript includes, rasterised at 150 dpi: Figures 2-7 and S2 are pixel-identical; S1 is
@@ -125,7 +125,7 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
   `runs/v7rev_stats/W1J_*` (scripts/stats);
   `runs/v1fix_ls8_s*` and `runs/v1fix_byclass_s*` (exhaustive selection, bootstrap),
   `runs/v1fix_leadclf` (lead-set-specific classification, patient-clustered bootstrap).
-- Table S13: `runs/v7rev_stats/W1F_multilabel_*.csv` (scripts 101, 102;
+- Table S13: `runs/v7rev_stats/W1F_multilabel_*.csv` (scripts 11 and 70;
   zero-shot multi-label, encoder frozen).
 - Tables 8–9: `v1fix/external/` (Georgia, CPSC2018; zero-shot) and
   `runs/v7rev_stats/W1K_*` (cohort label composition).

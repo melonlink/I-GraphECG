@@ -430,6 +430,8 @@ runs:
       - baseline_cnn_metrics_perclass.csv
       - baseline_features_metrics.csv
       - baseline_features_metrics_perclass.csv
+      - data_rejection_summary.csv
+      - data_split_summary.csv
   - dir: v1fix/external
     files:
       - cls_cpsc2018.json
@@ -452,7 +454,6 @@ runs:
       - panelA_degradation.csv
       - panelB_group_identifiability.csv
       - panelC_marginal.csv
-      - panelC_top3.csv
 # Superseded lineages. Named so that a gate can recognise them, and so that the one
 # legitimate read of a superseded weight -- W1M_scaled_derivation, which compares the
 # two derivation conventions and therefore needs the pre-change model -- is a declared

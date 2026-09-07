@@ -115,8 +115,6 @@ def main(out=None):
     pA.to_csv(out / "panelA_degradation.csv", index=False)
     pB = pd.DataFrame([{"group": g, "mean": np.mean(gsc[g]), "std": np.std(gsc[g], ddof=1)} for g in GROUPS])
     pB.to_csv(out / "panelB_group_identifiability.csv", index=False)
-    pC1 = pd.DataFrame([{"set": k, "D_logdet": v} for k, v in seed42["top3"].items()])
-    pC1.to_csv(out / "panelC_top3.csv", index=False)
     pC2 = pd.DataFrame([{"lead": k, "marginal_logdet": v} for k, v in seed42["marg"].items()])
     pC2.to_csv(out / "panelC_marginal.csv", index=False)
 
@@ -160,7 +158,9 @@ def main(out=None):
     axC2.set_title("each lead's unique\ncontribution (low redundancy)"); axC2.grid(alpha=.3, axis="y")
 
     for ext in ("pdf", "png"):
-        fig.savefig(out / f"figure_identifiability.{ext}", dpi=300, bbox_inches="tight", facecolor="white")
+        # No creation date in the PDF, so the registered file is byte-identical on every run.
+        fig.savefig(out / f"figure_identifiability.{ext}", dpi=300, bbox_inches="tight", facecolor="white",
+                    metadata={"CreationDate": None} if ext == "pdf" else None)
     plt.close(fig)
     print(f"[fig34] DONE -> {out}")
 

@@ -455,7 +455,7 @@
     }
   },
   "_meta": {
-    "label_map": "D:\\PROJECT\\AI_PROJECT\\ECG_Proj\\I-GraphMonoECG\\igraphecg\\artifacts\\label_maps\\snomed_to_superclass.csv",
+    "label_map": "igraphecg/artifacts/label_maps/snomed_to_superclass.csv",
     "controls_all_pass": true,
     "header_only_scan": true,
     "n_mi_mapped_codes_in_map": 1,
