@@ -1,0 +1,11 @@
+{
+  "n_fold10_s42": 1594,
+  "n_fold10_s1": 1594,
+  "n_fold10_s2": 1594,
+  "n_fold10_s3": 1594,
+  "n_fold10_s4": 1594,
+  "T_sign_discordance_rate_pearson_r_s42": 0.4570804825266158,
+  "T_sign_discordance_rate_pearson_r_5seed_mean": 0.3703688108201445,
+  "T_sign_discordance_rate_pearson_r_5seed_sd": 0.12460243160535413,
+  "n_pairs": 37
+}

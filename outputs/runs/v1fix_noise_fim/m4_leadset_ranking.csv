@@ -1,0 +1,6 @@
+rank,W=I (identity),W=Sigma^-1 (empirical)
+1,V1,V2
+2,V4,V5
+3,I,V3
+4,V2,V4
+5,V5,V1

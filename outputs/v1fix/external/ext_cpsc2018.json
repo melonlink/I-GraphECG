@@ -1,0 +1,51 @@
+{
+  "dataset": "cpsc2018",
+  "manifest": {
+    "dataset": "cpsc2018",
+    "n_scanned": 6877,
+    "n_kept": 4305,
+    "kept_by_class": {
+      "CD": 2416,
+      "NORM": 918,
+      "STTC": 971
+    },
+    "drop_reasons": {
+      "label_other_or_multilabel_or_HYP": 2572
+    },
+    "seconds_preprocess": 52.4
+  },
+  "reconstruction": {
+    "median_corr": 0.8727413980522173,
+    "scaled_median_nrmse": 0.467367559671402,
+    "n_finite_corr": 4303
+  },
+  "observability_n": 399,
+  "observability": {
+    "effective_rank": {
+      "12": 3.908381223678589,
+      "II+V1+V5": 3.167999505996704,
+      "I+V1+V4": 3.56203556060791,
+      "II": 2.2888691425323486
+    },
+    "dopt_3lead": {
+      "selected": [
+        "V1",
+        "V4",
+        "I"
+      ],
+      "logdet": 172.27911376953125
+    },
+    "leadfield_svd": {
+      "singular_values": [
+        1.3978040218353271,
+        0.9662033915519714,
+        0.5049183368682861,
+        4.005976350640594e-08,
+        1.5705417411027156e-08,
+        8.541332086053899e-09,
+        2.769969587035348e-09,
+        1.5341403147850485e-10
+      ]
+    }
+  }
+}

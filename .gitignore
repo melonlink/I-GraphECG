@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+
+# Data: raw datasets are not redistributed (see data/README.md); the processed cache is regenerable
+/data/*
+!/data/README.md
+
+# Run logs
+/outputs/logs/
+
+# LaTeX by-products of the paper
+/paper/**/*.aux
+/paper/**/*.blg
+/paper/**/*.log
+/paper/**/*.out
+/paper/**/*.fdb_latexmk
+/paper/**/*.fls
+/paper/**/*.synctex.gz
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

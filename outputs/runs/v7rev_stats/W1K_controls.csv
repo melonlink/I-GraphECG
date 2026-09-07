@@ -1,0 +1,13 @@
+cohort,quantity,got,expected,match
+georgia,total_records,10344,10344,PASS
+georgia,clean_kept,2586,2586,PASS
+georgia,kept_NORM,1752,1752,PASS
+georgia,kept_MI,0,0,PASS
+georgia,kept_STTC,542,542,PASS
+georgia,kept_CD,292,292,PASS
+cpsc_2018,total_records,6877,6877,PASS
+cpsc_2018,clean_kept,4305,4305,PASS
+cpsc_2018,kept_NORM,918,918,PASS
+cpsc_2018,kept_MI,0,0,PASS
+cpsc_2018,kept_STTC,971,971,PASS
+cpsc_2018,kept_CD,2416,2416,PASS

@@ -1,0 +1,393 @@
+{
+  "task": "W1O",
+  "question": "How much of the Table-6 reduced-lead macro-AUROC is optimism from the full-12 teacher loss? Retrain lead-set-specific encoders with the loss restricted to the observed leads and re-evaluate C5 descriptors.",
+  "protocol": {
+    "base_checkpoint": "checkpoints/d1s_r3_s42_best.pt",
+    "pipeline": "scripts/55_leadset_classification.py caliber (batch 128, lr 1e-3, wd 1e-4, 80 epochs, patience 15, frozen decoder + lead field), driver = 55_leadset_classification.py",
+    "teacher_free_loss": "total_loss restricted to the observed leads (the former lead-set retrain script, since removed; the mode lives in W1O_teacherfree_leadsets.py mode='obs'; scripts/44_single_lead_sanity.py L1-no-teacher-obs, Table S2)",
+    "init_fix": {
+      "head_init_scale": 0.01,
+      "grad_clip": 1.0,
+      "source": "configs/d1s_r3_s42.yaml / scripts/31_surrogate_encoder.py",
+      "arms_with_fix": [
+        "teacher_stable",
+        "obs_stable"
+      ]
+    },
+    "features": "C5 = theta(47) + repolarization + ST + auxiliary recovery, computed only from theta and its decoder reconstruction",
+    "classifier": "XGBoost 400x4, folds 1-8 train, fold 10 test, seed 42",
+    "ci": "1000x percentile bootstrap, resampled by patient cluster",
+    "fim": "fixed 400-record fold-10 subset (100/class, seed 42), scaled 47-coordinate Fisher matrix, effective rank = exp(entropy of eigenvalue spectrum)"
+  },
+  "controls_reproduced": {
+    "12 leads": {
+      "control_arm": "locked_main",
+      "frozen_macro_auroc": 0.9014108235762696,
+      "reproduced_macro_auroc": 0.9014108235762696,
+      "abs_difference": 0.0,
+      "frozen_ci": [
+        0.887263639318269,
+        0.9154638653854968
+      ],
+      "reproduced_ci": [
+        0.887263639318269,
+        0.9154638653854968
+      ],
+      "frozen_val_nrmse": null,
+      "reproduced_val_nrmse": null
+    },
+    "II+V1+V5": {
+      "control_arm": "teacher_stock",
+      "frozen_macro_auroc": 0.8871095212724889,
+      "reproduced_macro_auroc": 0.8871095212724889,
+      "abs_difference": 0.0,
+      "frozen_ci": [
+        0.8714025054189635,
+        0.9020683833120994
+      ],
+      "reproduced_ci": [
+        0.8714025054189635,
+        0.9020683833120994
+      ],
+      "frozen_val_nrmse": 0.4819096028804779,
+      "reproduced_val_nrmse": 0.4819096028804779
+    },
+    "I+V1+V4": {
+      "control_arm": "teacher_stock",
+      "frozen_macro_auroc": 0.8780879032570988,
+      "reproduced_macro_auroc": 0.8780879032570988,
+      "abs_difference": 0.0,
+      "frozen_ci": [
+        0.8617554597438102,
+        0.8932275103922185
+      ],
+      "reproduced_ci": [
+        0.8617554597438102,
+        0.8932275103922185
+      ],
+      "frozen_val_nrmse": 0.4559192061424255,
+      "reproduced_val_nrmse": 0.4559192061424255
+    },
+    "II": {
+      "control_arm": "teacher_stock",
+      "frozen_macro_auroc": 0.8442931066507506,
+      "reproduced_macro_auroc": 0.8442931066507506,
+      "abs_difference": 0.0,
+      "frozen_ci": [
+        0.8258282333212292,
+        0.8621974157150641
+      ],
+      "reproduced_ci": [
+        0.8258282333212292,
+        0.8621974157150641
+      ],
+      "frozen_val_nrmse": 0.576598048210144,
+      "reproduced_val_nrmse": 0.576598048210144
+    }
+  },
+  "locked_model_fim_effective_rank": {
+    "12 leads": 4.3622,
+    "II+V1+V5": 3.5298,
+    "I+V1+V4": 3.7205,
+    "II": 2.8422
+  },
+  "arms": {
+    "12 leads|locked_main": {
+      "loss_mode": NaN,
+      "n_leads": 12,
+      "C5_macro_auroc": 0.9014108235762696,
+      "C5_ci": [
+        0.887263639318269,
+        0.9154638653854968
+      ],
+      "theta_only_macro_auroc": 0.9010929847362688,
+      "balanced_accuracy": 0.6542215786459613,
+      "observed_lead_median_corr": 0.911517971808712,
+      "full12_median_nrmse_scaled": 0.4009280204772949,
+      "fim_effective_rank_encoder_specific": 4.362206935882568,
+      "fim_effective_rank_locked_model": 4.3622,
+      "val_sat090": null,
+      "epochs_run": 0,
+      "diverged": false
+    },
+    "II+V1+V5|teacher_stock": {
+      "loss_mode": "full",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8871095212724889,
+      "C5_ci": [
+        0.8714025054189635,
+        0.9020683833120994
+      ],
+      "theta_only_macro_auroc": 0.888878516945343,
+      "balanced_accuracy": 0.6478399125269494,
+      "observed_lead_median_corr": 0.9183035624765804,
+      "full12_median_nrmse_scaled": 0.483286440372467,
+      "fim_effective_rank_encoder_specific": 3.0101876258850098,
+      "fim_effective_rank_locked_model": 3.5298,
+      "val_sat090": 0.2472665719687938,
+      "epochs_run": 80,
+      "diverged": false
+    },
+    "II+V1+V5|teacher_stable": {
+      "loss_mode": "full",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8898662016435449,
+      "C5_ci": [
+        0.8746010721251615,
+        0.904851332257668
+      ],
+      "theta_only_macro_auroc": 0.8899608992739687,
+      "balanced_accuracy": 0.6615716564700469,
+      "observed_lead_median_corr": 0.9293569097519578,
+      "full12_median_nrmse_scaled": 0.4761174917221069,
+      "fim_effective_rank_encoder_specific": 2.696351289749145,
+      "fim_effective_rank_locked_model": 3.5298,
+      "val_sat090": 0.2173064947128296,
+      "epochs_run": 55,
+      "diverged": false
+    },
+    "II+V1+V5|obs_stock": {
+      "loss_mode": "obs",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8891362815787045,
+      "C5_ci": [
+        0.8730258003437295,
+        0.9037890260278169
+      ],
+      "theta_only_macro_auroc": 0.8878607770908575,
+      "balanced_accuracy": 0.6478006668187491,
+      "observed_lead_median_corr": 0.9419746484759056,
+      "full12_median_nrmse_scaled": 0.5704345703125,
+      "fim_effective_rank_encoder_specific": 2.56499981880188,
+      "fim_effective_rank_locked_model": 3.5298,
+      "val_sat090": 0.2293840870261192,
+      "epochs_run": 55,
+      "diverged": false
+    },
+    "II+V1+V5|obs_stable": {
+      "loss_mode": "obs",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8944538697482158,
+      "C5_ci": [
+        0.8784380469786763,
+        0.9086286343786616
+      ],
+      "theta_only_macro_auroc": 0.8929190984844868,
+      "balanced_accuracy": 0.6467434212988792,
+      "observed_lead_median_corr": 0.937541809318078,
+      "full12_median_nrmse_scaled": 0.5722275972366333,
+      "fim_effective_rank_encoder_specific": 2.974882125854492,
+      "fim_effective_rank_locked_model": 3.5298,
+      "val_sat090": 0.2181830964982509,
+      "epochs_run": 77,
+      "diverged": false
+    },
+    "I+V1+V4|teacher_stock": {
+      "loss_mode": "full",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8780879032570988,
+      "C5_ci": [
+        0.8617554597438102,
+        0.8932275103922185
+      ],
+      "theta_only_macro_auroc": 0.8781200659095469,
+      "balanced_accuracy": 0.617356998366098,
+      "observed_lead_median_corr": 0.9264695634227368,
+      "full12_median_nrmse_scaled": 0.451780617237091,
+      "fim_effective_rank_encoder_specific": 3.526087760925293,
+      "fim_effective_rank_locked_model": 3.7205,
+      "val_sat090": 0.2895423546433449,
+      "epochs_run": 80,
+      "diverged": false
+    },
+    "I+V1+V4|teacher_stable": {
+      "loss_mode": "full",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8842572194690205,
+      "C5_ci": [
+        0.8691020838631281,
+        0.8984558082430286
+      ],
+      "theta_only_macro_auroc": 0.8859658778756192,
+      "balanced_accuracy": 0.6161916255334707,
+      "observed_lead_median_corr": 0.937605172483456,
+      "full12_median_nrmse_scaled": 0.4413684010505676,
+      "fim_effective_rank_encoder_specific": 3.230576515197754,
+      "fim_effective_rank_locked_model": 3.7205,
+      "val_sat090": 0.219809953123331,
+      "epochs_run": 80,
+      "diverged": false
+    },
+    "I+V1+V4|obs_stock": {
+      "loss_mode": "obs",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8748715917998592,
+      "C5_ci": [
+        0.8605442091501597,
+        0.8888748308096803
+      ],
+      "theta_only_macro_auroc": 0.8761167412286271,
+      "balanced_accuracy": 0.6021369032633123,
+      "observed_lead_median_corr": 0.9337391890484684,
+      "full12_median_nrmse_scaled": 0.5456768870353699,
+      "fim_effective_rank_encoder_specific": 2.9340622425079346,
+      "fim_effective_rank_locked_model": 3.7205,
+      "val_sat090": 0.2591644674539566,
+      "epochs_run": 49,
+      "diverged": false
+    },
+    "I+V1+V4|obs_stable": {
+      "loss_mode": "obs",
+      "n_leads": 3,
+      "C5_macro_auroc": 0.8771011355494388,
+      "C5_ci": [
+        0.8623897789842806,
+        0.8917919353435301
+      ],
+      "theta_only_macro_auroc": 0.8772464266444171,
+      "balanced_accuracy": 0.5999535306190151,
+      "observed_lead_median_corr": 0.9405196063090546,
+      "full12_median_nrmse_scaled": 0.5420834422111511,
+      "fim_effective_rank_encoder_specific": 3.075582265853882,
+      "fim_effective_rank_locked_model": 3.7205,
+      "val_sat090": 0.2649376392364502,
+      "epochs_run": 58,
+      "diverged": false
+    },
+    "II|teacher_stock": {
+      "loss_mode": "full",
+      "n_leads": 1,
+      "C5_macro_auroc": 0.8442931066507506,
+      "C5_ci": [
+        0.8258282333212292,
+        0.8621974157150641
+      ],
+      "theta_only_macro_auroc": 0.8430490026896411,
+      "balanced_accuracy": 0.5706791503355271,
+      "observed_lead_median_corr": 0.917553044808816,
+      "full12_median_nrmse_scaled": 0.5753034353256226,
+      "fim_effective_rank_encoder_specific": 1.8751689195632928,
+      "fim_effective_rank_locked_model": 2.8422,
+      "val_sat090": 0.2756764590740204,
+      "epochs_run": 42,
+      "diverged": false
+    },
+    "II|teacher_stable": {
+      "loss_mode": "full",
+      "n_leads": 1,
+      "C5_macro_auroc": 0.8570983534181722,
+      "C5_ci": [
+        0.8396407968541678,
+        0.8743778801377731
+      ],
+      "theta_only_macro_auroc": 0.8559555472898184,
+      "balanced_accuracy": 0.5799018609816178,
+      "observed_lead_median_corr": 0.9203134781216517,
+      "full12_median_nrmse_scaled": 0.5788645148277283,
+      "fim_effective_rank_encoder_specific": 1.953446626663208,
+      "fim_effective_rank_locked_model": 2.8422,
+      "val_sat090": 0.24005888402462,
+      "epochs_run": 41,
+      "diverged": false
+    },
+    "II|obs_stock": {
+      "loss_mode": "obs",
+      "n_leads": 1,
+      "C5_macro_auroc": 0.8477882159593917,
+      "C5_ci": [
+        0.8296783016205417,
+        0.8653349895575265
+      ],
+      "theta_only_macro_auroc": 0.8487970797746492,
+      "balanced_accuracy": 0.574593945126583,
+      "observed_lead_median_corr": 0.9577535727475978,
+      "full12_median_nrmse_scaled": 2.31740665435791,
+      "fim_effective_rank_encoder_specific": 2.725969076156616,
+      "fim_effective_rank_locked_model": 2.8422,
+      "val_sat090": 0.167104497551918,
+      "epochs_run": 64,
+      "diverged": false
+    },
+    "II|obs_stable": {
+      "loss_mode": "obs",
+      "n_leads": 1,
+      "C5_macro_auroc": 0.8457711565432959,
+      "C5_ci": [
+        0.8273554356760398,
+        0.8645677969232288
+      ],
+      "theta_only_macro_auroc": 0.8455223236080268,
+      "balanced_accuracy": 0.5746843549258973,
+      "observed_lead_median_corr": 0.9585346589797415,
+      "full12_median_nrmse_scaled": 2.284587860107422,
+      "fim_effective_rank_encoder_specific": 2.473705768585205,
+      "fim_effective_rank_locked_model": 2.8422,
+      "val_sat090": 0.215273343026638,
+      "epochs_run": 80,
+      "diverged": false
+    }
+  },
+  "teacher_optimism": {
+    "II+V1+V5": {
+      "table6_teacher_auroc": 0.8871095212724889,
+      "teacher_free_auroc_with_init_fix": 0.8944538697482158,
+      "teacher_free_ci": [
+        0.8784380469786763,
+        0.9086286343786616
+      ],
+      "delta_vs_table6": -0.007344348475726958,
+      "delta_init_matched": -0.004587668104670928,
+      "delta_stock_matched": -0.0020267603062156248,
+      "teacher_free_inside_table6_ci": true,
+      "observed_corr_teacher_to_free": [
+        0.9183035624765804,
+        0.937541809318078
+      ],
+      "full12_nrmse_teacher_to_free": [
+        0.483286440372467,
+        0.5722275972366333
+      ]
+    },
+    "I+V1+V4": {
+      "table6_teacher_auroc": 0.8780879032570988,
+      "teacher_free_auroc_with_init_fix": 0.8771011355494388,
+      "teacher_free_ci": [
+        0.8623897789842806,
+        0.8917919353435301
+      ],
+      "delta_vs_table6": 0.0009867677076600412,
+      "delta_init_matched": 0.007156083919581668,
+      "delta_stock_matched": 0.0032163114572396623,
+      "teacher_free_inside_table6_ci": true,
+      "observed_corr_teacher_to_free": [
+        0.9264695634227368,
+        0.9405196063090546
+      ],
+      "full12_nrmse_teacher_to_free": [
+        0.451780617237091,
+        0.5420834422111511
+      ]
+    },
+    "II": {
+      "table6_teacher_auroc": 0.8442931066507506,
+      "teacher_free_auroc_with_init_fix": 0.8457711565432959,
+      "teacher_free_ci": [
+        0.8273554356760398,
+        0.8645677969232288
+      ],
+      "delta_vs_table6": -0.0014780498925452967,
+      "delta_init_matched": 0.011327196874876266,
+      "delta_stock_matched": -0.0034951093086410534,
+      "teacher_free_inside_table6_ci": true,
+      "observed_corr_teacher_to_free": [
+        0.917553044808816,
+        0.9585346589797415
+      ],
+      "full12_nrmse_teacher_to_free": [
+        0.5753034353256226,
+        2.284587860107422
+      ]
+    }
+  },
+  "divergences": []
+}

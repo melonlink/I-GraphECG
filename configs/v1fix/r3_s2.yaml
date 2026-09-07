@@ -1,0 +1,17 @@
+# v1-conclusion recheck on the bug-fixed model line (B1+B2+B3 all addressed):
+# checkpoint = d1s_r3_s2 (rank 3, scaled_derivation=true, B bounds, stable init),
+# analysis loaded scaler-aware via round2_io; features are the post-B2 build.
+seed: 2
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+patient_metadata: ptbxl_database.csv   # resolved under $ECG_DATA_DIR; see data/README.md
+encoder_ckpt: checkpoints/d1s_r3_s2_best.pt
+leadfield_rank: 3
+c_rep: 2.0
+interpret_split: test
+out_dir: runs/v1fix_r3_s2
+fim_per_class: 100
+noise_per_class: 100
+noise_levels_mV: [0.005, 0.01, 0.02, 0.05]
+noise_K: 10
+ode_per_class: 20
+classifier: auto

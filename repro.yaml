@@ -1,0 +1,9 @@
+# Root declarations for this checkout. Every root is inside the folder, so it runs on its own;
+# environment variables (ECG_OUTPUT_DIR, ECG_PROCESSED_DIR, ECG_DATA_DIR) still override.
+output_root: outputs
+processed_root: data/processed
+# No manuscript root: igraphecg.repro.paper() raises, so no script can write into paper/.
+paper_root: null
+# PTB-XL v1.0.3 lives in data/ptbxl/raw (ptbxl_database.csv, scp_statements.csv, records100/).
+# The Challenge-2021 cohorts are looked up beside it: data/challenge_2021/training/{georgia,cpsc_2018}.
+data_root: data/ptbxl

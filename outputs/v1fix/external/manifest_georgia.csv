@@ -1,0 +1,7 @@
+key,value
+dataset,georgia
+n_scanned,10344
+n_kept,2586
+kept_by_class,"{'NORM': 1752, 'STTC': 542, 'CD': 292}"
+drop_reasons,{'label_other_or_multilabel_or_HYP': 7758}
+seconds_preprocess,40.8

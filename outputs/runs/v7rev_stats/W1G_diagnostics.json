@@ -1,0 +1,38 @@
+{
+  "seed42_group_rank": {
+    "delta_root": 5,
+    "edge_prox": 7,
+    "edge_leaf": 8,
+    "APD": 4,
+    "tau_dep": 1,
+    "tau_rep": 6,
+    "q": 2,
+    "alpha_ST": 9,
+    "global_gain": 3
+  },
+  "five_seed_group_rank": {
+    "delta_root": 6,
+    "edge_prox": 7,
+    "edge_leaf": 1,
+    "APD": 4,
+    "tau_dep": 2,
+    "tau_rep": 8,
+    "q": 3,
+    "alpha_ST": 9,
+    "global_gain": 5
+  },
+  "edge_leaf_mean_abs_pairwise_corr_by_seed": {
+    "42": 0.9976,
+    "1": 0.8569,
+    "2": 0.4233,
+    "3": 0.9054,
+    "4": 0.6228
+  },
+  "edge_leaf_group_score_by_seed": {
+    "42": 3.368,
+    "1": 22.953,
+    "2": 43.644,
+    "3": 27.457,
+    "4": 42.28
+  }
+}

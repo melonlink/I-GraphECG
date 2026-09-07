@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "igraphecg"
+version = "1.0.0"
+description = "Gray-box graph electrophysiology surrogate for the 12-lead ECG: identifiability analysis, observability-based lead selection, and interpretable disease prediction"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Limin Zhao", email = "zhaolimin@tsnu.edu.cn" },
+    { name = "Hongtao Xu" },
+    { name = "Pengjian Wang" },
+    { name = "Weicheng Fu" },
+    { name = "Ningning Zhang" },
+]
+keywords = [
+    "electrocardiography", "reduced-lead ECG", "Fisher information",
+    "observability", "sensor selection", "identifiability",
+    "interpretable machine learning",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+
+# torch is deliberately absent: the CUDA build has to match the host, and every result
+# in the paper reproduces on CPU from the shipped checkpoints and derived tables.
+# neurokit2 and xgboost are optional, each with a documented fallback.
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "matplotlib>=3.8",
+    "wfdb>=4.1",
+    "tqdm",
+    "pyyaml",
+    "joblib",
+]
+
+[project.optional-dependencies]
+full = ["neurokit2>=0.2.10", "xgboost>=2.0"]
+torch = ["torch>=2.4"]
+
+[tool.setuptools.packages.find]
+include = ["igraphecg*"]
+
+[tool.setuptools.package-data]
+igraphecg = ["artifacts/*", "labels/*.csv", "labels/*.json"]

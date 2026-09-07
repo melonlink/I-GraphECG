@@ -1,0 +1,60 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper."
+title: "I-GraphECG: gray-box graph electrophysiology surrogate for the 12-lead ECG"
+abstract: >-
+  Source code, configurations, trained encoder checkpoints and derived per-record tables
+  for the I-GraphECG study. An encoder maps a 12-lead median beat to a bounded
+  47-dimensional set of equivalent electrophysiological descriptors; a constrained
+  eight-node conduction-graph decoder reconstructs the signal; disease prediction and
+  observability-based lead selection are computed from the descriptors.
+type: software
+version: 1.0.0
+license: MIT
+repository-artifact: "https://doi.org/[DOI to be inserted on acceptance]"
+authors:
+  - family-names: Zhao
+    given-names: Limin
+    orcid: "https://orcid.org/0009-0008-0264-6602"
+    email: zhaolimin@tsnu.edu.cn
+    affiliation: >-
+      School of Electronic Information and Electrical Engineering,
+      Tianshui Normal University, Tianshui, China
+  - family-names: Xu
+    given-names: Hongtao
+    affiliation: Tianshui Normal University
+  - family-names: Wang
+    given-names: Pengjian
+    affiliation: Tianshui Normal University
+  - family-names: Fu
+    given-names: Weicheng
+    affiliation: Tianshui Normal University
+  - family-names: Zhang
+    given-names: Ningning
+    affiliation: Tianshui Normal University
+keywords:
+  - electrocardiography
+  - reduced-lead ECG
+  - Fisher information
+  - observability
+  - sensor selection
+  - identifiability
+  - interpretable machine learning
+preferred-citation:
+  type: article
+  title: >-
+    I-GraphECG: Observability-Based Lead Selection and Interpretable Disease Prediction
+    from the 12-Lead ECG Using a Gray-Box Graph Electrophysiology Surrogate
+  journal: Sensors
+  year: 2026
+  authors:
+    - family-names: Zhao
+      given-names: Limin
+      orcid: "https://orcid.org/0009-0008-0264-6602"
+    - family-names: Xu
+      given-names: Hongtao
+    - family-names: Wang
+      given-names: Pengjian
+    - family-names: Fu
+      given-names: Weicheng
+    - family-names: Zhang
+      given-names: Ningning

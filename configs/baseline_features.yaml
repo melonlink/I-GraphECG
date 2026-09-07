@@ -1,0 +1,26 @@
+# B0 hand-crafted feature baseline
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+window_pre_ms: 300
+
+# Classifier: auto prefers xgboost, else hist_gb; logreg / rf / hist_gb / xgboost may be forced
+classifier: auto
+
+logreg:
+  C: 1.0
+  max_iter: 2000
+rf:
+  n_estimators: 400
+  max_depth: null
+hist_gb:
+  max_iter: 400
+  learning_rate: 0.05
+xgboost:
+  n_estimators: 600
+  max_depth: 5
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+
+out_metrics: tables/baseline_features_metrics.csv
+out_cm: figures/confusion_matrix_baseline_features.png

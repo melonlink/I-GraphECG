@@ -1,0 +1,281 @@
+{
+  "selection_pool": [
+    "I",
+    "II",
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+  ],
+  "pool_size": 8,
+  "n_precordial_in_pool": 6,
+  "n_limb_in_pool": 2,
+  "n_three_lead_subsets": 56,
+  "count_by_n_precordial": {
+    "0": 0,
+    "1": 6,
+    "2": 30,
+    "3": 20
+  },
+  "prob_by_n_precordial": {
+    "0": 0.0,
+    "1": 0.10714285714285714,
+    "2": 0.5357142857142857,
+    "3": 0.35714285714285715
+  },
+  "expected_n_precordial_random_triple": 2.25,
+  "prob_all_three_precordial": 0.35714285714285715,
+  "prob_at_least_two_precordial": 0.8928571428571429,
+  "modal_n_precordial_random_triple": 2,
+  "observed": {
+    "identity": {
+      "optima_by_seed": {
+        "42": "I+V1+V4",
+        "1": "I+V1+V5",
+        "2": "I+V1+V5",
+        "3": "I+V1+V4",
+        "4": "I+V1+V5"
+      },
+      "n_precordial_by_seed": {
+        "42": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2
+      },
+      "mean_n_precordial_over_seeds": 2.0,
+      "expected_under_chance": 2.25,
+      "difference_vs_chance": -0.25,
+      "above_chance": false,
+      "one_sided_p_of_observing_at_least_this_many_by_chance": 0.8928571428571428,
+      "top5_mean_n_precordial_over_seeds": 2.2800000000000002,
+      "bootstrap_mean_n_precordial_over_seeds": 2.0,
+      "bootstrap_frac_all_precordial_over_seeds": 0.0,
+      "n_all_precordial_optima_of_5_seeds": 0,
+      "binom_p_at_least_this_many_all_precordial": 0.9999999999999998,
+      "binom_p_at_most_this_many_all_precordial": 0.10979242280002374,
+      "binom_note": "Binomial(n=5, p=20/56) against the 8-lead-pool base rate. The 5 seeds share the same 400-record subset and differ only in encoder initialisation, so they are not fully independent draws; treat this as a heuristic, not a formal test."
+    },
+    "empirical_sigma_inv": {
+      "optima_by_seed": {
+        "42": "V2+V3+V5",
+        "1": "V2+V4+V5",
+        "2": "I+V2+V4",
+        "3": "V1+V2+V4",
+        "4": "V2+V4+V5"
+      },
+      "n_precordial_by_seed": {
+        "42": 3,
+        "1": 3,
+        "2": 2,
+        "3": 3,
+        "4": 3
+      },
+      "mean_n_precordial_over_seeds": 2.8,
+      "expected_under_chance": 2.25,
+      "difference_vs_chance": 0.5499999999999998,
+      "above_chance": true,
+      "one_sided_p_of_observing_at_least_this_many_by_chance": 0.35714285714285715,
+      "top5_mean_n_precordial_over_seeds": 2.7199999999999998,
+      "bootstrap_mean_n_precordial_over_seeds": 2.847,
+      "bootstrap_frac_all_precordial_over_seeds": 0.8469999999999999,
+      "n_all_precordial_optima_of_5_seeds": 4,
+      "binom_p_at_least_this_many_all_precordial": 0.058104510025584574,
+      "binom_p_at_most_this_many_all_precordial": 0.9941895489974413,
+      "binom_note": "Binomial(n=5, p=20/56) against the 8-lead-pool base rate. The 5 seeds share the same 400-record subset and differ only in encoder initialisation, so they are not fully independent draws; treat this as a heuristic, not a formal test."
+    },
+    "empirical_sigma_inv_norm8": {
+      "optima_by_seed": {
+        "42": "V2+V3+V5",
+        "1": "V2+V4+V5",
+        "2": "I+V2+V4",
+        "3": "V1+V2+V4",
+        "4": "V2+V4+V5"
+      },
+      "n_precordial_by_seed": {
+        "42": 3,
+        "1": 3,
+        "2": 2,
+        "3": 3,
+        "4": 3
+      },
+      "mean_n_precordial_over_seeds": 2.8,
+      "expected_under_chance": 2.25,
+      "difference_vs_chance": 0.5499999999999998,
+      "above_chance": true,
+      "one_sided_p_of_observing_at_least_this_many_by_chance": 0.35714285714285715,
+      "top5_mean_n_precordial_over_seeds": 2.7199999999999998,
+      "bootstrap_mean_n_precordial_over_seeds": 2.846,
+      "bootstrap_frac_all_precordial_over_seeds": 0.8460000000000001,
+      "n_all_precordial_optima_of_5_seeds": 4,
+      "binom_p_at_least_this_many_all_precordial": 0.058104510025584574,
+      "binom_p_at_most_this_many_all_precordial": 0.9941895489974413,
+      "binom_note": "Binomial(n=5, p=20/56) against the 8-lead-pool base rate. The 5 seeds share the same 400-record subset and differ only in encoder initialisation, so they are not fully independent draws; treat this as a heuristic, not a formal test."
+    }
+  },
+  "clinical_set": {
+    "leads": "II+V1+V5",
+    "n_precordial": 2,
+    "clinical_rank_of_56_by_seed": {
+      "identity": {
+        "42": 22,
+        "1": 5,
+        "2": 9,
+        "3": 13,
+        "4": 8
+      },
+      "empirical_sigma_inv": {
+        "42": 48,
+        "1": 34,
+        "2": 41,
+        "3": 46,
+        "4": 41
+      },
+      "empirical_sigma_inv_norm8": {
+        "42": 48,
+        "1": 34,
+        "2": 41,
+        "3": 46,
+        "4": 41
+      }
+    }
+  },
+  "measured_noise_contrast": {
+    "precordial_in_pool": [
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6"
+    ],
+    "limb_in_pool": [
+      "I",
+      "II"
+    ],
+    "mean_noise_std_scaled_precordial": 0.3545633554458618,
+    "mean_noise_std_scaled_limb": 0.5575385689735413,
+    "ratio_limb_over_precordial_scaled": 1.5724653005599976,
+    "mean_noise_std_mV_precordial": 0.02605738304555416,
+    "mean_noise_std_mV_limb": 0.03322966396808624,
+    "ratio_limb_over_precordial_mV": 1.2752494812011719,
+    "mean_iqr_mV_precordial": 0.07893391760687034,
+    "mean_iqr_mV_limb": 0.059301313012838364,
+    "quietest_lead_scaled": "V2",
+    "loudest_lead_scaled": "aVF",
+    "quietest_lead_mV": "aVL",
+    "loudest_lead_mV": "II",
+    "maxmin_ratio_scaled": 2.073688268661499,
+    "maxmin_ratio_mV": 2.2125954627990723,
+    "headline_V2_vs_aVF": {
+      "V2_noise_std_scaled": 0.2841166853904724,
+      "aVF_noise_std_scaled": 0.589169442653656,
+      "ratio_aVF_over_V2_scaled": 2.073688268661499,
+      "V2_noise_std_mV": 0.02940777689218521,
+      "aVF_noise_std_mV": 0.02954874187707901,
+      "ratio_aVF_over_V2_mV": 1.004793405532837,
+      "V2_iqr_mV": 0.10350604355335236,
+      "aVF_iqr_mV": 0.05015326663851738,
+      "ratio_V2_over_aVF_iqr": 2.0637946128845215,
+      "interpretation": "The 2.07x scaled-space contrast is ~entirely a dynamic-range effect: in absolute mV the two leads have essentially the same isoelectric noise (V2 0.02941 vs aVF 0.02955 mV, ratio 1.005), while V2's robust IQR is 2.06x larger. Sigma (defined in the scaled space the decoder and FIM live in) is therefore a per-lead inverse baseline-SNR, NOT an absolute noise level."
+    }
+  },
+  "margin_over_clinical_by_noise_model": {
+    "identity": {
+      "per_seed": {
+        "42": 9.987796652139934,
+        "1": 8.038769447754731,
+        "2": 6.973605947561111,
+        "3": 10.803055256991428,
+        "4": 8.644845134934087
+      },
+      "mean": 8.889614487876258,
+      "sd_ddof1": 1.5266137107843143,
+      "min": 6.973605947561111,
+      "max": 10.803055256991428,
+      "all_bootstrap_CIs_exclude_zero": true,
+      "clinical_rank_of_56_per_seed": [
+        5,
+        8,
+        9,
+        13,
+        22
+      ],
+      "lead_II_best_rank_per_seed": [
+        4,
+        5,
+        8,
+        8,
+        14
+      ],
+      "lead_II_enters_top5_in_n_seeds": 2
+    },
+    "empirical_sigma_inv": {
+      "per_seed": {
+        "42": 32.38202956035667,
+        "1": 21.001659888956283,
+        "2": 25.724546632755334,
+        "3": 29.560969853207553,
+        "4": 24.365919842112447
+      },
+      "mean": 26.607025155477658,
+      "sd_ddof1": 4.452468593190826,
+      "min": 21.001659888956283,
+      "max": 32.38202956035667,
+      "all_bootstrap_CIs_exclude_zero": true,
+      "clinical_rank_of_56_per_seed": [
+        34,
+        41,
+        41,
+        46,
+        48
+      ],
+      "lead_II_best_rank_per_seed": [
+        14,
+        15,
+        16,
+        16,
+        19
+      ],
+      "lead_II_enters_top5_in_n_seeds": 0
+    },
+    "empirical_sigma_inv_norm8": {
+      "per_seed": {
+        "42": 32.35318524747126,
+        "1": 20.979755944774666,
+        "2": 25.682414805611955,
+        "3": 29.517785858465345,
+        "4": 24.33005932723586
+      },
+      "mean": 26.572640236711816,
+      "sd_ddof1": 4.4494552619244905,
+      "min": 20.979755944774666,
+      "max": 32.35318524747126,
+      "all_bootstrap_CIs_exclude_zero": true,
+      "clinical_rank_of_56_per_seed": [
+        34,
+        41,
+        41,
+        46,
+        48
+      ],
+      "lead_II_best_rank_per_seed": [
+        14,
+        15,
+        16,
+        16,
+        19
+      ],
+      "lead_II_enters_top5_in_n_seeds": 0
+    }
+  },
+  "verdict": {
+    "identity_optima_are_below_chance_on_precordial_count": true,
+    "empirical_optima_are_above_chance_on_precordial_count": true,
+    "count_based_dominance_claim_supported_under_identity": false,
+    "count_based_dominance_claim_supported_under_empirical": true
+  },
+  "note": "A count-based 'precordial dominance' claim must be read against the base rate of the 8-lead selection pool (6/8 precordial). A random triple already contains 2.25 precordial leads on average and is all-precordial with probability 20/56=0.357."
+}

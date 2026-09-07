@@ -1,0 +1,51 @@
+{
+  "dataset": "georgia",
+  "manifest": {
+    "dataset": "georgia",
+    "n_scanned": 10344,
+    "n_kept": 2586,
+    "kept_by_class": {
+      "NORM": 1752,
+      "STTC": 542,
+      "CD": 292
+    },
+    "drop_reasons": {
+      "label_other_or_multilabel_or_HYP": 7758
+    },
+    "seconds_preprocess": 40.8
+  },
+  "reconstruction": {
+    "median_corr": 0.8868872073172861,
+    "scaled_median_nrmse": 0.4599930942058563,
+    "n_finite_corr": 2585
+  },
+  "observability_n": 399,
+  "observability": {
+    "effective_rank": {
+      "12": 4.642010688781738,
+      "II+V1+V5": 3.654322385787964,
+      "I+V1+V4": 4.080900192260742,
+      "II": 2.7002193927764893
+    },
+    "dopt_3lead": {
+      "selected": [
+        "V1",
+        "V4",
+        "I"
+      ],
+      "logdet": 166.9327850341797
+    },
+    "leadfield_svd": {
+      "singular_values": [
+        1.3978040218353271,
+        0.9662033915519714,
+        0.5049183368682861,
+        4.005976350640594e-08,
+        1.5705417411027156e-08,
+        8.541332086053899e-09,
+        2.769969587035348e-09,
+        1.5341403147850485e-10
+      ]
+    }
+  }
+}

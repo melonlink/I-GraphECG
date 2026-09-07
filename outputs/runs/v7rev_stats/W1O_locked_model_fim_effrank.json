@@ -1,0 +1,30 @@
+{
+  "12 leads": {
+    "effective_rank": 4.362206935882568,
+    "rank95": 9,
+    "rank99": 17,
+    "condition_number": 1000000.0,
+    "logdet": 239.5979766845703
+  },
+  "II+V1+V5": {
+    "effective_rank": 3.529778242111206,
+    "rank95": 8,
+    "rank99": 16,
+    "condition_number": 1000000.0,
+    "logdet": 170.32882690429688
+  },
+  "I+V1+V4": {
+    "effective_rank": 3.720499038696289,
+    "rank95": 8,
+    "rank99": 16,
+    "condition_number": 1000000.0,
+    "logdet": 178.79095458984375
+  },
+  "II": {
+    "effective_rank": 2.842212438583374,
+    "rank95": 4,
+    "rank99": 10,
+    "condition_number": 999999.9375,
+    "logdet": 26.022056579589844
+  }
+}

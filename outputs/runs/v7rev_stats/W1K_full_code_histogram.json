@@ -1,0 +1,499 @@
+{
+  "georgia": {
+    "n_records": 10344,
+    "disposition": {
+      "n_records": 10344,
+      "n_ge1_target_superclass": 7697,
+      "n_exactly1_target_superclass": 6768,
+      "n_clean_single_label_kept": 2586,
+      "n_carrying_HYP": 1331,
+      "n_carrying_OTHER_code": 7254,
+      "drop_1_HYP_overlap": 1331,
+      "drop_2_OTHER_code_present": 6301,
+      "n_multi_target_superclass": 929,
+      "n_zero_target_superclass": 2647,
+      "drop_3_multi_superclass": 126,
+      "n_records_with_any_STTC_code": 4620
+    },
+    "kept_by_class": {
+      "NORM": 1752,
+      "STTC": 542,
+      "CD": 292
+    },
+    "unmapped_codes": {},
+    "sttc_code_combination_among_clean_STTC": {
+      "428750005": 258,
+      "164934002": 127,
+      "428750005+59931005": 46,
+      "59931005": 40,
+      "164934002+428750005+59931005": 24,
+      "164934002+59931005": 13,
+      "164934002+428750005": 9,
+      "164930006": 5,
+      "164931005": 4,
+      "164931005+428750005": 4,
+      "164931005+59931005": 2,
+      "429622005": 2,
+      "164931005+164934002": 1,
+      "164930006+164931005": 1,
+      "164930006+428750005": 1,
+      "164934002+428750005+429622005": 1,
+      "164931005+428750005+59931005": 1,
+      "164930006+164934002": 1,
+      "164931005+164934002+429622005+59931005": 1,
+      "164934002+429622005": 1
+    },
+    "code_histogram": {
+      "164934002": {
+        "n": 2306,
+        "term": "T wave abnormal",
+        "mapped": "STTC"
+      },
+      "428750005": {
+        "n": 1883,
+        "term": "nonspecific ST-T abnormality",
+        "mapped": "STTC"
+      },
+      "426783006": {
+        "n": 1752,
+        "term": "sinus rhythm",
+        "mapped": "NORM"
+      },
+      "426177001": {
+        "n": 1677,
+        "term": "sinus bradycardia",
+        "mapped": "OTHER"
+      },
+      "111975006": {
+        "n": 1391,
+        "term": "prolonged QT interval",
+        "mapped": "OTHER"
+      },
+      "427084000": {
+        "n": 1261,
+        "term": "sinus tachycardia",
+        "mapped": "OTHER"
+      },
+      "164873001": {
+        "n": 1232,
+        "term": "left ventricular hypertrophy",
+        "mapped": "HYP"
+      },
+      "164930006": {
+        "n": 992,
+        "term": "ST elevation",
+        "mapped": "STTC"
+      },
+      "39732003": {
+        "n": 940,
+        "term": "left axis deviation",
+        "mapped": "OTHER"
+      },
+      "425623009": {
+        "n": 903,
+        "term": "low QRS voltages",
+        "mapped": "OTHER"
+      },
+      "67741000119109": {
+        "n": 870,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "59931005": {
+        "n": 812,
+        "term": "T wave inversion",
+        "mapped": "STTC"
+      },
+      "270492004": {
+        "n": 769,
+        "term": "first degree AV block",
+        "mapped": "CD"
+      },
+      "284470004": {
+        "n": 639,
+        "term": "premature atrial contraction",
+        "mapped": "OTHER"
+      },
+      "164889003": {
+        "n": 570,
+        "term": "atrial fibrillation",
+        "mapped": "OTHER"
+      },
+      "59118001": {
+        "n": 542,
+        "term": "right bundle branch block",
+        "mapped": "CD"
+      },
+      "164917005": {
+        "n": 464,
+        "term": "abnormal QRS",
+        "mapped": "OTHER"
+      },
+      "427393009": {
+        "n": 455,
+        "term": "sinus arrhythmia",
+        "mapped": "OTHER"
+      },
+      "425419005": {
+        "n": 451,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "713426002": {
+        "n": 407,
+        "term": "incomplete right bundle branch block",
+        "mapped": "CD"
+      },
+      "251146004": {
+        "n": 374,
+        "term": "low amplitude ECG",
+        "mapped": "OTHER"
+      },
+      "17338001": {
+        "n": 357,
+        "term": "ventricular premature beats",
+        "mapped": "OTHER"
+      },
+      "426434006": {
+        "n": 281,
+        "term": "anterior ischemia (nonspecific)",
+        "mapped": "OTHER"
+      },
+      "164909002": {
+        "n": 231,
+        "term": "left bundle branch block",
+        "mapped": "CD"
+      },
+      "698252002": {
+        "n": 203,
+        "term": "nonspecific intraventricular conduction disorder",
+        "mapped": "CD"
+      },
+      "164890007": {
+        "n": 186,
+        "term": "atrial flutter",
+        "mapped": "OTHER"
+      },
+      "445118002": {
+        "n": 180,
+        "term": "left anterior fascicular block",
+        "mapped": "CD"
+      },
+      "428417006": {
+        "n": 140,
+        "term": "early repolarization",
+        "mapped": "OTHER"
+      },
+      "164931005": {
+        "n": 134,
+        "term": "ST-T change / ST changes",
+        "mapped": "STTC"
+      },
+      "6374002": {
+        "n": 116,
+        "term": "bundle branch block",
+        "mapped": "CD"
+      },
+      "89792004": {
+        "n": 86,
+        "term": "right ventricular hypertrophy",
+        "mapped": "HYP"
+      },
+      "251120003": {
+        "n": 86,
+        "term": "incomplete left bundle branch block",
+        "mapped": "CD"
+      },
+      "47665007": {
+        "n": 83,
+        "term": "right axis deviation",
+        "mapped": "OTHER"
+      },
+      "233917008": {
+        "n": 74,
+        "term": "AV block",
+        "mapped": "CD"
+      },
+      "253352002": {
+        "n": 72,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "266249003": {
+        "n": 71,
+        "term": "ventricular hypertrophy",
+        "mapped": "HYP"
+      },
+      "195126007": {
+        "n": 60,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "251268003": {
+        "n": 52,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "251266004": {
+        "n": 46,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "164884008": {
+        "n": 41,
+        "term": "premature ventricular contraction",
+        "mapped": "OTHER"
+      },
+      "429622005": {
+        "n": 38,
+        "term": "ST depression",
+        "mapped": "STTC"
+      },
+      "426761007": {
+        "n": 32,
+        "term": "supraventricular tachycardia",
+        "mapped": "OTHER"
+      },
+      "713422000": {
+        "n": 28,
+        "term": "atrial tachycardia",
+        "mapped": "OTHER"
+      },
+      "713427006": {
+        "n": 28,
+        "term": "complete right bundle branch block",
+        "mapped": "CD"
+      },
+      "445211001": {
+        "n": 25,
+        "term": "left posterior fascicular block",
+        "mapped": "CD"
+      },
+      "195042002": {
+        "n": 23,
+        "term": "second degree AV block",
+        "mapped": "CD"
+      },
+      "426664006": {
+        "n": 19,
+        "term": "intraventricular conduction delay",
+        "mapped": "CD"
+      },
+      "253339007": {
+        "n": 14,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "251139008": {
+        "n": 12,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "164921003": {
+        "n": 10,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "27885002": {
+        "n": 8,
+        "term": "complete heart block",
+        "mapped": "CD"
+      },
+      "195101003": {
+        "n": 7,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "164865005": {
+        "n": 7,
+        "term": "myocardial infarction",
+        "mapped": "MI"
+      },
+      "426627000": {
+        "n": 6,
+        "term": "bradycardia",
+        "mapped": "OTHER"
+      },
+      "55930002": {
+        "n": 6,
+        "term": "nonspecific change",
+        "mapped": "OTHER"
+      },
+      "426995002": {
+        "n": 5,
+        "term": "junctional escape",
+        "mapped": "OTHER"
+      },
+      "426648003": {
+        "n": 4,
+        "term": "junctional rhythm",
+        "mapped": "OTHER"
+      },
+      "164896001": {
+        "n": 3,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "195080001": {
+        "n": 2,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "74390002": {
+        "n": 2,
+        "term": "Wolff-Parkinson-White",
+        "mapped": "OTHER"
+      },
+      "11157007": {
+        "n": 2,
+        "term": "ventricular bigeminy",
+        "mapped": "OTHER"
+      },
+      "195060002": {
+        "n": 2,
+        "term": "ventricular tachycardia",
+        "mapped": "OTHER"
+      },
+      "49578007": {
+        "n": 2,
+        "term": "shortened PR interval",
+        "mapped": "OTHER"
+      },
+      "251180001": {
+        "n": 1,
+        "term": "(uncertain)",
+        "mapped": "OTHER"
+      },
+      "81898007": {
+        "n": 1,
+        "term": "ventricular escape",
+        "mapped": "OTHER"
+      },
+      "413444003": {
+        "n": 1,
+        "term": "acute myocardial ischemia",
+        "mapped": "STTC"
+      },
+      "63593006": {
+        "n": 1,
+        "term": "supraventricular premature beats",
+        "mapped": "OTHER"
+      }
+    }
+  },
+  "cpsc_2018": {
+    "n_records": 6877,
+    "disposition": {
+      "n_records": 6877,
+      "n_ge1_target_superclass": 4746,
+      "n_exactly1_target_superclass": 4690,
+      "n_clean_single_label_kept": 4305,
+      "n_zero_target_superclass": 2131,
+      "n_carrying_OTHER_code": 2522,
+      "drop_2_OTHER_code_present": 2522,
+      "n_multi_target_superclass": 56,
+      "drop_3_multi_superclass": 50,
+      "n_records_with_any_STTC_code": 1087
+    },
+    "kept_by_class": {
+      "CD": 2416,
+      "NORM": 918,
+      "STTC": 971
+    },
+    "unmapped_codes": {},
+    "sttc_code_combination_among_clean_STTC": {
+      "429622005": 784,
+      "164931005": 185,
+      "164931005+429622005": 2
+    },
+    "code_histogram": {
+      "59118001": {
+        "n": 1857,
+        "term": "right bundle branch block",
+        "mapped": "CD"
+      },
+      "164889003": {
+        "n": 1221,
+        "term": "atrial fibrillation",
+        "mapped": "OTHER"
+      },
+      "426783006": {
+        "n": 918,
+        "term": "sinus rhythm",
+        "mapped": "NORM"
+      },
+      "429622005": {
+        "n": 869,
+        "term": "ST depression",
+        "mapped": "STTC"
+      },
+      "270492004": {
+        "n": 722,
+        "term": "first degree AV block",
+        "mapped": "CD"
+      },
+      "164884008": {
+        "n": 700,
+        "term": "premature ventricular contraction",
+        "mapped": "OTHER"
+      },
+      "284470004": {
+        "n": 616,
+        "term": "premature atrial contraction",
+        "mapped": "OTHER"
+      },
+      "164909002": {
+        "n": 236,
+        "term": "left bundle branch block",
+        "mapped": "CD"
+      },
+      "164931005": {
+        "n": 220,
+        "term": "ST-T change / ST changes",
+        "mapped": "STTC"
+      }
+    }
+  },
+  "_meta": {
+    "label_map": "D:\\PROJECT\\AI_PROJECT\\ECG_Proj\\I-GraphMonoECG\\igraphecg\\artifacts\\label_maps\\snomed_to_superclass.csv",
+    "controls_all_pass": true,
+    "header_only_scan": true,
+    "n_mi_mapped_codes_in_map": 1,
+    "mi_mapped_codes": [
+      "164865005"
+    ],
+    "sttc_mapped_codes": [
+      "164930006",
+      "164931005",
+      "164934002",
+      "413444003",
+      "428750005",
+      "429622005",
+      "59931005"
+    ],
+    "hyp_mapped_codes": [
+      "164873001",
+      "89792004",
+      "266249003"
+    ],
+    "norm_mapped_codes": [
+      "426783006"
+    ],
+    "cd_mapped_codes": [
+      "270492004",
+      "59118001",
+      "713426002",
+      "164909002",
+      "698252002",
+      "445118002",
+      "6374002",
+      "251120003",
+      "233917008",
+      "713427006",
+      "445211001",
+      "195042002",
+      "426664006",
+      "27885002"
+    ]
+  }
+}

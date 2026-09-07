@@ -1,0 +1,26 @@
+# Versions this archive was verified against (see REPRODUCIBILITY.md section 4).
+# Pinned to what actually ran, not to a supported range: these are the versions that
+# produce the numbers in the paper bit for bit.
+numpy==2.2.*
+scipy==1.15.*
+pandas==2.3.*
+scikit-learn==1.7.*
+matplotlib==3.10.*
+wfdb==4.3.*
+pyyaml
+joblib
+tqdm
+
+# Optional, each with a fallback in the code:
+#   neurokit2 -- R-peak detection; without it the loader falls back to its own detector
+#   xgboost   -- the reported classifier; without it, HistGradientBoosting is used, which
+#                changes the numbers, so install it to reproduce the tables
+neurokit2==0.2.13
+xgboost==3.2.*
+
+# torch is NOT pinned here. The CUDA build has to match the host, and nothing in the
+# paper needs a GPU: the shipped checkpoints and derived tables reproduce every
+# classification, identifiability and lead-selection result on CPU. Install the build
+# that suits your machine, e.g.
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# Verified with torch 2.9.

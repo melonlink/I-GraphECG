@@ -1,0 +1,150 @@
+{
+  "task": "W1M",
+  "superseded_artifact": {
+    "path": "1_I-GraphECG-Surrogate/FINAL_Sensors/Revision_v3/Results/review_response/structure_check_summary.json",
+    "field": "max_abs_F_diff_scaled_vs_unscaled_derivation",
+    "value": 0.0,
+    "checkpoint": "graphmono_encoder_eikonal_B_best.pt (superseded, NOT the paper model)",
+    "status": "recomputed here on d1s_r3_s42; the 0.0 reproduces exactly for the 8 non-derived lead rows, but it is a structural identity, not evidence of convention-invariance over the 12 displayed leads"
+  },
+  "learned_leadfield_singular_values": {
+    "d1s_r3_s42_scaled_derivation": [
+      1.3978039761306682,
+      0.9662034192754666,
+      0.5049183614666639,
+      3.382970785065045e-08,
+      1.9340602495021175e-08,
+      1.0943793287844945e-08,
+      2.2075570514351626e-09,
+      1.5806022281502098e-09
+    ],
+    "graphmono_encoder_eikonal_B_physical_derivation": [
+      1.6090886655718972,
+      1.033629302601138,
+      0.4550225645083912,
+      5.069538227784253e-08,
+      3.198257114292744e-08,
+      1.704528928388885e-08,
+      8.86886584336922e-09,
+      3.345153625534493e-10
+    ]
+  },
+  "lineage": {
+    "checkpoint": "checkpoints/d1s_r3_s42_best.pt",
+    "seed": 42,
+    "leadfield_rank": 3,
+    "scaled_derivation_in_cfg": true,
+    "recon_channels_in_cfg": "absent -> all 12 displayed leads in the loss"
+  },
+  "subset": {
+    "fold": 10,
+    "per_class": 100,
+    "n_records": 400,
+    "rng_seed": 52,
+    "classes": [
+      "NORM",
+      "MI",
+      "STTC",
+      "CD"
+    ]
+  },
+  "fim_settings": {
+    "columns": "0..45 (global_gain dropped: scale gauge fixed)",
+    "jacobian": "torch.func.jacfwd, float64, columns scaled by box radius",
+    "estimator": "F = mean_s J_s^T J_s"
+  },
+  "results": [
+    {
+      "lead_rows": "8 non-derived leads (I,II,V1-V6) -- the published FIM convention",
+      "scaled": {
+        "effective_rank": 3.67317284817016,
+        "rank95": 8,
+        "rank99": 15,
+        "condition_number": 999999.9999959837,
+        "logdet": 214.5237304336058
+      },
+      "physical": {
+        "effective_rank": 3.67317284817016,
+        "rank95": 8,
+        "rank99": 15,
+        "condition_number": 999999.9999959837,
+        "logdet": 214.5237304336058
+      },
+      "delta_physical_minus_scaled": {
+        "effective_rank": 0.0,
+        "rank95": 0.0,
+        "rank99": 0.0,
+        "condition_number": 0.0,
+        "logdet": 0.0
+      },
+      "max_abs_entry_diff": 0.0,
+      "relative_frobenius_diff": 0.0,
+      "trace_scaled": 358800.1891786419,
+      "trace_physical": 358800.1891786419,
+      "top_eigval_scaled": 248983.74521684367,
+      "top_eigval_physical": 248983.74521684367
+    },
+    {
+      "lead_rows": "all 12 displayed leads -- the convention of the training loss",
+      "scaled": {
+        "effective_rank": 4.3329109130987735,
+        "rank95": 9,
+        "rank99": 16,
+        "condition_number": 999999.9999969163,
+        "logdet": 235.33678467443085
+      },
+      "physical": {
+        "effective_rank": 4.072900493181747,
+        "rank95": 9,
+        "rank99": 16,
+        "condition_number": 999999.9999967101,
+        "logdet": 229.90016707546314
+      },
+      "delta_physical_minus_scaled": {
+        "effective_rank": -0.2600104199170268,
+        "rank95": 0.0,
+        "rank99": 0.0,
+        "condition_number": -2.0617153495550156e-07,
+        "logdet": -5.4366175989677
+      },
+      "max_abs_entry_diff": 12232.252909204573,
+      "relative_frobenius_diff": 0.07574831717961988,
+      "trace_scaled": 495962.52103874873,
+      "trace_physical": 450986.86756047426,
+      "top_eigval_scaled": 324276.3705081651,
+      "top_eigval_physical": 303943.93046673294
+    }
+  ],
+  "controls": {
+    "coefficients_vs_expected_max_abs_diff": 4.433033222372984e-05,
+    "unit_iqr_zero_median_reduces_to_physical": 0.0,
+    "precordial_scaler_leak": 0.0,
+    "relrms_against_observed_derived_leads_fold10": {
+      "III": {
+        "physical_space_physical_coef": 0.11312603734826898,
+        "scaled_space_scaled_coef": 0.11308721077356568,
+        "scaled_space_physical_coef": 0.34201348777012597
+      },
+      "aVR": {
+        "physical_space_physical_coef": 0.04071645092767184,
+        "scaled_space_scaled_coef": 0.0396827428414338,
+        "scaled_space_physical_coef": 0.0761210106036467
+      },
+      "aVL": {
+        "physical_space_physical_coef": 0.07961214946880987,
+        "scaled_space_scaled_coef": 0.07892728130931044,
+        "scaled_space_physical_coef": 0.279628907984706
+      },
+      "aVF": {
+        "physical_space_physical_coef": 0.07795867009989386,
+        "scaled_space_scaled_coef": 0.07756172994927148,
+        "scaled_space_physical_coef": 0.3432104775409807
+      }
+    },
+    "derived_jacobian_rows_vs_analytic_linear_image_max_diff": 0.0,
+    "non_derived_jacobian_rows_across_conventions_max_diff": 0.0,
+    "analytic_vs_autodiff_max_diff": 0.0
+  },
+  "scope_statement": "The five waveform loss terms in scripts/31_surrogate_encoder.py are computed over all 12 displayed leads whenever cfg has no recon_channels key; d1s_r3_s42.yaml has no such key, so recon_rows=None and the four derived leads ARE inside the reconstruction loss. The derivation convention therefore changes the training objective and the fitted parameters. The invariance reported here is only that, for a FIXED trained decoder evaluated at analysis time, the FIM restricted to the 8 non-derived leads is bitwise identical under the two conventions (the derived rows are simply not in the row set). Over all 12 displayed leads the FIM is NOT invariant. No claim is made that a model retrained under the other convention would have the same FIM.",
+  "failures": []
+}

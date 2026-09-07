@@ -1,0 +1,28 @@
+# Stage 0 data pipeline configuration
+seed: 42
+sampling_rate: 100          # first pass runs at 100 Hz; switch to 250/500 once stable
+window_pre_ms: 300
+window_post_ms: 700
+
+# Label mapping
+min_likelihood: 0.0         # scp_codes likelihood cutoff; 0 = all listed codes (Wagner 2020)
+exclude_hyp_overlap: true   # single-label clean: drop co-occurring HYP, labels unambiguous
+
+# Filtering
+bandpass_low: 0.5
+bandpass_high: 40.0
+bandpass_order: 4
+apply_notch: false
+notch_freq: 50.0
+
+# Quality control
+max_abs_mv: 20.0            # larger amplitudes are treated as artefacts
+min_beat_quality: 0.0       # median-beat consistency threshold (0 = log only, no rejection)
+
+# Output
+out_npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+out_metadata: data/processed/ptbxl_medianbeat_clean_100hz_metadata.csv
+n_random_plots: 20
+
+# Debug: >0 processes only the first N records (quick smoke run), 0 = the full set
+debug_limit: 0

@@ -1,0 +1,2 @@
+stability_level,ap_ode_implemented,ap_ode_success_rate,note
+surrogate_proxy + finite_time_monodromy,True,1.0,"finite-time recovery multiplier under paced dynamics, NOT strict Floquet"

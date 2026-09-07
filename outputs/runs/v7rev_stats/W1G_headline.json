@@ -1,0 +1,128 @@
+{
+  "n_parameters": 47,
+  "tier_sizes_by_rule": {
+    "R1_group_mean_cv (the flawed rule)": {
+      "A_strongly_identifiable": 25,
+      "B_weakly_identifiable": 16,
+      "C_primarily_regularized": 6
+    },
+    "R2_min_across_seeds": {
+      "A_strongly_identifiable": 8,
+      "B_weakly_identifiable": 33,
+      "C_primarily_regularized": 6
+    },
+    "R3_per_param_cv": {
+      "A_strongly_identifiable": 11,
+      "B_weakly_identifiable": 30,
+      "C_primarily_regularized": 6
+    },
+    "R4_mean_only": {
+      "A_strongly_identifiable": 23,
+      "B_weakly_identifiable": 18,
+      "C_primarily_regularized": 6
+    },
+    "R5_min_and_cv": {
+      "A_strongly_identifiable": 8,
+      "B_weakly_identifiable": 33,
+      "C_primarily_regularized": 6
+    }
+  },
+  "recommended_rule": "R2_min_across_seeds (>=15 for Tier A; max-across-seeds <1 for Tier C). R5 adds a CV<=0.50 term and returns the identical partition, so the simpler R2 is recommended.",
+  "recommended_tierA": [
+    "APD3",
+    "APD5",
+    "APD7",
+    "tau_dep3",
+    "tau_dep4",
+    "tau_dep5",
+    "tau_dep7",
+    "global_gain"
+  ],
+  "recommended_tierC": [
+    "alpha_ST0",
+    "alpha_ST1",
+    "alpha_ST2",
+    "alpha_ST3",
+    "alpha_ST4",
+    "alpha_ST5"
+  ],
+  "max_per_parameter_cv": {
+    "param": "edge_prox1",
+    "cv": 0.8262181519181561
+  },
+  "second_max_per_parameter_cv": {
+    "param": "q2",
+    "cv": 0.8165172236482926
+  },
+  "group_level_cv": {
+    "delta_root": 0.4396603471582147,
+    "edge_prox": 0.45635249410431433,
+    "edge_leaf": 0.5884023267377012,
+    "APD": 0.05884104672637493,
+    "tau_dep": 0.06632090525107504,
+    "tau_rep": 0.05315824175831935,
+    "q": 0.1436703101320342,
+    "alpha_ST": 0.18937244057181063,
+    "global_gain": 0.01674457204651256
+  },
+  "group_level_five_seed_mean_score": {
+    "delta_root": 9.369689194413443,
+    "edge_prox": 9.100137807916115,
+    "edge_leaf": 27.940639166968435,
+    "APD": 15.951779504239767,
+    "tau_dep": 23.286151568175846,
+    "tau_rep": 8.010239863942827,
+    "q": 18.80208877555106,
+    "alpha_ST": 0.29101714225448927,
+    "global_gain": 15.92368993439035
+  },
+  "crb_verification_max_rel_diff": 0.0004436524441736059,
+  "units_statement": "identifiability score and CRB are computed on RADIUS-SCALED parameter columns (J_scaled[:,j] = J[:,j] * radius_j, radius_j = (hi_j-lo_j)/2), so CRB_j = 1/score_j is a standard deviation expressed in units of parameter j's own bound half-width, NOT in seconds or millivolts. Multiply by bound_radius for the physical-unit value. A Tikhonov term lambda=1e-3 is added before inversion, so the score floor is 1/sqrt(1/lambda) = 0.0316 and the values are a regularized uncertainty proxy, not a strict unbiased-estimator bound.",
+  "seed_stable_coupling_pairs": [
+    {
+      "a": "edge_leaf0",
+      "b": "edge_leaf1",
+      "corr_seed42": 0.9957568692786932,
+      "abs_corr_min_over_seeds": 0.781879634273064,
+      "abs_corr_mean_over_seeds": 0.9007939447377004,
+      "sign": "positive"
+    },
+    {
+      "a": "edge_leaf0",
+      "b": "edge_leaf4",
+      "corr_seed42": 0.9970932451131391,
+      "abs_corr_min_over_seeds": 0.6272139678029218,
+      "abs_corr_mean_over_seeds": 0.8813859092272864,
+      "sign": "positive"
+    },
+    {
+      "a": "edge_leaf1",
+      "b": "edge_leaf4",
+      "corr_seed42": 0.9991383471739895,
+      "abs_corr_min_over_seeds": 0.5949315064472149,
+      "abs_corr_mean_over_seeds": 0.8507937970929242,
+      "sign": "positive"
+    },
+    {
+      "a": "delta_root",
+      "b": "edge_prox0",
+      "corr_seed42": -0.5931832899826476,
+      "abs_corr_min_over_seeds": 0.5931832899826476,
+      "abs_corr_mean_over_seeds": 0.8055839780619571,
+      "sign": "negative"
+    },
+    {
+      "a": "edge_leaf1",
+      "b": "edge_leaf2",
+      "corr_seed42": 0.9991927929275755,
+      "abs_corr_min_over_seeds": 0.5874383813776989,
+      "abs_corr_mean_over_seeds": 0.84215951241268,
+      "sign": "positive"
+    }
+  ],
+  "crb_identity_check": {
+    "per_parameter_max_rel_diff_CRB_vs_1_over_score_all_leadsets": 1.504e-16,
+    "group_CRB_vs_frozen_phase1_table_max_rel_diff": 1.245e-15,
+    "note": "verified for L12, II+V1+V5, I+II+V5 and II by replaying scripts/41's J_all path; the frozen crb_by_group_by_leadset.csv is reproduced bit-exactly. Recomputing the FIM by scripts/09's sample-accumulation path instead shifts the group CRB means by at most 4.4e-4 relative (float summation order only)."
+  }
+}

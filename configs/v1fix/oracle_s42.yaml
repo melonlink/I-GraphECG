@@ -1,0 +1,26 @@
+# v1fix oracle: per-sample fitting capacity of the B1-FIXED decoder (scaled-space
+# Einthoven derivation), same caliber as graphmono_oracle.yaml except phys 0.05
+# to match the d1s lineage.
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+scaled_derivation: true
+
+subset_train_per_class: 128
+subset_val_per_class: 32
+max_epochs: 2500
+batch_size: 128
+lr_theta: 0.02
+lr_H: 0.005
+early_stop_patience: 150
+
+leadfield_rank: 3
+loss_weights:
+  rec: 1.0
+  slope: 0.2
+  qrs: 1.0
+  st: 0.5
+  t: 0.5
+  phys: 0.05
+  H: 0.001
+
+out_dir: runs/v1fix_oracle

@@ -1,0 +1,6 @@
+seed,n_fold10,frac_recon_Tptime_maxabs_at_440ms,frac_obs_Tptime_maxabs_at_440ms,frac_recon_Tptime_mean_ge_400ms,frac_obs_Tptime_mean_ge_400ms,recon_Tptime_maxabs_n_unique,obs_Tptime_maxabs_n_unique,note
+42,1594,0.5062735257214555,0.07277289836888332,0.0006273525721455458,0.003136762860727729,23,27,"Tptime is censored to the T window [160,440] ms (T_WIN=(160,450) ms at fs=100 Hz)"
+1,1594,0.5326223337515684,0.07277289836888332,0.0,0.003136762860727729,25,27,"Tptime is censored to the T window [160,440] ms (T_WIN=(160,450) ms at fs=100 Hz)"
+2,1594,0.664366373902133,0.07277289836888332,0.0056461731493099125,0.003136762860727729,26,27,"Tptime is censored to the T window [160,440] ms (T_WIN=(160,450) ms at fs=100 Hz)"
+3,1594,0.45294855708908405,0.07277289836888332,0.0006273525721455458,0.003136762860727729,23,27,"Tptime is censored to the T window [160,440] ms (T_WIN=(160,450) ms at fs=100 Hz)"
+4,1594,0.6455457967377666,0.07277289836888332,0.0012547051442910915,0.003136762860727729,25,27,"Tptime is censored to the T window [160,440] ms (T_WIN=(160,450) ms at fs=100 Hz)"

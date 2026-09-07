@@ -1,0 +1,13 @@
+# v1fix single-lead (lead-II) sanity variants on the fixed d1s lineage (Table S2).
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+encoder_ckpt: checkpoints/d1s_r3_s42_best.pt
+leadfield_rank: 3
+out_dir: runs/v1fix_round5
+train:
+  batch_size: 256
+  max_epochs: 120
+  lr_encoder: 0.001
+  early_stop_patience: 15
+  amp: true
+loss_weights: {rec: 1.0, slope: 0.2, qrs: 1.0, st: 0.5, t: 0.5, phys: 0.05, H: 0.0}

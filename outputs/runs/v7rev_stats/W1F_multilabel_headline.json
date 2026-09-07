@@ -1,0 +1,509 @@
+{
+  "task": "W1F multi-label PTB-XL, encoder frozen (zero-shot), seed-42 d1s_r3_s42",
+  "pool": {
+    "total_ptbxl": 21799,
+    "ge1_superclass": 21388,
+    "processed": 21387,
+    "dropped_by_beat_quality_gate": 1,
+    "clean_single_label_subset": 15709,
+    "split_train_val_test": [
+      17083,
+      2146,
+      2158
+    ]
+  },
+  "fold10_disposition": {
+    "fold10_total_ge1_superclass": 2158,
+    "fold10_cardinality_1": 1650,
+    "fold10_cardinality_2": 398,
+    "fold10_cardinality_3": 94,
+    "fold10_cardinality_4": 16,
+    "fold10_clean_single_label": 1594,
+    "fold10_excluded_by_clean_filter": 564,
+    "fold10_single_superclass_but_excluded": 56,
+    "fold10_unique_patients": 1877
+  },
+  "recon": {
+    "a_all_ge1_superclass": {
+      "n": 2158,
+      "median_nrmse_scaled": 0.4068,
+      "median_corr": 0.9069,
+      "nrmse_iqr": [
+        0.3574,
+        0.4896
+      ],
+      "corr_iqr": [
+        0.8606,
+        0.9295
+      ]
+    },
+    "b_multilabel_gt1": {
+      "n": 508,
+      "median_nrmse_scaled": 0.444,
+      "median_corr": 0.8788,
+      "nrmse_iqr": [
+        0.3644,
+        0.5764
+      ],
+      "corr_iqr": [
+        0.7916,
+        0.9201
+      ]
+    },
+    "single_superclass_reference": {
+      "n": 1650,
+      "median_nrmse_scaled": 0.4001,
+      "median_corr": 0.9116,
+      "nrmse_iqr": [
+        0.356,
+        0.4709
+      ],
+      "corr_iqr": [
+        0.8746,
+        0.9316
+      ]
+    },
+    "clean_subset_CONTROL": {
+      "n": 1594,
+      "median_nrmse_scaled": 0.4009,
+      "median_corr": 0.9115,
+      "nrmse_iqr": [
+        0.3571,
+        0.4705
+      ],
+      "corr_iqr": [
+        0.8754,
+        0.9315
+      ]
+    },
+    "excluded_by_clean_filter": {
+      "n": 564,
+      "median_nrmse_scaled": 0.4365,
+      "median_corr": 0.8817,
+      "nrmse_iqr": [
+        0.3579,
+        0.5764
+      ],
+      "corr_iqr": [
+        0.7937,
+        0.9233
+      ]
+    },
+    "cardinality_2": {
+      "n": 398,
+      "median_nrmse_scaled": 0.4399,
+      "median_corr": 0.8796,
+      "nrmse_iqr": [
+        0.3689,
+        0.5815
+      ],
+      "corr_iqr": [
+        0.7986,
+        0.9228
+      ]
+    },
+    "cardinality_3plus": {
+      "n": 110,
+      "median_nrmse_scaled": 0.4462,
+      "median_corr": 0.8736,
+      "nrmse_iqr": [
+        0.358,
+        0.5558
+      ],
+      "corr_iqr": [
+        0.762,
+        0.9159
+      ]
+    }
+  },
+  "recon_degradation": [
+    {
+      "comparison": "multi_gt1_minus_single",
+      "metric": "median_nrmse_scaled",
+      "n_a": 1650,
+      "n_b": 508,
+      "median_a": 0.4000701606273651,
+      "median_b": 0.4440124034881592,
+      "delta_b_minus_a": 0.043942242860794,
+      "delta_ci_lo": 0.0276839651167392,
+      "delta_ci_hi": 0.0608832657337188,
+      "mannwhitney_u": 495233.0,
+      "mannwhitney_p": 5.662278384632786e-10,
+      "bootstrap_unit": "patient",
+      "n_boot": 1000
+    },
+    {
+      "comparison": "multi_gt1_minus_single",
+      "metric": "median_corr",
+      "n_a": 1650,
+      "n_b": 508,
+      "median_a": 0.9115673053747526,
+      "median_b": 0.8787841575630894,
+      "delta_b_minus_a": -0.0327831478116632,
+      "delta_ci_lo": -0.0422529105883142,
+      "delta_ci_hi": -0.0244719810716691,
+      "mannwhitney_u": 304216.0,
+      "mannwhitney_p": 8.352581870912478e-21,
+      "bootstrap_unit": "patient",
+      "n_boot": 1000
+    },
+    {
+      "comparison": "excluded_minus_clean",
+      "metric": "median_nrmse_scaled",
+      "n_a": 1594,
+      "n_b": 564,
+      "median_a": 0.4009280204772949,
+      "median_b": 0.4364578425884247,
+      "delta_b_minus_a": 0.0355298221111297,
+      "delta_ci_lo": 0.0205696195363998,
+      "delta_ci_hi": 0.0512535914778709,
+      "mannwhitney_u": 514657.0,
+      "mannwhitney_p": 3.014536507462433e-07,
+      "bootstrap_unit": "patient",
+      "n_boot": 1000
+    },
+    {
+      "comparison": "excluded_minus_clean",
+      "metric": "median_corr",
+      "n_a": 1594,
+      "n_b": 564,
+      "median_a": 0.911517971808712,
+      "median_b": 0.8817122784850154,
+      "delta_b_minus_a": -0.0298056933236966,
+      "delta_ci_lo": -0.0390569201550152,
+      "delta_ci_hi": -0.0206254757147423,
+      "mannwhitney_u": 337658.0,
+      "mannwhitney_p": 1.4359609379164044e-18,
+      "bootstrap_unit": "patient",
+      "n_boot": 1000
+    }
+  ],
+  "auroc": {
+    "C0_theta_xgboost": {
+      "MACRO": {
+        "auroc": 0.8941,
+        "ci": [
+          0.885,
+          0.9023
+        ],
+        "auprc": 0.7624,
+        "auprc_ci": [
+          0.744,
+          0.7802
+        ],
+        "n_pos": 2792
+      },
+      "NORM": {
+        "auroc": 0.9161,
+        "ci": [
+          0.9031,
+          0.9274
+        ],
+        "auprc": 0.8854,
+        "auprc_ci": [
+          0.8617,
+          0.9034
+        ],
+        "n_pos": 963
+      },
+      "MI": {
+        "auroc": 0.87,
+        "ci": [
+          0.8507,
+          0.8875
+        ],
+        "auprc": 0.7272,
+        "auprc_ci": [
+          0.6846,
+          0.7652
+        ],
+        "n_pos": 550
+      },
+      "STTC": {
+        "auroc": 0.9174,
+        "ci": [
+          0.9031,
+          0.9307
+        ],
+        "auprc": 0.7869,
+        "auprc_ci": [
+          0.7435,
+          0.8237
+        ],
+        "n_pos": 521
+      },
+      "CD": {
+        "auroc": 0.8784,
+        "ci": [
+          0.8564,
+          0.8977
+        ],
+        "auprc": 0.7923,
+        "auprc_ci": [
+          0.7557,
+          0.8231
+        ],
+        "n_pos": 496
+      },
+      "HYP": {
+        "auroc": 0.8888,
+        "ci": [
+          0.8681,
+          0.9075
+        ],
+        "auprc": 0.6204,
+        "auprc_ci": [
+          0.565,
+          0.676
+        ],
+        "n_pos": 262
+      }
+    },
+    "C0_theta_logreg": {
+      "MACRO": {
+        "auroc": 0.8786,
+        "ci": [
+          0.8685,
+          0.8875
+        ],
+        "auprc": 0.7194,
+        "auprc_ci": [
+          0.7007,
+          0.7375
+        ],
+        "n_pos": 2792
+      },
+      "NORM": {
+        "auroc": 0.9078,
+        "ci": [
+          0.8945,
+          0.9199
+        ],
+        "auprc": 0.874,
+        "auprc_ci": [
+          0.8499,
+          0.8939
+        ],
+        "n_pos": 963
+      },
+      "MI": {
+        "auroc": 0.8513,
+        "ci": [
+          0.8293,
+          0.8711
+        ],
+        "auprc": 0.6836,
+        "auprc_ci": [
+          0.6366,
+          0.7261
+        ],
+        "n_pos": 550
+      },
+      "STTC": {
+        "auroc": 0.9016,
+        "ci": [
+          0.8853,
+          0.9154
+        ],
+        "auprc": 0.7264,
+        "auprc_ci": [
+          0.6813,
+          0.7712
+        ],
+        "n_pos": 521
+      },
+      "CD": {
+        "auroc": 0.8681,
+        "ci": [
+          0.8453,
+          0.8881
+        ],
+        "auprc": 0.7658,
+        "auprc_ci": [
+          0.7274,
+          0.8001
+        ],
+        "n_pos": 496
+      },
+      "HYP": {
+        "auroc": 0.864,
+        "ci": [
+          0.838,
+          0.8862
+        ],
+        "auprc": 0.5473,
+        "auprc_ci": [
+          0.4897,
+          0.6027
+        ],
+        "n_pos": 262
+      }
+    },
+    "C5_xgboost": {
+      "MACRO": {
+        "auroc": 0.8929,
+        "ci": [
+          0.8834,
+          0.9015
+        ],
+        "auprc": 0.7629,
+        "auprc_ci": [
+          0.7448,
+          0.78
+        ],
+        "n_pos": 2792
+      },
+      "NORM": {
+        "auroc": 0.918,
+        "ci": [
+          0.9052,
+          0.9295
+        ],
+        "auprc": 0.8886,
+        "auprc_ci": [
+          0.8659,
+          0.906
+        ],
+        "n_pos": 963
+      },
+      "MI": {
+        "auroc": 0.868,
+        "ci": [
+          0.8486,
+          0.8859
+        ],
+        "auprc": 0.7271,
+        "auprc_ci": [
+          0.6837,
+          0.7648
+        ],
+        "n_pos": 550
+      },
+      "STTC": {
+        "auroc": 0.9166,
+        "ci": [
+          0.9021,
+          0.9292
+        ],
+        "auprc": 0.791,
+        "auprc_ci": [
+          0.7512,
+          0.8268
+        ],
+        "n_pos": 521
+      },
+      "CD": {
+        "auroc": 0.8739,
+        "ci": [
+          0.8506,
+          0.8943
+        ],
+        "auprc": 0.7879,
+        "auprc_ci": [
+          0.7505,
+          0.8199
+        ],
+        "n_pos": 496
+      },
+      "HYP": {
+        "auroc": 0.8881,
+        "ci": [
+          0.8674,
+          0.9072
+        ],
+        "auprc": 0.6201,
+        "auprc_ci": [
+          0.564,
+          0.6762
+        ],
+        "n_pos": 262
+      }
+    },
+    "C5_logreg": {
+      "MACRO": {
+        "auroc": 0.8816,
+        "ci": [
+          0.8718,
+          0.8904
+        ],
+        "auprc": 0.7262,
+        "auprc_ci": [
+          0.7074,
+          0.7449
+        ],
+        "n_pos": 2792
+      },
+      "NORM": {
+        "auroc": 0.9132,
+        "ci": [
+          0.9005,
+          0.9247
+        ],
+        "auprc": 0.8803,
+        "auprc_ci": [
+          0.8581,
+          0.8994
+        ],
+        "n_pos": 963
+      },
+      "MI": {
+        "auroc": 0.8568,
+        "ci": [
+          0.8359,
+          0.8754
+        ],
+        "auprc": 0.6919,
+        "auprc_ci": [
+          0.6464,
+          0.732
+        ],
+        "n_pos": 550
+      },
+      "STTC": {
+        "auroc": 0.9081,
+        "ci": [
+          0.8929,
+          0.9214
+        ],
+        "auprc": 0.7529,
+        "auprc_ci": [
+          0.7095,
+          0.7924
+        ],
+        "n_pos": 521
+      },
+      "CD": {
+        "auroc": 0.8673,
+        "ci": [
+          0.8442,
+          0.8875
+        ],
+        "auprc": 0.7655,
+        "auprc_ci": [
+          0.7276,
+          0.7992
+        ],
+        "n_pos": 496
+      },
+      "HYP": {
+        "auroc": 0.8623,
+        "ci": [
+          0.8376,
+          0.884
+        ],
+        "auprc": 0.5405,
+        "auprc_ci": [
+          0.4823,
+          0.5983
+        ],
+        "n_pos": 262
+      }
+    }
+  },
+  "notes": [
+    "encoder + decoder frozen; only the one-vs-rest downstream classifier is fitted",
+    "frozen PTB-XL training robust scaler reused verbatim, never refit",
+    "split = official strat_fold 1-8 train / 9 val / 10 test",
+    "bootstrap = 1000 patient-clustered resamples, percentile 95% CI"
+  ]
+}

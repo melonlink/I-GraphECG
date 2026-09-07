@@ -1,0 +1,37 @@
+# D1-stable sweep run 'd1s_r3_s1': leadfield_rank=3, seed=1, scaled-space Einthoven
+# derivation, PLUS the encoder-init stabilisation (head_init_scale + grad_clip) ported from
+# experiments/robustness_universality/train_encoder_stable.py.
+# This is the STABLE arm. The stock-init arm (control group) is the existing d1_* runs; do not
+# overwrite those. Every other hyperparameter is byte-for-byte the D1 sweep setting.
+seed: 1
+scaled_derivation: true   # D1: correct affine coefficients for Einthoven in the scaled space
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+leadfield_rank: 3
+
+# --- stable arm ---
+head_init_scale: 0.01     # encoder head: last-layer weights x0.01, bias zeroed
+grad_clip: 1.0            # clip_grad_norm_ upper bound
+# abort_sat_threshold deliberately unset: this run needs the full curves, no early stop
+
+train:
+  batch_size: 128
+  max_epochs: 150
+  lr_encoder: 0.001
+  lr_decoder_global: 0.0005
+  weight_decay: 0.0001
+  early_stop_patience: 20
+  leadfield_warmup_epochs: 20
+  amp: true
+
+loss_weights:
+  rec: 1.0
+  slope: 0.2
+  qrs: 1.0
+  st: 0.5
+  t: 0.5
+  phys: 0.05      # 0.01 -> 0.05
+  H: 0.001
+
+out_dir: runs/d1s_r3_s1
+out_theta: data/processed/ptbxl_theta_d1s_r3_s1.npz
+out_ckpt: checkpoints/d1s_r3_s1_best.pt

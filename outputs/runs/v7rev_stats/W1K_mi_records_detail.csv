@@ -1,0 +1,8 @@
+cohort,record_id,mi_codes,all_codes,all_terms,n_target_superclasses,target_superclasses,has_HYP,has_OTHER,disposition
+georgia,E09161,164865005,164865005|426177001|59118001,myocardial infarction|sinus bradycardia|right bundle branch block,2,CD|MI,0,1,excluded_OTHER_code_present
+georgia,E10190,164865005,164865005|164931005|39732003|425623009|429622005|67741000119109,myocardial infarction|ST-T change / ST changes|left axis deviation|low QRS voltages|ST depression|(uncertain),2,MI|STTC,0,1,excluded_OTHER_code_present
+georgia,E03468,164865005,164865005|164934002|17338001|284470004,myocardial infarction|T wave abnormal|ventricular premature beats|premature atrial contraction,2,MI|STTC,0,1,excluded_OTHER_code_present
+georgia,E05943,164865005,164865005|164931005|67741000119109,myocardial infarction|ST-T change / ST changes|(uncertain),2,MI|STTC,0,1,excluded_OTHER_code_present
+georgia,E07593,164865005,164865005|428750005|445118002,myocardial infarction|nonspecific ST-T abnormality|left anterior fascicular block,3,CD|MI|STTC,0,0,excluded_multi_superclass
+georgia,E07826,164865005,164865005|164890007|251146004|428750005,myocardial infarction|atrial flutter|low amplitude ECG|nonspecific ST-T abnormality,2,MI|STTC,0,1,excluded_OTHER_code_present
+georgia,E08645,164865005,164865005|164934002|425623009|47665007|67741000119109,myocardial infarction|T wave abnormal|low QRS voltages|right axis deviation|(uncertain),2,MI|STTC,0,1,excluded_OTHER_code_present

@@ -1,0 +1,11 @@
+cohort,superclass,n_records_carrying_class_any,n_kept_relaxed_OTHER_tolerated,n_kept_strict_paper_filter,pct_of_cohort_strict,retention_pct_strict_over_any
+georgia,NORM,1752,1752,1752,16.94,100.0
+georgia,MI,7,0,0,0.0,0.0
+georgia,STTC,4620,3139,542,5.24,11.73
+georgia,CD,2248,1193,292,2.82,12.99
+georgia,TOTAL,8627,6084,2586,25.0,29.98
+cpsc_2018,NORM,918,918,918,13.35,100.0
+cpsc_2018,MI,0,0,0,0.0,
+cpsc_2018,STTC,1087,1031,971,14.12,89.33
+cpsc_2018,CD,2797,2741,2416,35.13,86.38
+cpsc_2018,TOTAL,4802,4690,4305,62.6,89.65

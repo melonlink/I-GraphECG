@@ -1,0 +1,79 @@
+{
+  "dataset": "cpsc2018",
+  "classifier": "C0 (theta-47, PTB-XL-trained, seed-42)",
+  "n": 4305,
+  "classes_present": [
+    "NORM",
+    "STTC",
+    "CD"
+  ],
+  "per_class": {
+    "NORM": {
+      "support": 918,
+      "precision": 0.4017,
+      "recall": 0.9281,
+      "f1": 0.5607,
+      "auroc": 0.8546,
+      "auprc": 0.5322
+    },
+    "MI": {
+      "support": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "auroc": null,
+      "auprc": null,
+      "note": "class absent in this dataset"
+    },
+    "STTC": {
+      "support": 971,
+      "precision": 0.4917,
+      "recall": 0.2739,
+      "f1": 0.3519,
+      "auroc": 0.7821,
+      "auprc": 0.4438
+    },
+    "CD": {
+      "support": 2416,
+      "precision": 0.9686,
+      "recall": 0.5877,
+      "f1": 0.7316,
+      "auroc": 0.8456,
+      "auprc": 0.9061
+    }
+  },
+  "macro_auroc_present": 0.8274,
+  "balanced_acc_present": 0.5966,
+  "confusion_matrix": [
+    [
+      852,
+      12,
+      33,
+      21
+    ],
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      640,
+      40,
+      266,
+      25
+    ],
+    [
+      629,
+      125,
+      242,
+      1420
+    ]
+  ],
+  "confusion_labels": [
+    "NORM",
+    "MI",
+    "STTC",
+    "CD"
+  ]
+}

@@ -1,0 +1,72 @@
+snomed_code,term,mapped_superclass,note
+# Study-defined SNOMED-CT -> 4-superclass map (anchored on PTB-XL SCP scheme).
+# mapped_superclass in {NORM,MI,STTC,CD,HYP,OTHER}; HYP=excluded, OTHER=dropped.
+# Covers all codes present in Georgia+CPSC2018; uncertain/rhythm -> OTHER (conservative).
+# This map is defined by THIS study; a known cross-database transfer noise source.
+164934002,T wave abnormal,STTC,
+428750005,nonspecific ST-T abnormality,STTC,
+426783006,sinus rhythm,NORM,
+426177001,sinus bradycardia,OTHER,
+111975006,prolonged QT interval,OTHER,
+427084000,sinus tachycardia,OTHER,
+164873001,left ventricular hypertrophy,HYP,
+164930006,ST elevation,STTC,
+39732003,left axis deviation,OTHER,
+425623009,low QRS voltages,OTHER,
+67741000119109,(uncertain),OTHER,code not confidently identified -> OTHER
+59931005,T wave inversion,STTC,
+270492004,first degree AV block,CD,
+284470004,premature atrial contraction,OTHER,
+164889003,atrial fibrillation,OTHER,
+59118001,right bundle branch block,CD,
+164917005,abnormal QRS,OTHER,
+427393009,sinus arrhythmia,OTHER,
+425419005,(uncertain),OTHER,code not confidently identified -> OTHER
+713426002,incomplete right bundle branch block,CD,
+251146004,low amplitude ECG,OTHER,
+17338001,ventricular premature beats,OTHER,
+426434006,anterior ischemia (nonspecific),OTHER,
+164909002,left bundle branch block,CD,
+698252002,nonspecific intraventricular conduction disorder,CD,
+164890007,atrial flutter,OTHER,
+445118002,left anterior fascicular block,CD,
+428417006,early repolarization,OTHER,
+164931005,ST-T change / ST changes,STTC,
+6374002,bundle branch block,CD,
+89792004,right ventricular hypertrophy,HYP,
+251120003,incomplete left bundle branch block,CD,
+47665007,right axis deviation,OTHER,
+233917008,AV block,CD,
+253352002,(uncertain),OTHER,code not confidently identified -> OTHER
+266249003,ventricular hypertrophy,HYP,
+195126007,(uncertain),OTHER,code not confidently identified -> OTHER
+251268003,(uncertain),OTHER,code not confidently identified -> OTHER
+251266004,(uncertain),OTHER,code not confidently identified -> OTHER
+164884008,premature ventricular contraction,OTHER,
+429622005,ST depression,STTC,
+426761007,supraventricular tachycardia,OTHER,
+713422000,atrial tachycardia,OTHER,
+713427006,complete right bundle branch block,CD,
+445211001,left posterior fascicular block,CD,
+195042002,second degree AV block,CD,
+426664006,intraventricular conduction delay,CD,
+253339007,(uncertain),OTHER,code not confidently identified -> OTHER
+251139008,(uncertain),OTHER,code not confidently identified -> OTHER
+164921003,(uncertain),OTHER,code not confidently identified -> OTHER
+27885002,complete heart block,CD,
+195101003,(uncertain),OTHER,code not confidently identified -> OTHER
+164865005,myocardial infarction,MI,
+426627000,bradycardia,OTHER,
+55930002,nonspecific change,OTHER,
+426995002,junctional escape,OTHER,
+426648003,junctional rhythm,OTHER,
+164896001,(uncertain),OTHER,code not confidently identified -> OTHER
+195080001,(uncertain),OTHER,code not confidently identified -> OTHER
+74390002,Wolff-Parkinson-White,OTHER,
+11157007,ventricular bigeminy,OTHER,
+195060002,ventricular tachycardia,OTHER,
+49578007,shortened PR interval,OTHER,
+251180001,(uncertain),OTHER,code not confidently identified -> OTHER
+81898007,ventricular escape,OTHER,
+413444003,acute myocardial ischemia,STTC,
+63593006,supraventricular premature beats,OTHER,

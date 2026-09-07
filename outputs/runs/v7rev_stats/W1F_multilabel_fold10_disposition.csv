@@ -1,0 +1,10 @@
+stratum,n
+fold10_total_ge1_superclass,2158
+fold10_cardinality_1,1650
+fold10_cardinality_2,398
+fold10_cardinality_3,94
+fold10_cardinality_4,16
+fold10_clean_single_label,1594
+fold10_excluded_by_clean_filter,564
+fold10_single_superclass_but_excluded,56
+fold10_unique_patients,1877

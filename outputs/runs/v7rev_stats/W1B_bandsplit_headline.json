@@ -1,0 +1,30 @@
+{
+ "band_A_faithful": [
+  "Tpeak_maxabs",
+  "Tarea_mean",
+  "Tabsarea_mean",
+  "Tlowamp_mean"
+ ],
+ "band_C_not_recovered": [
+  "Tasym_mean",
+  "T_sign_discordance_rate"
+ ],
+ "delta_macro_auroc_vs_C5": {
+  "C5_obsA_minus_C5": {
+   "mean": 0.0018032192248644608,
+   "sd_ddof1": 0.0009303780069646024,
+   "n_seeds_ci_excludes_0": 2,
+   "n_seeds_positive": 5
+  },
+  "C5_obsC_minus_C5": {
+   "mean": 0.0023777593088367467,
+   "sd_ddof1": 0.0006606224502372082,
+   "n_seeds_ci_excludes_0": 1,
+   "n_seeds_positive": 5
+  }
+ },
+ "per_descriptor_delta": {
+  "band_A_4_descriptors": 0.0004508048062161152,
+  "band_C_2_descriptors": 0.0011888796544183733
+ }
+}

@@ -1,0 +1,469 @@
+# The published lineage, declared once.
+#
+# Every fact here used to live in a filename, a module-level constant or a sentence of
+# prose. Three of those spellings disagreed with each other: scripts/45 and 47 resolved
+# their checkpoints to the SUPERSEDED eikonal_B line in both branches of ckpt_of(), and
+# only a lambda inside 54_cd_descriptors.py -- a different file -- redirected them to the
+# lineage the paper reports. The shipped default was wrong; the correct value lived in a
+# monkey patch. A reader running the script directly would have computed, in silence,
+# numbers from a model the paper does not use.
+#
+# Read through igraphecg.repro.lineage. Nothing else may name a checkpoint file.
+
+lineage: d1s_r3
+description: >-
+  rank-3 lead field, scaled-space Einthoven derivation, stabilized head initialisation
+  (head_init_scale 0.01, grad_clip 1.0). Five seeds; 42 is the locked model.
+seeds: [42, 1, 2, 3, 4]
+
+# sha256 is checked on first use. A file that is not the locked weight fails loudly
+# instead of quietly producing different numbers.
+checkpoints:
+  42:
+    path: checkpoints/d1s_r3_s42_best.pt
+    sha256: 1957b20d69947ec8076c43086145c69b18f849313a351b14b5380a68e22eae1f
+    bytes: 8868037
+  1:
+    path: checkpoints/d1s_r3_s1_best.pt
+    sha256: c1cd241a809a053d40928ecb48c71df524786f6dea33608d94d5e9178341b54c
+    bytes: 8868037
+  2:
+    path: checkpoints/d1s_r3_s2_best.pt
+    sha256: e34a34f5e908cf31a853a1fae9b583522f96427801cd601c06e81ce13de62e9b
+    bytes: 8868037
+  3:
+    path: checkpoints/d1s_r3_s3_best.pt
+    sha256: cba5352cdfede8d2013587f485d90bb28aaf7d2eed1e53779d93ce9446c584fe
+    bytes: 8868037
+  4:
+    path: checkpoints/d1s_r3_s4_best.pt
+    sha256: f28b0b3fff15057acdf45a742870ec596e2de79da25e5ea4b834b2e3af7090bf
+    bytes: 8868037
+
+# Run directories of the published lineage, output-root relative, each with the files it
+# holds. Keyed, so that a directory belongs to the lineage by declaration rather than by
+# whether its name happens to match a pattern -- which is how the pre-v1fix phase1 runs
+# and the rank 5/6/8 sweeps kept being mistaken for published ones.
+#
+# The file lists are the deposit: build_archive.py copies exactly these into
+# outputs/<dir>/ of the archive, so every shipped script finds its inputs at the same
+# output-root-relative path in both trees, and tests/test_output_registry.py checks the
+# lists against the tree it runs in. Before this, `files:` was a count of CSVs and the
+# archive shipped 6 of these 33 directories, under a results/ layout nothing read.
+runs:
+  - dir: runs/d1s_r3_s1/tables
+    files:
+      - epoch_log.csv
+      - reconstruction_by_class.csv
+      - reconstruction_by_lead.csv
+      - reconstruction_metrics.csv
+  - dir: runs/d1s_r3_s2/tables
+    files:
+      - epoch_log.csv
+      - reconstruction_by_class.csv
+      - reconstruction_by_lead.csv
+      - reconstruction_metrics.csv
+  - dir: runs/d1s_r3_s3/tables
+    files:
+      - epoch_log.csv
+      - reconstruction_by_class.csv
+      - reconstruction_by_lead.csv
+      - reconstruction_metrics.csv
+  - dir: runs/d1s_r3_s4/tables
+    files:
+      - epoch_log.csv
+      - reconstruction_by_class.csv
+      - reconstruction_by_lead.csv
+      - reconstruction_metrics.csv
+  - dir: runs/d1s_r3_s42/tables
+    files:
+      - epoch_log.csv
+      - reconstruction_by_class.csv
+      - reconstruction_by_lead.csv
+      - reconstruction_metrics.csv
+  - dir: runs/v1fix_byclass_s1/tables
+    files:
+      - byclass_optimal_DAE.csv
+      - global_top3_Doptimal.csv
+      - optimal_set_marginal_contrib.csv
+  - dir: runs/v1fix_byclass_s2/tables
+    files:
+      - byclass_optimal_DAE.csv
+      - global_top3_Doptimal.csv
+      - optimal_set_marginal_contrib.csv
+  - dir: runs/v1fix_byclass_s3/tables
+    files:
+      - byclass_optimal_DAE.csv
+      - global_top3_Doptimal.csv
+      - optimal_set_marginal_contrib.csv
+  - dir: runs/v1fix_byclass_s4/tables
+    files:
+      - byclass_optimal_DAE.csv
+      - global_top3_Doptimal.csv
+      - optimal_set_marginal_contrib.csv
+  - dir: runs/v1fix_byclass_s42/tables
+    files:
+      - byclass_optimal_DAE.csv
+      - global_top3_Doptimal.csv
+      - optimal_set_marginal_contrib.csv
+  - dir: runs/v1fix_leadclf
+    files:
+      - leadclf_m10.csv
+      - leadclf_m10_perclass.csv
+  - dir: runs/v1fix_ls8_s1/tables
+    files:
+      - best_sets_DAE_k234.csv
+      - bootstrap_gap_summary.csv
+      - bootstrap_lead_inclusion.csv
+      - bootstrap_top_winning_sets.csv
+      - crb_optimal_vs_clinical.csv
+      - greedy_D_8indep.csv
+      - optimal3_vs_clinical.csv
+  - dir: runs/v1fix_ls8_s2/tables
+    files:
+      - best_sets_DAE_k234.csv
+      - bootstrap_gap_summary.csv
+      - bootstrap_lead_inclusion.csv
+      - bootstrap_top_winning_sets.csv
+      - crb_optimal_vs_clinical.csv
+      - greedy_D_8indep.csv
+      - optimal3_vs_clinical.csv
+  - dir: runs/v1fix_ls8_s3/tables
+    files:
+      - best_sets_DAE_k234.csv
+      - bootstrap_gap_summary.csv
+      - bootstrap_lead_inclusion.csv
+      - bootstrap_top_winning_sets.csv
+      - crb_optimal_vs_clinical.csv
+      - greedy_D_8indep.csv
+      - optimal3_vs_clinical.csv
+  - dir: runs/v1fix_ls8_s4/tables
+    files:
+      - best_sets_DAE_k234.csv
+      - bootstrap_gap_summary.csv
+      - bootstrap_lead_inclusion.csv
+      - bootstrap_top_winning_sets.csv
+      - crb_optimal_vs_clinical.csv
+      - greedy_D_8indep.csv
+      - optimal3_vs_clinical.csv
+  - dir: runs/v1fix_ls8_s42/tables
+    files:
+      - best_sets_DAE_k234.csv
+      - bootstrap_gap_summary.csv
+      - bootstrap_lead_inclusion.csv
+      - bootstrap_top_winning_sets.csv
+      - crb_optimal_vs_clinical.csv
+      - greedy_D_8indep.csv
+      - optimal3_vs_clinical.csv
+  - dir: runs/v1fix_noise_fim
+    files:
+      - RESULT.md
+      - m4_leadset_ranking.csv
+      - m4_noise_variance.csv
+  - dir: runs/v1fix_oracle/tables
+    files:
+      - reconstruction_metrics.csv
+  - dir: runs/v1fix_phase1_s1/tables
+    files:
+      - crb_by_group_by_leadset.csv
+      - greedy3_vs_clinical.csv
+      - greedy_lead_selection.csv
+      - greedy_vs_exhaustive_gap.csv
+      - leadfield_singular_values.csv
+      - unobservable_subspace_group_energy.csv
+  - dir: runs/v1fix_phase1_s2/tables
+    files:
+      - crb_by_group_by_leadset.csv
+      - greedy3_vs_clinical.csv
+      - greedy_lead_selection.csv
+      - greedy_vs_exhaustive_gap.csv
+      - leadfield_singular_values.csv
+      - unobservable_subspace_group_energy.csv
+  - dir: runs/v1fix_phase1_s3/tables
+    files:
+      - crb_by_group_by_leadset.csv
+      - greedy3_vs_clinical.csv
+      - greedy_lead_selection.csv
+      - greedy_vs_exhaustive_gap.csv
+      - leadfield_singular_values.csv
+      - unobservable_subspace_group_energy.csv
+  - dir: runs/v1fix_phase1_s4/tables
+    files:
+      - crb_by_group_by_leadset.csv
+      - greedy3_vs_clinical.csv
+      - greedy_lead_selection.csv
+      - greedy_vs_exhaustive_gap.csv
+      - leadfield_singular_values.csv
+      - unobservable_subspace_group_energy.csv
+  - dir: runs/v1fix_phase1_s42/tables
+    files:
+      - crb_by_group_by_leadset.csv
+      - greedy3_vs_clinical.csv
+      - greedy_lead_selection.csv
+      - greedy_vs_exhaustive_gap.csv
+      - leadfield_singular_values.csv
+      - unobservable_subspace_group_energy.csv
+  - dir: runs/v1fix_r3_s1/tables
+    files:
+      - ap_ode_monodromy.csv
+      - compact_heuristic_features.csv
+      - feature_provenance.csv
+      - fim_effective_rank_by_class.csv
+      - fim_effective_rank_by_leadset.csv
+      - fim_parameter_identifiability.csv
+      - identifiability_by_param_group.csv
+      - least_identifiable_parameters.csv
+      - most_identifiable_parameters.csv
+      - paired_group_differences.csv
+      - parameter_correlation_pairs.csv
+      - repolarization_features_by_class.csv
+      - round2_reproduction_metrics.csv
+      - round3_classification_perclass.csv
+      - round3_classification_summary.csv
+      - round3_features.csv
+      - round3_xgboost_test_predictions.csv
+      - st_features_by_class.csv
+      - stability_features_by_class.csv
+      - stability_level.csv
+      - stability_proxy_values.csv
+      - top_20_coupled_parameter_pairs.csv
+  - dir: runs/v1fix_r3_s2/tables
+    files:
+      - ap_ode_monodromy.csv
+      - compact_heuristic_features.csv
+      - feature_provenance.csv
+      - fim_effective_rank_by_class.csv
+      - fim_effective_rank_by_leadset.csv
+      - fim_parameter_identifiability.csv
+      - identifiability_by_param_group.csv
+      - least_identifiable_parameters.csv
+      - most_identifiable_parameters.csv
+      - paired_group_differences.csv
+      - parameter_correlation_pairs.csv
+      - repolarization_features_by_class.csv
+      - round2_reproduction_metrics.csv
+      - round3_classification_perclass.csv
+      - round3_classification_summary.csv
+      - round3_features.csv
+      - round3_xgboost_test_predictions.csv
+      - st_features_by_class.csv
+      - stability_features_by_class.csv
+      - stability_level.csv
+      - stability_proxy_values.csv
+      - top_20_coupled_parameter_pairs.csv
+  - dir: runs/v1fix_r3_s3/tables
+    files:
+      - ap_ode_monodromy.csv
+      - compact_heuristic_features.csv
+      - feature_provenance.csv
+      - fim_effective_rank_by_class.csv
+      - fim_effective_rank_by_leadset.csv
+      - fim_parameter_identifiability.csv
+      - identifiability_by_param_group.csv
+      - least_identifiable_parameters.csv
+      - most_identifiable_parameters.csv
+      - paired_group_differences.csv
+      - parameter_correlation_pairs.csv
+      - repolarization_features_by_class.csv
+      - round2_reproduction_metrics.csv
+      - round3_classification_perclass.csv
+      - round3_classification_summary.csv
+      - round3_features.csv
+      - round3_xgboost_test_predictions.csv
+      - st_features_by_class.csv
+      - stability_features_by_class.csv
+      - stability_level.csv
+      - stability_proxy_values.csv
+      - top_20_coupled_parameter_pairs.csv
+  - dir: runs/v1fix_r3_s4/tables
+    files:
+      - ap_ode_monodromy.csv
+      - compact_heuristic_features.csv
+      - feature_provenance.csv
+      - fim_effective_rank_by_class.csv
+      - fim_effective_rank_by_leadset.csv
+      - fim_parameter_identifiability.csv
+      - identifiability_by_param_group.csv
+      - least_identifiable_parameters.csv
+      - most_identifiable_parameters.csv
+      - paired_group_differences.csv
+      - parameter_correlation_pairs.csv
+      - repolarization_features_by_class.csv
+      - round2_reproduction_metrics.csv
+      - round3_classification_perclass.csv
+      - round3_classification_summary.csv
+      - round3_features.csv
+      - round3_xgboost_test_predictions.csv
+      - st_features_by_class.csv
+      - stability_features_by_class.csv
+      - stability_level.csv
+      - stability_proxy_values.csv
+      - top_20_coupled_parameter_pairs.csv
+  - dir: runs/v1fix_r3_s42/tables
+    files:
+      - ap_ode_monodromy.csv
+      - compact_heuristic_features.csv
+      - feature_provenance.csv
+      - fim_effective_rank_by_class.csv
+      - fim_effective_rank_by_leadset.csv
+      - fim_parameter_identifiability.csv
+      - identifiability_by_param_group.csv
+      - least_identifiable_parameters.csv
+      - most_identifiable_parameters.csv
+      - paired_group_differences.csv
+      - parameter_correlation_pairs.csv
+      - repolarization_features_by_class.csv
+      - round2_reproduction_metrics.csv
+      - round3_classification_perclass.csv
+      - round3_classification_summary.csv
+      - round3_features.csv
+      - round3_xgboost_test_predictions.csv
+      - st_features_by_class.csv
+      - stability_features_by_class.csv
+      - stability_level.csv
+      - stability_proxy_values.csv
+      - top_20_coupled_parameter_pairs.csv
+  - dir: runs/v1fix_round5/tables
+    files:
+      - single_lead_sanity.csv
+  # runs/v7rev_stats lists what the shipped W1 generators write. Thirteen files that used to be
+  # listed are not: ten *_VERIFY_* re-check records, a run log, and two early-format dumps
+  # (W1G_structural_couplings.csv, W1K_details.json) came from audit scripts that do not ship.
+  # They stay in the repository's frozen tree as history; the deposit carries only what its code produces.
+  - dir: runs/v7rev_stats
+    files:
+      - W1A_controls.json
+      - W1A_per_record_recon_s1.csv
+      - W1A_per_record_recon_s2.csv
+      - W1A_per_record_recon_s3.csv
+      - W1A_per_record_recon_s4.csv
+      - W1A_per_record_recon_s42.csv
+      - W1A_summary.csv
+      - W1A_window_by_lead.csv
+      - W1A_window_context.csv
+      - W1B_bandsplit_headline.json
+      - W1B_controls_and_class_association.json
+      - W1B_headline.json
+      - W1B_recon_vs_trueprob_spearman.csv
+      - W1B_strata_pooled.csv
+      - W1B_strata_within_class.csv
+      - W1B_substitution_oracle.csv
+      - W1C_Tptime_window_saturation.csv
+      - W1C_controls.json
+      - W1C_descriptor_fidelity.csv
+      - W1C_domain_rollup.csv
+      - W1C_headline.json
+      - W1C_summary.csv
+      - W1F_multilabel_auroc.csv
+      - W1F_multilabel_controls.csv
+      - W1F_multilabel_fold10_disposition.csv
+      - W1F_multilabel_headline.json
+      - W1F_multilabel_numeric_provenance.csv
+      - W1F_multilabel_perrecord.csv
+      - W1F_multilabel_recon.csv
+      - W1F_multilabel_recon_delta.csv
+      - W1G_corr_s1.npy
+      - W1G_corr_s2.npy
+      - W1G_corr_s3.npy
+      - W1G_corr_s4.npy
+      - W1G_corr_s42.npy
+      - W1G_crb_identity_check.csv
+      - W1G_crb_per_parameter_by_leadset.csv
+      - W1G_crb_verification.csv
+      - W1G_diagnostics.json
+      - W1G_group_relabelling_diagnostic.csv
+      - W1G_group_scores_by_seed.csv
+      - W1G_headline.json
+      - W1G_parameter_table.csv
+      - W1G_parameter_table_compact.csv
+      - W1G_score_recheck.csv
+      - W1G_score_s1.npy
+      - W1G_score_s2.npy
+      - W1G_score_s3.npy
+      - W1G_score_s4.npy
+      - W1G_score_s42.npy
+      - W1G_seed_stable_coupling_pairs.csv
+      - W1G_tier_rules.csv
+      - W1G_tier_threshold_sensitivity.csv
+      - W1G_within_group_collinearity.csv
+      - W1J_all56_logdet.csv
+      - W1J_bootstrap_lead_inclusion.csv
+      - W1J_chance_reference.json
+      - W1J_cross_noise_model.csv
+      - W1J_identity_control_check.csv
+      - W1J_leadsets_by_noise_model.csv
+      - W1J_margin_bootstrap_summary.csv
+      - W1J_per_lead_noise.csv
+      - W1J_precision_audit.csv
+      - W1K_cohort_disposition.csv
+      - W1K_controls.csv
+      - W1K_filter_sensitivity.csv
+      - W1K_full_code_histogram.json
+      - W1K_mi_attrition.csv
+      - W1K_mi_records_detail.csv
+      - W1K_sttc_code_histogram.csv
+      - W1M_counterfactual_residuals.csv
+      - W1M_fim_difference.json
+      - W1M_scaled_coefficients.csv
+      - W1O_headline.json
+      - W1O_locked_model_fim_effrank.json
+      - W1O_teacherfree_contrast.csv
+      - W1O_teacherfree_contrast.json
+      - W1O_teacherfree_leadsets.csv
+      - W1O_teacherfree_leadsets_perclass.csv
+      - W1O_teacherfree_summary.csv
+      - w1d_mi_operating_points.csv
+      - w1e_mi_subclass_by_convention.csv
+      - w1e_prior_full.npy
+      - w1e_record_disposition.csv
+      - w1e_retention_by_class.csv
+      - w1h_paired_ablation_fdr.csv
+      - w1i_group_auroc_five_seed.csv
+      - w1i_mean_confusion.csv
+      - w1i_sd_confusion.csv
+      - w1l_class_matched_variants.csv
+  # Table 1's black-box baselines (scripts 20 and 21). Their metrics had no stored source
+  # until 2026-09-06; both scripts reproduce the printed values exactly (0.9200, 0.9241).
+  - dir: tables
+    files:
+      - baseline_cnn_metrics.csv
+      - baseline_cnn_metrics_perclass.csv
+      - baseline_features_metrics.csv
+      - baseline_features_metrics_perclass.csv
+  - dir: v1fix/external
+    files:
+      - cls_cpsc2018.json
+      - cls_georgia.json
+      - ext_cpsc2018.json
+      - ext_cpsc2018.theta.npz
+      - ext_georgia.json
+      - ext_georgia.theta.npz
+      - manifest_cpsc2018.csv
+      - manifest_georgia.csv
+  - dir: v1fix/runs/cd_descriptors
+    files:
+      - cd_candidates_byseed.csv
+      - cd_candidates_consistency.csv
+  - dir: v1fix/runs/fig34
+    files:
+      - figure_identifiability.pdf
+      - figure_identifiability.png
+      - leadset_effrank_supp.csv
+      - panelA_degradation.csv
+      - panelB_group_identifiability.csv
+      - panelC_marginal.csv
+      - panelC_top3.csv
+# Superseded lineages. Named so that a gate can recognise them, and so that the one
+# legitimate read of a superseded weight -- W1M_scaled_derivation, which compares the
+# two derivation conventions and therefore needs the pre-change model -- is a declared
+# exception rather than an oversight.
+superseded:
+  lineages: [eikonal, eikonal_B, seed_sweep, d1s_r5, d1s_r6, d1s_r8, ranksens, limbctl, c3]
+  permitted_reads:
+    - script: scripts/stats/W1M_scaled_derivation.py
+      artifact: checkpoints/graphmono_encoder_eikonal_B_best.pt
+      sha256: cfce9fd481bdf58776fd44e0120dddde28fc7695c845f42201f48805e056bbd9
+      bytes: 8867973
+      reason: >-
+        evidence that the scaled derivation changes training, so the comparison needs
+        the pre-change lineage. A read, never a reported number.

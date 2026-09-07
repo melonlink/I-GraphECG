@@ -1,0 +1,131 @@
+{
+  "task": "W1C",
+  "n_pairs": 37,
+  "n_test_fold10": 1594,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "n_r_ge_090": 10,
+  "n_r_080_090": 11,
+  "n_r_050_080": 2,
+  "n_r_lt_050": 14,
+  "best": {
+    "pair": "STslope_std",
+    "r_mean": 0.951503820779788,
+    "r_sd": 0.0066350569603403
+  },
+  "worst": {
+    "pair": "Tptime_maxabs",
+    "r_mean": 0.0700246057330667,
+    "r_sd": 0.0341712353220184
+  },
+  "control_T_sign_discordance_rate": {
+    "r_five_seed_mean": 0.3703688108201445,
+    "r_five_seed_sd": 0.1246024316053541,
+    "r_seed42": 0.4570804825266158
+  },
+  "middle_band_pairs": [
+    "Tlowamp_range",
+    "Tlowamp_std"
+  ],
+  "amplitude_pairs_in_low_band": [
+    "Tlowamp_maxabs"
+  ],
+  "bands_empirical": {
+    "definition": "largest gap in the sorted five-seed mean-r ladder is 0.725->0.485 (0.2404) between Tlowamp_range and Tlowamp_maxabs; second largest 0.485->0.370 (0.1144). Bands: A r>=0.80, B 0.45<=r<0.80, C r<0.45.",
+    "A_faithful": {
+      "n": 21,
+      "pairs": [
+        "STmean_maxabs",
+        "STmean_mean",
+        "STmean_range",
+        "STmean_std",
+        "STslope_maxabs",
+        "STslope_mean",
+        "STslope_range",
+        "STslope_std",
+        "Tabsarea_maxabs",
+        "Tabsarea_mean",
+        "Tabsarea_range",
+        "Tabsarea_std",
+        "Tarea_maxabs",
+        "Tarea_mean",
+        "Tarea_range",
+        "Tarea_std",
+        "Tlowamp_mean",
+        "Tpeak_maxabs",
+        "Tpeak_mean",
+        "Tpeak_range",
+        "Tpeak_std"
+      ],
+      "r_range": [
+        0.8239418526771726,
+        0.951503820779788
+      ]
+    },
+    "B_partial": {
+      "n": 3,
+      "pairs": [
+        "Tlowamp_maxabs",
+        "Tlowamp_range",
+        "Tlowamp_std"
+      ],
+      "r_range": [
+        0.4847538461459257,
+        0.7758934279168026
+      ]
+    },
+    "C_not_recovered": {
+      "n": 13,
+      "pairs": [
+        "T_sign_discordance_rate",
+        "Tasym_maxabs",
+        "Tasym_mean",
+        "Tasym_range",
+        "Tasym_std",
+        "Tptime_maxabs",
+        "Tptime_mean",
+        "Tptime_range",
+        "Tptime_std",
+        "Twidth_maxabs",
+        "Twidth_mean",
+        "Twidth_range",
+        "Twidth_std"
+      ],
+      "r_range": [
+        0.0700246057330667,
+        0.3703688108201445
+      ]
+    }
+  },
+  "dichotomy_caveat": "Not a clean amplitude-vs-timing split. All 20 voltage-scale pairs (Tpeak/Tarea/Tabsarea/STmean/STslope) sit at r>=0.824, and all 13 timing/shape/polarity pairs at r<=0.370, but the 4-member Tlowamp family - a monotone saturating transform of |T peak| amplitude, exp(-|Tpeak|/0.2) - straddles the divide: Tlowamp_mean 0.891 (band A) while Tlowamp_maxabs 0.485 (band B, only 0.11 above the polarity descriptor). Tlowamp spans 0.41 in r across its own four cross-lead aggregations, wider than any voltage family (widest voltage family span is STmean, 0.086).",
+  "Tptime_window_censoring": {
+    "frac_recon_Tptime_maxabs_pinned_at_440ms_mean": 0.5603513174404016,
+    "frac_recon_Tptime_maxabs_pinned_at_440ms_sd": 0.09124950451671256,
+    "frac_obs_Tptime_maxabs_pinned_at_440ms": 0.0727728983688833,
+    "note": "T_WIN=(160,450) ms at fs=100 Hz gives a discrete grid 160..440 ms. The reconstruction pins Tptime_maxabs at the 440 ms edge in 56.0+-9.1% of fold-10 records vs 7.3% for the observation, so the near-zero r=0.070 for Tptime_maxabs is partly a ceiling/censoring artifact of the descriptor definition, not purely a reconstruction failure."
+  },
+  "domain_rollup_mean_r": {
+    "voltage_n20": 0.8955,
+    "voltage_derived_Tlowamp_n4": 0.7193,
+    "polarity_n1": 0.3704,
+    "shape_n8": 0.2696,
+    "timing_n4": 0.2301
+  },
+  "within_family_r_span": {
+    "Tlowamp": 0.4067,
+    "Tptime": 0.2897,
+    "Twidth": 0.2053,
+    "Tasym": 0.1361,
+    "STmean": 0.0863,
+    "Tabsarea": 0.0608,
+    "STslope": 0.0511,
+    "Tpeak": 0.0358,
+    "Tarea": 0.0335,
+    "T_sign_discordance_rate": 0.0
+  }
+}

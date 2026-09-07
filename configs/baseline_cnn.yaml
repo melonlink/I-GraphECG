@@ -1,0 +1,23 @@
+# B1 ResNet1D baseline
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+
+model:
+  widths: [32, 64, 128, 256]
+  dropout: 0.3
+
+train:
+  batch_size: 128
+  epochs: 60
+  lr: 0.001
+  weight_decay: 0.0001
+  optimizer: adamw
+  early_stop_patience: 12
+  class_weighted_loss: true   # counteract class imbalance
+  num_workers: 0
+  amp: true                   # mixed precision (GPU)
+
+out_ckpt: checkpoints/baseline_cnn_best.pt
+out_metrics: tables/baseline_cnn_metrics.csv
+out_cm: figures/confusion_matrix_cnn.png
+out_loss_curve: figures/baseline_cnn_loss.png

@@ -1,0 +1,19 @@
+cohort,quantity,n_records,pct_of_MI_coded,pct_of_cohort,note
+georgia,n_records_with_any_MI_mapped_code,7,100.0,0.068,164865005 'myocardial infarction' is the ONLY MI-mapped SNOMED code in the study map
+georgia,excluded_HYP_overlap,0,0.0,0.0,attrition precedence 1
+georgia,excluded_OTHER_code_present,6,85.71,0.058,attrition precedence 2: co-occurring rhythm/axis/etc code maps to OTHER
+georgia,excluded_multi_superclass,1,14.29,0.01,attrition precedence 3: MI plus another of the four superclasses
+georgia,kept_clean_single_label_MI,0,0.0,0.0,survives the clean filter
+georgia,overlap_any_HYP,0,0.0,0.0,non-exclusive overlap count
+georgia,overlap_any_OTHER,6,85.71,0.058,non-exclusive overlap count
+georgia,overlap_any_second_target_superclass,7,100.0,0.068,non-exclusive overlap count
+georgia,co_occurring_superclass_CD,2,28.57,0.019,non-exclusive overlap count
+georgia,co_occurring_superclass_STTC,6,85.71,0.058,non-exclusive overlap count
+cpsc_2018,n_records_with_any_MI_mapped_code,0,,0.0,164865005 'myocardial infarction' is the ONLY MI-mapped SNOMED code in the study map
+cpsc_2018,excluded_HYP_overlap,0,,0.0,attrition precedence 1
+cpsc_2018,excluded_OTHER_code_present,0,,0.0,attrition precedence 2: co-occurring rhythm/axis/etc code maps to OTHER
+cpsc_2018,excluded_multi_superclass,0,,0.0,attrition precedence 3: MI plus another of the four superclasses
+cpsc_2018,kept_clean_single_label_MI,0,,0.0,survives the clean filter
+cpsc_2018,overlap_any_HYP,0,,0.0,non-exclusive overlap count
+cpsc_2018,overlap_any_OTHER,0,,0.0,non-exclusive overlap count
+cpsc_2018,overlap_any_second_target_superclass,0,,0.0,non-exclusive overlap count

@@ -1,0 +1,18 @@
+control,expected,observed,ok,max_abs_diff,frozen_sd
+pool_ge1_superclass_processed,21388,21387,True,,
+pool_fold10,2158,2158,True,,
+clean_records_present,15709,15709,True,,
+frozen_scaler_reused_not_refit,bit-identical,bit-identical,True,,
+clean_median_beats_bit_identical,identical,identical,True,,
+clean_test_n,1594.0,1594.0,True,,
+clean_test_median_nrmse_scaled,0.4009280204772949,0.4009280204772949,True,,
+clean_test_median_corr,0.911517971808712,0.9115179718087121,True,,
+theta_batching_matched_max_abs_diff,<1e-5 (float32 exact),1.1920166009815603e-07,True,,
+theta_pooled_max_abs_diff,<1e-3,0.00040911000366206096,True,,
+descriptor_theta_0_max_abs_diff_over_sd,<0.01,0.0014389395937253835,True,5.257756042487127e-06,0.003653910188734824
+descriptor_theta_23_max_abs_diff_over_sd,<0.01,0.0015605219193701883,True,3.6019041290275e-06,0.0023081406831383655
+descriptor_ST_projected_L2_max_abs_diff_over_sd,<0.01,0.0031457660036527855,True,0.0001271676308865488,0.04042501277554812
+descriptor_Sync_rep_max_abs_diff_over_sd,<0.01,0.0016909543084184335,True,0.00019377117294311352,0.11459279057891851
+descriptor_D_act_max_abs_diff_over_sd,<0.01,0.003136990828690338,True,6.04994506836487e-06,0.0019285823257859703
+descriptor_Tend_disp_max_abs_diff_over_sd,<0.01,0.001388859920610979,True,0.00010845490928651502,0.07808916340447364
+m_proxy_max_abs_diff_over_sd,<0.01,0.0025873392464373485,True,0.006380929027048676,2.4662127457135483

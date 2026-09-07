@@ -1,0 +1,7 @@
+key,value
+dataset,cpsc2018
+n_scanned,6877
+n_kept,4305
+kept_by_class,"{'CD': 2416, 'NORM': 918, 'STTC': 971}"
+drop_reasons,{'label_other_or_multilabel_or_HYP': 2572}
+seconds_preprocess,52.4
