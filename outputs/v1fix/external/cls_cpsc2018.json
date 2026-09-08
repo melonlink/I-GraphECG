@@ -43,6 +43,11 @@
     }
   },
   "macro_auroc_present": 0.8274,
+  "macro_auroc_present_ci95": [
+    0.8182,
+    0.8371
+  ],
+  "macro_auroc_present_ci95_note": "percentile bootstrap, 1000 usable record-level resamples of 1000, numpy default_rng(42)",
   "balanced_acc_present": 0.5966,
   "confusion_matrix": [
     [

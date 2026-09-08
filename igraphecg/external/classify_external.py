@@ -71,6 +71,24 @@ def main():
     # macro over present classes with positives
     aurocs = [v["auroc"] for v in res["per_class"].values() if v["auroc"] is not None]
     res["macro_auroc_present"] = round(float(np.mean(aurocs)), 4) if aurocs else None
+    # 95% percentile CI of that macro-AUROC: 1000 record-level bootstrap resamples (the external
+    # cohorts carry no patient identifier), the interval Table 8 prints. Resamples in which a
+    # present class loses all its positives or negatives are skipped, so the count can fall a
+    # little short of 1000; the field records how many were usable.
+    scored = [c for c in present if 0 < (y == c).sum() < len(y)]
+    if scored:
+        rng = np.random.default_rng(42)
+        boot = []
+        for _ in range(1000):
+            idx = rng.integers(0, len(y), len(y))
+            yb = y[idx]
+            if all(0 < (yb == c).sum() < len(yb) for c in scored):
+                boot.append(float(np.mean([roc_auc_score((yb == c).astype(int), prob[idx, c])
+                                           for c in scored])))
+        lo, hi = np.percentile(boot, [2.5, 97.5])
+        res["macro_auroc_present_ci95"] = [round(float(lo), 4), round(float(hi), 4)]
+        res["macro_auroc_present_ci95_note"] = (f"percentile bootstrap, {len(boot)} usable record-level "
+                                                "resamples of 1000, numpy default_rng(42)")
     res["balanced_acc_present"] = round(float(np.mean([res["per_class"][SUPERCLASSES[c]]["recall"]
                                                        for c in present])), 4)
     res["confusion_matrix"] = confusion_matrix(y, pred, labels=list(range(4))).tolist()

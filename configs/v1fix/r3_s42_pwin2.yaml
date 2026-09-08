@@ -1,0 +1,19 @@
+# Analysis chain on the p = 2.0 P-window control encoder.
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+patient_metadata: ptbxl_database.csv
+encoder_ckpt: checkpoints/d1s_r3_s42_pwin2_best.pt
+leadfield_rank: 3
+c_rep: 2.0
+interpret_split: test
+out_dir: runs/v1fix_pwin2_s42_analysis
+fim_per_class: 100
+noise_per_class: 100
+noise_levels_mV:
+- 0.005
+- 0.01
+- 0.02
+- 0.05
+noise_K: 10
+ode_per_class: 20
+classifier: auto

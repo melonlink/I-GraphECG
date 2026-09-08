@@ -39,6 +39,8 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 "$PY" scripts/31_surrogate_encoder.py --config configs/d1s_r3_s42.yaml   # + s1..s4
 # Oracle capacity check (fixed decoder)
 "$PY" scripts/30_surrogate_oracle.py  --config configs/v1fix/oracle_s42.yaml
+# Like-for-like oracle on every fold-10 record (capacity ceiling, amortization gap, lead-field transfer)
+"$PY" scripts/32_oracle_fold10.py    --config configs/v1fix/oracle_fold10_s42.yaml
 
 # Main analysis chain, per seed S in {42,1,2,3,4}
 "$PY" scripts/40_descriptors.py       --config configs/v1fix/r3_sS.yaml
@@ -61,12 +63,12 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 "$PY" scripts/71_external_classification.py --theta <ext_georgia.theta.npz>  --dataset georgia  --out <cls_georgia.json>
 "$PY" scripts/71_external_classification.py --theta <ext_cpsc2018.theta.npz> --dataset cpsc2018 --out <cls_cpsc2018.json>
 
-# Multi-label zero-shot check (Section 3.9, Table S13): encoder and decoder frozen,
+# Multi-label zero-shot check (Section 3.8, Table S13): encoder and decoder frozen,
 # frozen PTB-XL scaler reused, only the one-vs-rest classifier fitted
 "$PY" scripts/11_prepare_ptbxl_multilabel.py
 "$PY" scripts/70_multilabel_eval.py
 
-# Revision statistics: Table 6 and Supplementary Tables S7-S13.
+# Revision statistics: Table 5 and Supplementary Tables S7-S17 and Notes S1-S4.
 # Each family is ordered; the _finalize / _summarize / _headline steps read what the
 # steps above them wrote. All of them write into <output root>/runs/v7rev_stats.
 "$PY" scripts/stats/W1A_per_record_recon.py        # per-record reconstruction, 5 seeds
@@ -77,17 +79,24 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 "$PY" scripts/stats/W1C_fidelity.py                # descriptor fidelity, recon vs observed -> Table S(descfidelity)
 "$PY" scripts/stats/W1C_bands.py
 "$PY" scripts/stats/W1C_finalize.py
-"$PY" scripts/stats/W1G_recompute_fim.py           # identifiability tiers -> Table 6
+"$PY" scripts/stats/W1G_recompute_fim.py           # identifiability tiers -> Table 5
 "$PY" scripts/stats/W1G_crb_leadset_check.py
 "$PY" scripts/stats/W1G_build_table.py
 "$PY" scripts/stats/W1G_diagnostics.py
 "$PY" scripts/stats/W1G_finalize.py
 "$PY" scripts/stats/W1J_leadsets_by_noise_model.py # exhaustive 56-subset selection -> Fig 7
 "$PY" scripts/stats/W1J_precision_audit.py
+"$PY" scripts/stats/W1R_design_fold_check.py     # design-fold check of the selection -> Table S18
 "$PY" scripts/stats/W1M_scaled_derivation.py       # scaled-space Einthoven coefficients
-"$PY" scripts/stats/W1O_teacherfree_leadsets.py    # teacher-free control, Section 3.7
+"$PY" scripts/stats/W1O_teacherfree_leadsets.py    # teacher-free control, Section 3.6
 "$PY" scripts/stats/W1O_summarize.py
 "$PY" scripts/stats/W1O_headline.py
+# Atrial-window control (Table S15): retrain seed 42 with the extra P-window loss at two weights,
+# run the analysis chain on each, then summarize. By-products are not registered.
+"$PY" scripts/31_surrogate_encoder.py --config configs/v1fix/d1s_r3_s42_pwin.yaml
+"$PY" scripts/31_surrogate_encoder.py --config configs/v1fix/d1s_r3_s42_pwin2.yaml
+for C in r3_s42_pwin r3_s42_pwin2; do for S in 40_descriptors 41_stability 42_classification 43_identifiability; do "$PY" scripts/$S.py --config configs/v1fix/$C.yaml; done; done
+"$PY" scripts/stats/W1P_pwindow_control.py
 "$PY" scripts/stats/W1F_headline.py                # fold-10 disposition + headline, after 70_multilabel_eval
 "$PY" scripts/stats/W1F_multilabel_numeric_provenance.py   # after 11_prepare_ptbxl_multilabel and 70_multilabel_eval
 "$PY" scripts/stats/w1_stats.py                    # MI operating points, paired ablation FDR
@@ -96,6 +105,7 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 # Challenge-2021 georgia/ and cpsc_2018/ directories (--challenge_dir or ECG_CHALLENGE_DIR).
 "$PY" scripts/stats/W1K_scan.py --challenge_dir <challenge_2021/training>
 "$PY" scripts/stats/W1K_addendum.py
+"$PY" scripts/stats/W1K_ptbxl_sttc.py                # PTB-XL column of Table S9 (needs the raw release)
 
 # Figures. One command regenerates every data figure the manuscript includes, into
 # <output root>/figures/. Figures 6-7 come from scripts/83_fig_identifiability_selection.py (the published
@@ -113,24 +123,29 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
   + black-box baselines `tables/baseline_features_metrics.csv`, `tables/baseline_cnn_metrics.csv`
   (scripts 20 and 21 on the script-10 cache; both reproduce the printed AUROCs exactly).
 - Table 2 / Figure 2: `runs/d1s_r3_s*/tables/reconstruction_*` (test split) + oracle run;
-  Figure 2 drawn by `scripts/80_fig_recon.py`.
-- Tables 3–4 / Figures 3–4: `runs/v1fix_r3_s*/tables/round3_classification_*`;
+  Figure 2 drawn by `scripts/80_fig_recon.py`. The like-for-like oracle of Section 3.1 (per-record
+  fits on all 1,594 fold-10 records, lead field refit / locked, half-split transfer) is
+  `runs/v1fix_oracle_fold10/tables/` from `scripts/32_oracle_fold10.py`.
+- Table 3 and Supplementary Table S4 / Figures 3–4: `runs/v1fix_r3_s*/tables/round3_classification_*`;
   Figures 3–4 drawn in `scripts/89_make_figures.py` from those tables.
-- Table 5 / Figure 5: `runs/v1fix_r3_s42/tables/round3_features.csv` (signed Cliff's
+- Table 4 / Figure 5: `runs/v1fix_r3_s42/tables/round3_features.csv` (signed Cliff's
   delta over five seeds) + `v1fix/runs/cd_descriptors` (QRS descriptor sweep).
-- Table 6: `runs/v7rev_stats/W1G_parameter_table.csv` (identifiability tiers of the 47
+- Table 5: `runs/v7rev_stats/W1G_parameter_table.csv` (identifiability tiers of the 47
   parameters; tier rule = across-seed minimum), from `scripts/stats/W1G_*`.
-- Table 7 / Figures 6–7: `runs/v1fix_phase1_s*` (effective rank, CRB, group energy),
+- Table 6 / Figures 6–7: `runs/v1fix_phase1_s*` (effective rank, CRB, group energy, lead-field singular values and
+  the ST-mode transmission gain `st_mode_gain.csv`),
   Figures 6–7 drawn by `scripts/83_fig_identifiability_selection.py` from `v1fix/runs/fig34` (47) and
   `runs/v7rev_stats/W1J_*` (scripts/stats);
   `runs/v1fix_ls8_s*` and `runs/v1fix_byclass_s*` (exhaustive selection, bootstrap),
   `runs/v1fix_leadclf` (lead-set-specific classification, patient-clustered bootstrap).
 - Table S13: `runs/v7rev_stats/W1F_multilabel_*.csv` (scripts 11 and 70;
   zero-shot multi-label, encoder frozen).
-- Tables 8–9: `v1fix/external/` (Georgia, CPSC2018; zero-shot) and
-  `runs/v7rev_stats/W1K_*` (cohort label composition).
-- Supplementary Tables S7–S13: `runs/v7rev_stats/` (w1d, w1e, W1K, W1M, W1G, W1C, W1F),
-  from `scripts/stats/` — see the command list in section 5.
+- Table 7 (both blocks): `v1fix/external/` (Georgia, CPSC2018; zero-shot) and
+  `runs/v7rev_stats/W1K_*` (cohort label composition; the PTB-XL column of Table S9 is
+  `W1K_ptbxl_sttc_families.csv`, computed over the 2,400 clean STTC records).
+- Supplementary Tables S7–S18: `runs/v7rev_stats/` (w1d, w1e, W1K, W1M, W1G, W1C, W1F, W1P, W1O, w1h, W1J, W1R) and
+  `runs/v1fix_oracle_fold10/` (S14), from `scripts/stats/` and `scripts/32_oracle_fold10.py` — see the
+  command list in section 5.
 
 > Cross-references to main-text numbers in this file and in `supplementary.tex` are
 > literal, not `\ref`. Re-check them whenever a float or subsection is inserted.

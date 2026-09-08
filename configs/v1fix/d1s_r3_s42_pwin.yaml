@@ -1,0 +1,31 @@
+# P-window control (Supplementary): the locked seed-42 recipe with one extra loss term, the
+# atrial window -300..-100 ms at weight 0.5 (the ST/T weight). Everything else identical to
+# d1s_r3_s42.yaml. Asks whether the surrogate can reconstruct the P wave when the objective
+# asks it to, and what that does to the ventricular windows, the atrial parameters and CD recall.
+seed: 42
+scaled_derivation: true
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+leadfield_rank: 3
+head_init_scale: 0.01
+grad_clip: 1.0
+train:
+  batch_size: 128
+  max_epochs: 150
+  lr_encoder: 0.001
+  lr_decoder_global: 0.0005
+  weight_decay: 0.0001
+  early_stop_patience: 20
+  leadfield_warmup_epochs: 20
+  amp: true
+loss_weights:
+  rec: 1.0
+  slope: 0.2
+  qrs: 1.0
+  st: 0.5
+  t: 0.5
+  phys: 0.05
+  H: 0.001
+  p: 0.5
+out_dir: runs/v1fix_pwin_s42
+out_theta: data/processed/ptbxl_theta_d1s_r3_s42_pwin.npz
+out_ckpt: checkpoints/d1s_r3_s42_pwin_best.pt

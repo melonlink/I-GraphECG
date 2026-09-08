@@ -1,27 +1,27 @@
 cohort,snomed_code,term,n_records_with_code_all,pct_of_records_with_any_STTC_code,n_records_with_code_among_clean_STTC,pct_of_clean_STTC_records
-cpsc_2018,164930006,ST elevation,0,0.0,0,0.0
-cpsc_2018,164931005,ST-T change / ST changes,220,20.24,187,19.26
+cpsc_2018,164930006,ST interval abnormal,0,0.0,0,0.0
+cpsc_2018,164931005,ST elevation,220,20.24,187,19.26
 cpsc_2018,164934002,T wave abnormal,0,0.0,0,0.0
 cpsc_2018,413444003,acute myocardial ischemia,0,0.0,0,0.0
 cpsc_2018,428750005,nonspecific ST-T abnormality,0,0.0,0,0.0
 cpsc_2018,429622005,ST depression,869,79.94,786,80.95
 cpsc_2018,59931005,T wave inversion,0,0.0,0,0.0
 cpsc_2018,ANY_STTC_CODE,"(union, record-level)",1087,100.0,971,100.0
-cpsc_2018,FAMILY_ST_T_nonspecific,428750005+164931005,220,20.24,187,19.26
+cpsc_2018,FAMILY_ST_T_nonspecific,428750005+164930006,0,0.0,0,0.0
 cpsc_2018,FAMILY_ST_depression,429622005,869,79.94,786,80.95
-cpsc_2018,FAMILY_ST_elevation,164930006,0,0.0,0,0.0
+cpsc_2018,FAMILY_ST_elevation,164931005,220,20.24,187,19.26
 cpsc_2018,FAMILY_T_wave,164934002+59931005,0,0.0,0,0.0
 cpsc_2018,FAMILY_ischemia,413444003,0,0.0,0,0.0
-georgia,164930006,ST elevation,992,21.47,8,1.48
-georgia,164931005,ST-T change / ST changes,134,2.9,14,2.58
+georgia,164930006,ST interval abnormal,992,21.47,8,1.48
+georgia,164931005,ST elevation,134,2.9,14,2.58
 georgia,164934002,T wave abnormal,2306,49.91,178,32.84
 georgia,413444003,acute myocardial ischemia,1,0.02,0,0.0
 georgia,428750005,nonspecific ST-T abnormality,1883,40.76,344,63.47
 georgia,429622005,ST depression,38,0.82,5,0.92
 georgia,59931005,T wave inversion,812,17.58,127,23.43
 georgia,ANY_STTC_CODE,"(union, record-level)",4620,100.0,542,100.0
-georgia,FAMILY_ST_T_nonspecific,428750005+164931005,1991,43.1,353,65.13
+georgia,FAMILY_ST_T_nonspecific,428750005+164930006,2599,56.26,351,64.76
 georgia,FAMILY_ST_depression,429622005,38,0.82,5,0.92
-georgia,FAMILY_ST_elevation,164930006,992,21.47,8,1.48
+georgia,FAMILY_ST_elevation,164931005,134,2.9,14,2.58
 georgia,FAMILY_T_wave,164934002+59931005,2746,59.44,267,49.26
 georgia,FAMILY_ischemia,413444003,1,0.02,0,0.0

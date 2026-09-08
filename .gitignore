@@ -33,3 +33,13 @@ Thumbs.db
 # By-products of the documented commands that the lock does not register
 /outputs/figures/
 /outputs/runs/*/figures/
+
+# By-products of the atrial-window control (scripts/stats/W1P_pwindow_control.py summarizes them;
+# only that summary is registered, like the teacher-free encoders of W1O)
+/outputs/runs/v1fix_pwin*/
+/outputs/checkpoints/*pwin*
+
+# Internal working documents of the revision (software review notes, Chinese reading copy with
+# translated reviewer reports); not part of the public archive
+/paper/coments/
+/paper/5_Chinese_Reading_Copy/

@@ -27,9 +27,9 @@ TARGETS = set(SUPERCLASSES)
 
 FAMILIES = {
     "FAMILY_T_wave":            ["164934002", "59931005"],                  # T abnormal, T inversion
-    "FAMILY_ST_elevation":      ["164930006"],
+    "FAMILY_ST_elevation":      ["164931005"],                              # ST elevation (CPSC2018 class STE)
     "FAMILY_ST_depression":     ["429622005"],
-    "FAMILY_ST_T_nonspecific":  ["428750005", "164931005"],                 # nonspec ST-T, ST-T change
+    "FAMILY_ST_T_nonspecific":  ["428750005", "164930006"],                 # nonspec ST-T, ST interval abnormal
     "FAMILY_ischemia":          ["413444003"],
 }
 

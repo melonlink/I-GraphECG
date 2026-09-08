@@ -1,0 +1,23 @@
+# Fold-10 oracle (scripts/32): per-record fits on every test record, like-for-like with the
+# encoder. Same losses, learning rates and early-stopping rule as oracle_s42.yaml; the epoch
+# budget is raised so the refit-H arm early-stops instead of hitting the cap still improving.
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+scaled_derivation: true
+
+max_epochs: 20000
+lr_theta: 0.02
+lr_H: 0.005
+early_stop_patience: 150
+
+leadfield_rank: 3
+loss_weights:
+  rec: 1.0
+  slope: 0.2
+  qrs: 1.0
+  st: 0.5
+  t: 0.5
+  phys: 0.05
+  H: 0.001
+
+out_dir: runs/v1fix_oracle_fold10

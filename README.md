@@ -17,7 +17,7 @@ MIT licensed. See `LICENSE`; the datasets are not covered by it and are not redi
 
 ## What reproduces without downloading anything
 
-Most of it. `outputs/` ships the 33 run directories that `paper.lock.yaml` lists -- 337
+Most of it. `outputs/` ships the 35 run directories that `paper.lock.yaml` lists -- 340
 files, every table the reported numbers come from, at the same output-root-relative
 paths the scripts read -- and `outputs/checkpoints/` the five trained encoders (seeds 42,
 1-4), so
@@ -53,7 +53,8 @@ PTB-XL and PTB are never read, so the external cohorts stay disjoint from traini
 igraphecg/          the package: models, evaluation, data handling, external cohorts
 scripts/            the pipeline, numbered in execution order (see REPRODUCIBILITY.md)
 configs/            YAML for each stage; configs/v1fix/ is the reported analysis lineage
-tests/              runs with no data present
+tests/              runs with no data present; test_manuscript_numbers.py checks every headline
+                    number of paper/ against the shipped output tables
 outputs/            the published run directories, exactly as paper.lock.yaml lists them,
                     plus checkpoints/ with the five trained encoders
 results/            patient_map.csv, the PTB-XL record-to-patient map the tests use
@@ -80,7 +81,7 @@ data/               empty; see data/README.md for what belongs where
   source has low observability in this parameterization.
 - The classifier is fitted on a clean single-label four-class subset, an easier task than
   the standard multi-label PTB-XL benchmark. Absolute AUROC is therefore not comparable to
-  leaderboard numbers; Section 3.9 quantifies the gap on the multi-label task.
+  leaderboard numbers; Section 3.8 quantifies the gap on the multi-label task.
 - Disease prediction degrades on external cohorts, and infarction could not be tested
   externally at all -- neither cohort labels it usably. Reconstruction and the
   lead-selection conclusions do transfer.

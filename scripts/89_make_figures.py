@@ -59,7 +59,7 @@ def _style():
 # ---- figures drawn here ---------------------------------------------------------------
 
 def fig_classification(out: Path) -> None:
-    """Figure 3: macro-AUROC by interpretable feature group, black-box ceilings dashed."""
+    """Figure 3: macro-AUROC by interpretable feature group, black-box references dashed."""
     import matplotlib.pyplot as plt
     import pandas as pd
     _style()
@@ -79,7 +79,7 @@ def fig_classification(out: Path) -> None:
     ax.axhline(0.9241, ls=":", color="#888", lw=1)
     ax.set_xlim(-0.45, 5.45)
     ax.text(5.32, 0.9192, "hand-crafted+XGB 0.9200", fontsize=6.8, color="#666", ha="right", va="top")
-    ax.text(5.32, 0.9249, "ResNet1D 0.9241 (black-box ceiling)", fontsize=6.8, color="#666",
+    ax.text(5.32, 0.9249, "ResNet1D 0.9241 (black-box reference)", fontsize=6.8, color="#666",
             ha="right", va="bottom")
     ax.set_xticks(list(x)); ax.set_xticklabels(labels)
     ax.set_ylim(0.87, 0.93)

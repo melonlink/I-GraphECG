@@ -81,7 +81,7 @@
       },
       "164930006": {
         "n": 992,
-        "term": "ST elevation",
+        "term": "ST interval abnormal",
         "mapped": "STTC"
       },
       "39732003": {
@@ -91,7 +91,7 @@
       },
       "425623009": {
         "n": 903,
-        "term": "low QRS voltages",
+        "term": "lateral ischaemia",
         "mapped": "OTHER"
       },
       "67741000119109": {
@@ -136,7 +136,7 @@
       },
       "425419005": {
         "n": 451,
-        "term": "(uncertain)",
+        "term": "inferior ischaemia",
         "mapped": "OTHER"
       },
       "713426002": {
@@ -186,7 +186,7 @@
       },
       "164931005": {
         "n": 134,
-        "term": "ST-T change / ST changes",
+        "term": "ST elevation",
         "mapped": "STTC"
       },
       "6374002": {
@@ -449,7 +449,7 @@
       },
       "164931005": {
         "n": 220,
-        "term": "ST-T change / ST changes",
+        "term": "ST elevation",
         "mapped": "STTC"
       }
     }

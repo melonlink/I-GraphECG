@@ -163,6 +163,11 @@ runs:
   - dir: runs/v1fix_oracle/tables
     files:
       - reconstruction_metrics.csv
+  - dir: runs/v1fix_oracle_fold10/tables
+    files:
+      - oracle_fold10_leadfield_transfer.csv
+      - oracle_fold10_metrics.csv
+      - oracle_fold10_per_record.csv
   - dir: runs/v1fix_phase1_s1/tables
     files:
       - crb_by_group_by_leadset.csv
@@ -170,6 +175,7 @@ runs:
       - greedy_lead_selection.csv
       - greedy_vs_exhaustive_gap.csv
       - leadfield_singular_values.csv
+      - st_mode_gain.csv
       - unobservable_subspace_group_energy.csv
   - dir: runs/v1fix_phase1_s2/tables
     files:
@@ -178,6 +184,7 @@ runs:
       - greedy_lead_selection.csv
       - greedy_vs_exhaustive_gap.csv
       - leadfield_singular_values.csv
+      - st_mode_gain.csv
       - unobservable_subspace_group_energy.csv
   - dir: runs/v1fix_phase1_s3/tables
     files:
@@ -186,6 +193,7 @@ runs:
       - greedy_lead_selection.csv
       - greedy_vs_exhaustive_gap.csv
       - leadfield_singular_values.csv
+      - st_mode_gain.csv
       - unobservable_subspace_group_energy.csv
   - dir: runs/v1fix_phase1_s4/tables
     files:
@@ -194,6 +202,7 @@ runs:
       - greedy_lead_selection.csv
       - greedy_vs_exhaustive_gap.csv
       - leadfield_singular_values.csv
+      - st_mode_gain.csv
       - unobservable_subspace_group_energy.csv
   - dir: runs/v1fix_phase1_s42/tables
     files:
@@ -202,6 +211,7 @@ runs:
       - greedy_lead_selection.csv
       - greedy_vs_exhaustive_gap.csv
       - leadfield_singular_values.csv
+      - st_mode_gain.csv
       - unobservable_subspace_group_energy.csv
   - dir: runs/v1fix_r3_s1/tables
     files:
@@ -401,6 +411,7 @@ runs:
       - W1K_full_code_histogram.json
       - W1K_mi_attrition.csv
       - W1K_mi_records_detail.csv
+      - W1K_ptbxl_sttc_families.csv
       - W1K_sttc_code_histogram.csv
       - W1M_counterfactual_residuals.csv
       - W1M_fim_difference.json
@@ -412,6 +423,8 @@ runs:
       - W1O_teacherfree_leadsets.csv
       - W1O_teacherfree_leadsets_perclass.csv
       - W1O_teacherfree_summary.csv
+      - W1P_pwindow_control.csv
+      - W1R_design_fold_check.csv
       - w1d_mi_operating_points.csv
       - w1e_mi_subclass_by_convention.csv
       - w1e_prior_full.npy

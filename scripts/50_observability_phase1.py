@@ -139,6 +139,10 @@ def main():
     # ST source mode = uniform over ventricular nodes; its transmitted gain = ||H @ e_ST|| (normalized)
     e_st = np.zeros(8); e_st[VENT] = 1.0; e_st /= np.linalg.norm(e_st)
     st_gain = float(np.linalg.norm(H @ e_st))
+    # persisted so that the manuscript's transmission-gain figure (Section 3.6) has a registered source
+    pd.DataFrame([{"mode": "uniform_ventricular_ST", "transmitted_gain": st_gain,
+                   "leading_sigma": float(Sh[0]), "gain_over_leading_sigma": st_gain / float(Sh[0]),
+                   "smallest_nonzero_sigma": float(Sh[2])}]).to_csv(out / "tables" / "st_mode_gain.csv", index=False)
     qrs_mode = np.zeros(8); qrs_mode[VENT] = 1.0; qrs_mode /= np.linalg.norm(qrs_mode)   # same support; use top sing for contrast
     print(f"[1.2] smallest FIM eigenvalues: {np.round(evals[:5],3)}  | unobs top group: {gdf.iloc[0]['param_group']} "
           f"({gdf.iloc[0]['unobs_energy_bottom5']:.2f})")

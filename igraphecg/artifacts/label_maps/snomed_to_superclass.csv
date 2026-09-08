@@ -10,9 +10,9 @@ snomed_code,term,mapped_superclass,note
 111975006,prolonged QT interval,OTHER,
 427084000,sinus tachycardia,OTHER,
 164873001,left ventricular hypertrophy,HYP,
-164930006,ST elevation,STTC,
+164930006,ST interval abnormal,STTC,
 39732003,left axis deviation,OTHER,
-425623009,low QRS voltages,OTHER,
+425623009,lateral ischaemia,OTHER,territory-coded ischemia -> OTHER (PTB-XL ISC* statements are STTC; Table S9)
 67741000119109,(uncertain),OTHER,code not confidently identified -> OTHER
 59931005,T wave inversion,STTC,
 270492004,first degree AV block,CD,
@@ -21,17 +21,17 @@ snomed_code,term,mapped_superclass,note
 59118001,right bundle branch block,CD,
 164917005,abnormal QRS,OTHER,
 427393009,sinus arrhythmia,OTHER,
-425419005,(uncertain),OTHER,code not confidently identified -> OTHER
+425419005,inferior ischaemia,OTHER,territory-coded ischemia -> OTHER (PTB-XL ISC* statements are STTC; Table S9)
 713426002,incomplete right bundle branch block,CD,
 251146004,low amplitude ECG,OTHER,
 17338001,ventricular premature beats,OTHER,
-426434006,anterior ischemia (nonspecific),OTHER,
+426434006,anterior ischemia (nonspecific),OTHER,territory-coded ischemia -> OTHER (PTB-XL ISC* statements are STTC; Table S9)
 164909002,left bundle branch block,CD,
 698252002,nonspecific intraventricular conduction disorder,CD,
 164890007,atrial flutter,OTHER,
 445118002,left anterior fascicular block,CD,
 428417006,early repolarization,OTHER,
-164931005,ST-T change / ST changes,STTC,
+164931005,ST elevation,STTC,
 6374002,bundle branch block,CD,
 89792004,right ventricular hypertrophy,HYP,
 251120003,incomplete left bundle branch block,CD,

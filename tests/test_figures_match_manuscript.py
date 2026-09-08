@@ -131,12 +131,19 @@ GPU_FIGURES = ["fig_recon", "fig_descriptors", "fig_identifiability_ab", "fig_se
 
 
 def _gpu_and_weight_available() -> bool:
+    """CUDA, the locked seed-42 weight, and the median-beat cache the GPU figures redraw from.
+
+    Without the cache 89_make_figures exits instead of drawing; on a CPU-only machine the
+    fixture already skipped, but a GPU machine without the cache used to error rather than skip,
+    which contradicted the README's promise that the suite runs with no data present."""
     try:
         import torch
         sys.path.insert(0, str(ROOT))
+        from igraphecg import repro
         from igraphecg.repro import lineage
         lineage.checkpoint(42)
-        return bool(torch.cuda.is_available())
+        cache = repro.processed() / "ptbxl_medianbeat_clean_100hz.npz"
+        return bool(torch.cuda.is_available()) and cache.exists()
     except Exception:
         return False
 
@@ -148,7 +155,7 @@ def regenerated_gpu(tmp_path_factory):
     drawn third, exact when drawn alone). 89_make_figures now resets rcParams per figure;
     this fixture keeps exercising the order that found it."""
     if not _gpu_and_weight_available():
-        pytest.skip("needs CUDA and the seed-42 checkpoint named in paper.lock.yaml")
+        pytest.skip("needs CUDA, the seed-42 checkpoint named in paper.lock.yaml and the median-beat cache")
     out = tmp_path_factory.mktemp("figs_gpu")
     sys.path.insert(0, str(ROOT))
     sys.path.insert(0, str(ROOT / "scripts"))

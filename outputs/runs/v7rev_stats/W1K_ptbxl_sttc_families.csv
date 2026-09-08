@@ -1,0 +1,7 @@
+family,scp_codes,n_records,pct_of_clean_STTC_records,note
+T-wave abnormality or inversion,NDT,1323,55.12,STTC superclass
+Non-specific ST or ST-T change,NST_,476,19.83,STTC superclass
+Territory-coded ischemia,ISC_+ISCAL+ISCAN+ISCAS+ISCIL+ISCIN+ISCLA,527,21.96,STTC superclass
+ST depression (form statement),STD_,258,10.75,"form statement, no diagnostic_class; n/a in Table S9"
+ST elevation (form statement),STE_,7,0.29,"form statement, no diagnostic_class; n/a in Table S9"
+Records,"(clean single-label STTC, all folds)",2400,100.0,

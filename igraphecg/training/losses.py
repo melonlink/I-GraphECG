@@ -5,6 +5,10 @@ Total loss L = λ_rec·L_rec + λ_slope·L_slope + λ_qrs·L_qrs + λ_st·L_st +
 
 All time windows are turned into masks from the time axis (seconds); no hard-coded indices.
 
+Optional (off by default): an atrial-window term, either as an in-window mean squared error (`p`)
+or as the relative in-window energy error (`p_rel`, the `rec` normalization restricted to the
+P window); neither is computed unless its weight is set.
+
 Optional (off by default): the five waveform terms (rec/slope/qrs/st/t) can be restricted to a
 **row subset** of the lead axis; see `total_loss(..., recon_rows=...)` and `resolve_recon_rows`.
 The default recon_rows=None means all 12 output leads => bit-for-bit legacy behaviour. The
@@ -22,6 +26,7 @@ from ..models.surrogate_decoder import ParamSpace, _SEG, PARAM_DIM
 QRS_WIN = (-0.06, 0.10)
 ST_WIN = (0.06, 0.14)
 T_WIN = (0.12, 0.45)
+P_WIN = (-0.30, -0.10)   # atrial window of the W1A analysis; used only by the optional `p` loss term
 # Note: activation-order penalty removed; eikonal propagation (edge_delay>=0) keeps delta monotone.
 
 # --- Reconstruction channel subset (lead axis = second-to-last dim) ------------
@@ -75,7 +80,7 @@ def _select_rows(y: torch.Tensor, yhat: torch.Tensor, rows):
 def build_masks(t: torch.Tensor) -> dict[str, torch.Tensor]:
     def m(win):
         return ((t >= win[0]) & (t <= win[1])).float()
-    return {"qrs": m(QRS_WIN), "st": m(ST_WIN), "t": m(T_WIN)}
+    return {"qrs": m(QRS_WIN), "st": m(ST_WIN), "t": m(T_WIN), "p": m(P_WIN)}
 
 
 def _masked_mse(y, yhat, mask):
@@ -83,6 +88,12 @@ def _masked_mse(y, yhat, mask):
     num = (((y - yhat) ** 2) * w).sum()
     den = w.sum() * y.shape[0] * y.shape[1] + 1e-8
     return num / den
+
+
+def _masked_rel(y, yhat, mask, eps: float = 1e-6):
+    """Relative energy error inside a window: the `rec` normalization restricted to the mask."""
+    w = mask.view(1, 1, -1)
+    return (((y - yhat) ** 2) * w).sum() / (((y ** 2) * w).sum() + eps)
 
 
 def rec_loss(y, yhat, eps: float = 1e-6):
@@ -155,6 +166,12 @@ def total_loss(y, yhat, z, theta, H_ind, masks, weights: dict, recon_rows=None):
         "phys": phys_loss(z, theta),
         "H": leadfield_loss(H_ind),
     }
+    # Optional atrial (P-window) term, off unless loss_weights sets a nonzero `p`. The published
+    # lineage never sets it, and the term is not even computed then, so its sums stay bit-exact.
+    if weights.get("p", 0.0):
+        comps["p"] = _masked_mse(yr, yhr, masks["p"])
+    if weights.get("p_rel", 0.0):
+        comps["p_rel"] = _masked_rel(yr, yhr, masks["p"])
     total = sum(weights.get(k, 0.0) * v for k, v in comps.items())
     comps["total"] = total
     return total, comps
