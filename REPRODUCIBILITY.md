@@ -68,7 +68,7 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 "$PY" scripts/11_prepare_ptbxl_multilabel.py
 "$PY" scripts/70_multilabel_eval.py
 
-# Revision statistics: Table 5 and Supplementary Tables S7-S17 and Notes S1-S4.
+# Revision statistics: Table 5 and Supplementary Tables S7-S18 and Notes S1-S2.
 # Each family is ordered; the _finalize / _summarize / _headline steps read what the
 # steps above them wrote. All of them write into <output root>/runs/v7rev_stats.
 "$PY" scripts/stats/W1A_per_record_recon.py        # per-record reconstruction, 5 seeds
@@ -140,7 +140,7 @@ for C in r3_s42_pwin r3_s42_pwin2; do for S in 40_descriptors 41_stability 42_cl
   `runs/v1fix_leadclf` (lead-set-specific classification, patient-clustered bootstrap).
 - Table S13: `runs/v7rev_stats/W1F_multilabel_*.csv` (scripts 11 and 70;
   zero-shot multi-label, encoder frozen).
-- Table 7 (both blocks): `v1fix/external/` (Georgia, CPSC2018; zero-shot) and
+- Table 7 and Supplementary Tables S6 and S19: `v1fix/external/` (Georgia, CPSC2018; zero-shot) and
   `runs/v7rev_stats/W1K_*` (cohort label composition; the PTB-XL column of Table S9 is
   `W1K_ptbxl_sttc_families.csv`, computed over the 2,400 clean STTC records).
 - Supplementary Tables S7–S18: `runs/v7rev_stats/` (w1d, w1e, W1K, W1M, W1G, W1C, W1F, W1P, W1O, w1h, W1J, W1R) and
