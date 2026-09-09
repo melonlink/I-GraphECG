@@ -111,8 +111,9 @@ for C in r3_s42_pwin r3_s42_pwin2; do for S in 40_descriptors 41_stability 42_cl
 # <output root>/figures/. Figures 6-7 come from scripts/83_fig_identifiability_selection.py (the published
 # versions).
 # fig_overview (Figure 1) is a hand-authored schematic with no generator.
-# tests/test_figures_match_manuscript.py compares what this command draws with the files the
-# manuscript includes, rasterised at 150 dpi: Figures 2-7 and S2 are pixel-identical; S1 is
+# tests/test_figures_match_manuscript.py (runs when the manuscript sources sit beside the code as
+# paper/) compares what this command draws with the files the manuscript includes, rasterised at
+# 150 dpi: Figures 2-7 and S2 are pixel-identical; S1 is
 # redrawn from the same table and differs only at anti-aliasing level (0.68% of pixels, <=17/255).
 "$PY" scripts/89_make_figures.py                      # all of Figures 2-7 and S1-S2
 "$PY" scripts/89_make_figures.py --refresh-assets     # also re-run 82_fig_identifiability_assets first

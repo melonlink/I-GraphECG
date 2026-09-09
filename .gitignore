@@ -14,14 +14,13 @@ dist/
 # Run logs
 /outputs/logs/
 
-# LaTeX by-products of the paper
-/paper/**/*.aux
-/paper/**/*.blg
-/paper/**/*.log
-/paper/**/*.out
-/paper/**/*.fdb_latexmk
-/paper/**/*.fls
-/paper/**/*.synctex.gz
+# The manuscript is not part of the public archive. A checkout that carries the submission
+# package as paper/ beside the code runs the manuscript tests (tests/test_manuscript_numbers.py,
+# tests/test_figures_match_manuscript.py); without it they skip.
+/paper/
+
+# Assistant instructions for the local working copy
+/CLAUDE.md
 
 # Editors and OS
 .vscode/
@@ -39,7 +38,3 @@ Thumbs.db
 /outputs/runs/v1fix_pwin*/
 /outputs/checkpoints/*pwin*
 
-# Internal working documents of the revision (software review notes, Chinese reading copy with
-# translated reviewer reports); not part of the public archive
-/paper/coments/
-/paper/5_Chinese_Reading_Copy/

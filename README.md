@@ -54,7 +54,8 @@ igraphecg/          the package: models, evaluation, data handling, external coh
 scripts/            the pipeline, numbered in execution order (see REPRODUCIBILITY.md)
 configs/            YAML for each stage; configs/v1fix/ is the reported analysis lineage
 tests/              runs with no data present; test_manuscript_numbers.py checks every headline
-                    number of paper/ against the shipped output tables
+                    number of the manuscript against the shipped output tables (when the
+                    manuscript sources sit beside the code as paper/; otherwise it skips)
 outputs/            the published run directories, exactly as paper.lock.yaml lists them,
                     plus checkpoints/ with the five trained encoders
 results/            patient_map.csv, the PTB-XL record-to-patient map the tests use
@@ -73,6 +74,9 @@ data/               empty; see data/README.md for what belongs where
   does not report.
 - **Unpublished work.** A coupled hemodynamic/mechanical branch was explored and is not
   part of this paper.
+- **The manuscript.** The article and its Supplementary Materials are published by the
+  journal; their sources are not part of this archive. `paper.lock.yaml` and section 6 of
+  `REPRODUCIBILITY.md` map every table and figure to the files here.
 
 ## Known limitations
 
