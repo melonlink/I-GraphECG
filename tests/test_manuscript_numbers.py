@@ -246,7 +246,7 @@ def checks():
     c.append(("ST-mode transmission gain", f"transmission gain of only ${fmt(stg[0], 3)}$ (${pm(stg, 2)}$ across seeds)"))
     crb = pd.read_csv(OUT / "runs" / "v1fix_phase1_s42" / "tables" / "crb_by_group_by_leadset.csv").set_index("lead_set").CRB_alpha_ST
     crb8 = pd.read_csv(OUT / "runs" / "v1fix_ls8_s42" / "tables" / "crb_optimal_vs_clinical.csv").set_index("set").CRB_alpha_ST
-    c.append(("CRB ladder", f"from ${fmt(crb['L12'], 2)}$ at 12 leads (${fmt(crb8['all-8 independent'], 2)}$ on the eight independent leads alone, the derived limb leads adding redundant rather than new observations) to ${fmt(crb['II+V1+V5'], 2)}$ (II+V1+V5), ${fmt(crb['I+II+V5'], 2)}$ (I+II+V5), and ${fmt(crb['II'], 2)}$ for lead II alone"))
+    c.append(("CRB ladder", f"from ${fmt(crb['L12'], 2)}$ at 12 leads (${fmt(crb8['all-8 independent'], 2)}$ on the eight independent leads alone; under $\\Sigma=I$ the four derived leads count as additional observations of I and II) to ${fmt(crb['II+V1+V5'], 2)}$ (II+V1+V5), ${fmt(crb['I+II+V5'], 2)}$ (I+II+V5), and ${fmt(crb['II'], 2)}$ for lead II alone"))
     c.append(("Table 7 CRB", f"& ${fmt(crb['L12'], 2)}$ &"))
     ls8 = OUT / "runs" / "v1fix_ls8_s42" / "tables"
     best = pd.read_csv(ls8 / "best_sets_DAE_k234.csv").set_index(["k", "criterion"]).best_set
@@ -297,7 +297,7 @@ def checks():
     c.append(("largest optimism", f"largest optimism in any matched comparison is ${fmt(tf[['teacher_optimism_stable', 'teacher_optimism_stock']].max().max(), 3)}$"))
     noise = pd.read_csv(STATS / "W1J_per_lead_noise.csv").set_index("lead").noise_std_scaled
     limb, chest = noise[["I", "II", "III", "aVR", "aVL", "aVF"]], noise[["V2", "V3", "V4", "V5"]]
-    c.append(("noise ratio", f"carry ${fmt(limb.min() / chest.max(), 1)}$--${fmt(limb.max() / chest.min(), 1)}\\times$ less unmodeled pre-QRS variance"))
+    c.append(("noise ratio", f"carry a ${fmt(limb.min() / chest.max(), 1)}$--${fmt(limb.max() / chest.min(), 1)}\\times$ smaller unmodeled pre-QRS standard deviation"))
 
     # ---- Section 3.7 / Table 7: reduced-lead classification
     lc = pd.read_csv(OUT / "runs" / "v1fix_leadclf" / "leadclf_m10.csv")
@@ -310,7 +310,20 @@ def checks():
     rnd = lc5[lc5.kind == "random"].macro_auroc
     c.append(("random triples", f"${fmt(rnd.mean(), 3)}\\pm{fmt(rnd.std(ddof=1), 3)}$"))
     full12 = named.loc["12 displayed channels", "macro_auroc"]
-    c.append(("effective-rank loss", f"about ${round(100 * (1 - fig34.loc['II', 'mean'] / fig34.loc['12', 'mean']))}\\%$ of the FIM effective rank"))
+    c.append(("effective-rank loss", f"lowers the FIM effective rank from ${fmt(fig34.loc['12', 'mean'], 2)}\\pm{fmt(fig34.loc['12', 'std'], 2)}$ to ${fmt(fig34.loc['II', 'mean'], 2)}\\pm{fmt(fig34.loc['II', 'std'], 2)}$"))
+    c.append(("CRB ratio 4.2", f"raises the Cram\\'er--Rao bound of the ST source almost sevenfold (${fmt(crb['L12'], 2)}$ to ${fmt(crb['II'], 2)}$)"))
+    # external single-label criterion: fraction of each cohort removed, and its components for Georgia
+    disp = pd.read_csv(STATS / "W1K_cohort_disposition.csv").set_index(["cohort", "quantity"]).pct_of_cohort
+    g_rem = 100 - disp[("georgia", "n_clean_single_label_kept")]
+    c.append(("external filter", f"removed ${round(g_rem)}\\%$ of Georgia (${round(disp[('georgia', 'drop_2_OTHER_code_present')])}\\%$ for a rhythm, axis or ectopy code, ${round(disp[('georgia', 'drop_1_HYP_overlap')])}\\%$ for hypertrophy overlap, ${round(disp[('georgia', 'drop_3_multi_superclass')])}\\%$ for two target superclasses) and ${round(100 - disp[('cpsc_2018', 'n_clean_single_label_kept')])}\\%$ of CPSC2018"))
+    # Table S1 (AP-ODE recovery multiplier, seed 42) and Table S2 (lead-II variant effective ranks)
+    ode = pd.read_csv(OUT / "runs" / "v1fix_r3_s42" / "tables" / "ap_ode_monodromy.csv")
+    for cls in ("NORM", "MI", "STTC", "CD"):
+        r = ode[ode["class"] == cls].rho
+        c.append((f"Table S1 {cls}", f"${fmt(r.mean(), 4)}\\pm{fmt(r.std(ddof=1), 4)}$ & ${fmt(1 - r.mean(), 4)}$"))
+    sl = pd.read_csv(OUT / "runs" / "v1fix_round5" / "tables" / "single_lead_sanity.csv").set_index("variant")
+    for v in sl.index:
+        c.append((f"Table S2 effrank {v}", f"& {fmt(sl.loc[v, 'fim_effrank_L1'], 2)} & {fmt(sl.loc[v, 'theta_macro_auroc'], 3)} &"))
     c.append(("AUROC loss", f"only about ${round(100 * (1 - named.loc['II', 'macro_auroc'] / full12))}\\%$ of macro-AUROC (${fmt(full12, 3)}$ to ${fmt(named.loc['II', 'macro_auroc'], 3)}$)"))
     r5 = pd.read_csv(OUT / "runs" / "v1fix_round5" / "tables" / [f for f in (OUT / "runs" / "v1fix_round5" / "tables").glob("*.csv")][0].name) if (OUT / "runs" / "v1fix_round5" / "tables").exists() else None
 

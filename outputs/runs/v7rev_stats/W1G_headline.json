@@ -121,8 +121,8 @@
     }
   ],
   "crb_identity_check": {
-    "per_parameter_max_rel_diff_CRB_vs_1_over_score_all_leadsets": 1.504e-16,
-    "group_CRB_vs_frozen_phase1_table_max_rel_diff": 1.245e-15,
-    "note": "verified for L12, II+V1+V5, I+II+V5 and II by replaying scripts/41's J_all path; the frozen crb_by_group_by_leadset.csv is reproduced bit-exactly. Recomputing the FIM by scripts/09's sample-accumulation path instead shifts the group CRB means by at most 4.4e-4 relative (float summation order only)."
+    "per_parameter_max_rel_diff_CRB_vs_1_over_score_all_leadsets": 1.504130261306753e-16,
+    "group_CRB_vs_frozen_phase1_table_max_rel_diff": 1.2452286778350434e-15,
+    "note": "verified for L12, II+V1+V5, I+II+V5 and II by replaying scripts/50's J_all path (W1G_crb_leadset_check.py); the frozen crb_by_group_by_leadset.csv is reproduced to float precision. Recomputing the FIM by scripts/43's sample-accumulation path instead shifts the group CRB means by at most crb_verification_max_rel_diff (float summation order only)."
   }
 }

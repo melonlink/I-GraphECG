@@ -23,6 +23,7 @@ from igraphecg import repro   # output keys in configs are output-root relative
 from igraphecg.data.dataset import load_processed, split_indices
 from igraphecg.data.label_utils import TARGET_CLASSES
 from igraphecg.data.preprocess import RobustLeadScaler
+from igraphecg.evaluation.identifiability import compute_fim, fim_metrics, lead_rows
 from igraphecg.evaluation.metrics import bootstrap_ci, compute_metrics
 from igraphecg.evaluation.recon_metrics import per_sample_lead_corr, per_sample_nrmse
 from igraphecg.evaluation.repolarization_features import twave_features
@@ -91,6 +92,15 @@ def train_l1(scaled, idx, dec, cfg, device, widths, dropout, wd, mode):
     return enc
 
 
+def fim_subset(label, fold, per_class=100, seed=42):
+    """The fixed 400-record fold-10 FIM subset of scripts/50 (100 per class, rng seed 42)."""
+    rng = np.random.default_rng(seed); idx = []
+    for c in range(N):
+        pool = np.where((label == c) & (fold == 10))[0]
+        idx.append(pool if len(pool) <= per_class else rng.choice(pool, per_class, replace=False))
+    return np.concatenate(idx)
+
+
 def evaluate(enc, dec, scaled, signals, scaler, label, fold, H_ind, fs, device, seed):
     import torch
     lead_t = torch.tensor(LEAD_II, device=device)
@@ -102,6 +112,12 @@ def evaluate(enc, dec, scaled, signals, scaler, label, fold, H_ind, fs, device, 
             th.append(dec.pspace.theta(z).cpu().numpy()); yh.append(y12.cpu().numpy())
     theta = np.concatenate(th); yh = np.concatenate(yh)
     te = fold == 10
+    # FIM effective rank of THIS variant's lead-II estimates on the fixed 400-record subset
+    sub = fim_subset(label, fold)
+    rows = torch.tensor(lead_rows(LEAD_II, signals.shape[2]), dtype=torch.long, device=device)
+    F = compute_fim(dec, torch.from_numpy(theta[sub].astype(np.float32)).to(device),
+                    dec.pspace.radius, observed_rows=rows, device=str(device))
+    effrank = float(fim_metrics(F)["effective_rank"])
     obs_corr = float(np.median(per_sample_lead_corr(scaled[te][:, LEAD_II], yh[te][:, LEAD_II])))
     full_nrmse = float(np.median(per_sample_nrmse(scaled[te], yh[te])))
     from sklearn.preprocessing import StandardScaler
@@ -120,7 +136,8 @@ def evaluate(enc, dec, scaled, signals, scaler, label, fold, H_ind, fs, device, 
     d_act = compute_phys_features(torch.from_numpy(theta[te].astype(np.float32)))["D_act"].numpy()
     tw = twave_features(scaler.inverse_transform(yh[te]), fs=fs)
     stp = projected_st_features(theta[te], H_ind)["ST_projected_max_abs"]
-    return {"theta_macro_auroc": auroc, "observed_corr": obs_corr, "full12_nrmse": full_nrmse,
+    return {"fim_effrank_L1": effrank,
+            "theta_macro_auroc": auroc, "observed_corr": obs_corr, "full12_nrmse": full_nrmse,
             "D_act_CD": cliffs_vs_norm(d_act, label[te], "CD"),
             "STTC_Tsign": cliffs_vs_norm(tw["T_sign_discordance_rate"], label[te], "STTC"),
             "MI_STproj": cliffs_vs_norm(stp, label[te], "MI")}
@@ -152,7 +169,7 @@ def main():
         log.info(f"training {name} (widths={widths} dropout={dropout} wd={wd} mode={mode}) ...")
         enc = train_l1(scaled, idx, dec, cfg, device, widths, dropout, wd, mode)
         m = evaluate(enc, dec, scaled, signals, scaler, label, fold, H_ind, fs, device, cfg["seed"])
-        rows.append({"variant": name, "mode": mode, "fim_effrank_L1": 2.814, **m})
+        rows.append({"variant": name, "mode": mode, **m})
         log.info(f"  -> theta_AUROC={m['theta_macro_auroc']:.4f} full12_NRMSE={m['full12_nrmse']:.3f} "
                  f"obs_corr={m['observed_corr']:.3f} D_act={m['D_act_CD']:.2f} T_sign={m['STTC_Tsign']:.2f} MI={m['MI_STproj']:.2f}")
     df = pd.DataFrame(rows); df.to_csv(out / "tables" / "single_lead_sanity.csv", index=False)

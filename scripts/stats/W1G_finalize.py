@@ -50,13 +50,17 @@ print(stab.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
 
 head = json.loads((OUT / "W1G_headline.json").read_text(encoding="utf-8"))
 head["seed_stable_coupling_pairs"] = stab.to_dict("records")
+_per_param = pd.read_csv(OUT / "W1G_crb_per_parameter_by_leadset.csv")
+_identity = pd.read_csv(OUT / "W1G_crb_identity_check.csv")
 head["crb_identity_check"] = {
-    "per_parameter_max_rel_diff_CRB_vs_1_over_score_all_leadsets": 1.504e-16,
-    "group_CRB_vs_frozen_phase1_table_max_rel_diff": 1.245e-15,
-    "note": "verified for L12, II+V1+V5, I+II+V5 and II by replaying scripts/41's J_all path; "
-            "the frozen crb_by_group_by_leadset.csv is reproduced bit-exactly. Recomputing the "
-            "FIM by scripts/09's sample-accumulation path instead shifts the group CRB means by "
-            "at most 4.4e-4 relative (float summation order only)."}
+    "per_parameter_max_rel_diff_CRB_vs_1_over_score_all_leadsets":
+        float(_per_param["rel_diff_crb_vs_1_over_score"].abs().max()),
+    "group_CRB_vs_frozen_phase1_table_max_rel_diff": float(_identity["rel_diff"].abs().max()),
+    "note": "verified for L12, II+V1+V5, I+II+V5 and II by replaying scripts/50's J_all path "
+            "(W1G_crb_leadset_check.py); the frozen crb_by_group_by_leadset.csv is reproduced to "
+            "float precision. Recomputing the FIM by scripts/43's sample-accumulation path instead "
+            "shifts the group CRB means by at most crb_verification_max_rel_diff (float summation "
+            "order only)."}
 (OUT / "W1G_headline.json").write_text(json.dumps(head, indent=2, ensure_ascii=False),
                                        encoding="utf-8")
 print("\nwrote W1G_parameter_table_compact.csv, W1G_seed_stable_coupling_pairs.csv")

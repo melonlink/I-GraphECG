@@ -1,2 +1,2 @@
-reproduced_test_nrmse,reproduced_test_corr,reproduced_theta_macro_auroc,round2_report_nrmse,round2_report_corr,round2_report_auroc
-0.4009280204772949,0.9115179718087121,0.9010929847362688,0.391,0.918,0.9027
+reproduced_test_nrmse,reproduced_test_corr,reproduced_theta_macro_auroc
+0.4009280204772949,0.9115179718087121,0.9010929847362688

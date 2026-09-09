@@ -94,10 +94,17 @@ class APODE:
 _ADJ_NP = build_adjacency().numpy()
 
 
+def _ventricular_activation_times(theta_row: np.ndarray) -> np.ndarray:
+    """Nodal activation times of the ventricular nodes from the eikonal-tree layout of theta:
+    delta = delta_root + PATH_M @ edge_delay (theta[0] is delta_root, theta[1:8] the edge delays)."""
+    from .surrogate_decoder import PATH_M, VENT_NODES
+    delta = theta_row[0] + PATH_M.numpy().astype(np.float64) @ theta_row[1:8].astype(np.float64)
+    return delta[VENT_NODES]
+
+
 def ode_params_from_theta(theta_row: np.ndarray) -> dict:
     """Surrogate θ -> AP-ODE parameters φ (rule-based map)."""
-    vent = [2, 3, 4, 5, 6, 7]
-    delta = theta_row[0:8][vent]; taur = theta_row[24:32]
+    delta = _ventricular_activation_times(theta_row); taur = theta_row[24:32]
     delta_spread = float(delta.max() - delta.min())
     g = float(np.clip(1.0 + 1.5 * (0.05 - delta_spread) / 0.05, 0.3, 3.0))
     eps = np.clip(0.06 - 0.4 * (taur - 0.03), 0.005, 0.08).astype(np.float64)
@@ -178,10 +185,10 @@ def paced_monodromy_np(p: dict, T_cycle=1.0, n_cycles=25, dt=0.003,
 def rule_adapter(theta_row: np.ndarray, device="cpu") -> APODE:
     """Surrogate theta -> AP-ODE parameters (rule-based map, §9.4).
 
-    delta(0:8), APD(8:16), tau_rep(24:32). Ventricular nodes [2..7].
+    theta layout: delta_root(0), edge_delay(1:8), APD(8:16), tau_dep(16:24), tau_rep(24:32);
+    the ventricular activation times are derived from delta_root and the edge delays.
     """
-    vent = [2, 3, 4, 5, 6, 7]
-    delta = theta_row[0:8][vent]
+    delta = _ventricular_activation_times(theta_row)
     taur = theta_row[24:32]
     delta_spread = float(delta.max() - delta.min())
     g_global = float(np.clip(1.0 + 1.5 * (0.05 - delta_spread) / 0.05, 0.3, 3.0))

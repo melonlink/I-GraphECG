@@ -236,8 +236,7 @@ def main():
     mrec = compute_recon_metrics(scaled[te], yh[te], t_sec)
     c0_auroc = cdf[(cdf.feature_group == "C0_theta") & (cdf.classifier == "xgboost")]["macro_auroc"].values[0]
     rep = pd.DataFrame([{"reproduced_test_nrmse": mrec["median_nrmse"], "reproduced_test_corr": mrec["median_corr"],
-                         "reproduced_theta_macro_auroc": float(c0_auroc),
-                         "round2_report_nrmse": 0.391, "round2_report_corr": 0.918, "round2_report_auroc": 0.9027}])
+                         "reproduced_theta_macro_auroc": float(c0_auroc)}])
     rep.to_csv(out / "tables" / "round2_reproduction_metrics.csv", index=False)
     log.info(f"Round-2 re-check: NRMSE={mrec['median_nrmse']:.4f} corr={mrec['median_corr']:.4f} C0-AUROC={c0_auroc:.4f}")
     best = cdf.loc[cdf.macro_auroc.idxmax()]

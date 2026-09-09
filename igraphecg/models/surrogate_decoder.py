@@ -8,7 +8,7 @@ follow through the Einthoven-Goldberger relations.
 Parameters are constrained to a physiologically plausible range by theta =
 center + radius·tanh(z), with z unbounded (encoder or oracle output).
 
-Physical units: time in s; alpha_ST is a mV-equivalent source strength; q is a relative
+Physical units: time in s; alpha_ST is a source strength in arbitrary units (absorbed by H and the robust scaling); q is a relative
 source amplitude (dimensionless).
 The double-sigmoid node action potential follows TASK_SPEC §16.1 / ROUND2 §5.
 """
@@ -71,7 +71,7 @@ def _bounds() -> tuple[list[float], list[float]]:
     lo += [0.035] * N_NODES; hi += [0.100] * N_NODES        # tau_rep: [0.035,0.100]
     # q (relative source amplitude) -- unchanged
     lo += [0.05] * N_NODES; hi += [3.00] * N_NODES
-    # alpha_ST (ventricular nodes, mV-equivalent) -- tightened in variant B
+    # alpha_ST (ventricular nodes, arbitrary source units) -- tightened in variant B
     lo += [-0.25] * N_ST; hi += [0.25] * N_ST               # alpha_ST: [-0.25,0.25]
     # global_gain
     lo += [0.5]; hi += [2.0]
