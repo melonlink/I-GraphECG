@@ -140,15 +140,18 @@ def phys_loss(z: torch.Tensor, theta: torch.Tensor) -> torch.Tensor:
     return 0.1 * prior + 1.0 * st_sparse + 1.0 * boundary   # st_sparse 0.5->1.0
 
 
-def leadfield_loss(H_ind: torch.Tensor, lambda_smooth: float = 1.0) -> torch.Tensor:
-    """Frobenius regularization on H + V1–V6 smoothness (rows 2..7 are V1..V6)."""
+def leadfield_loss(H_ind: torch.Tensor, lambda_smooth: float = 1.0,
+                   precordial_rows: slice = slice(2, 8)) -> torch.Tensor:
+    """Frobenius regularization on H + V1–V6 smoothness (rows 2..7 are V1..V6 in the [8, rank]
+    lead field; a [12, rank] ablation field passes rows 6..11)."""
     fro = (H_ind ** 2).mean()
-    v = H_ind[2:8]  # V1..V6 rows
+    v = H_ind[precordial_rows]  # V1..V6 rows
     smooth = ((v[1:] - v[:-1]) ** 2).mean()
     return fro + lambda_smooth * smooth
 
 
-def total_loss(y, yhat, z, theta, H_ind, masks, weights: dict, recon_rows=None):
+def total_loss(y, yhat, z, theta, H_ind, masks, weights: dict, recon_rows=None,
+               precordial_rows: slice = slice(2, 8)):
     """recon_rows=None (default): the waveform terms use all 12 output leads - legacy, bit-exact.
 
     With explicit row indices (e.g. NON_DERIVED_ROWS) only rec/slope/qrs/st/t move to that row
@@ -164,7 +167,7 @@ def total_loss(y, yhat, z, theta, H_ind, masks, weights: dict, recon_rows=None):
         "st": _masked_mse(yr, yhr, masks["st"]),
         "t": _masked_mse(yr, yhr, masks["t"]),
         "phys": phys_loss(z, theta),
-        "H": leadfield_loss(H_ind),
+        "H": leadfield_loss(H_ind, precordial_rows=precordial_rows),
     }
     # Optional atrial (P-window) term, off unless loss_weights sets a nonzero `p`. The published
     # lineage never sets it, and the term is not even computed then, so its sums stay bit-exact.

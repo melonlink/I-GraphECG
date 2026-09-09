@@ -1,0 +1,228 @@
+{
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "lambda": 0.001,
+  "ar1_rho": 0.8,
+  "pre_qrs_samples": 20,
+  "noise_models": [
+    "identity",
+    "empirical_diag",
+    "empirical_full",
+    "limb_artifact_x4",
+    "chest_artifact_x4",
+    "ar1_rho0.8",
+    "empirical_full_ar1"
+  ],
+  "empirical_lead_correlation_8": {
+    "I-II": 0.7616235017776489,
+    "I-V1": -0.4704572260379791,
+    "I-V2": 0.10065416246652603,
+    "I-V3": 0.3221468925476074,
+    "I-V4": 0.5324469208717346,
+    "I-V5": 0.7490514516830444,
+    "I-V6": 0.805980920791626,
+    "II-V1": -0.20897305011749268,
+    "II-V2": 0.2446497529745102,
+    "II-V3": 0.5029494762420654,
+    "II-V4": 0.693657398223877,
+    "II-V5": 0.8084022402763367,
+    "II-V6": 0.813747763633728,
+    "V1-V2": 0.6013496518135071,
+    "V1-V3": 0.3647823929786682,
+    "V1-V4": 0.12237938493490219,
+    "V1-V5": -0.20483960211277008,
+    "V1-V6": -0.36687198281288147,
+    "V2-V3": 0.8697710037231445,
+    "V2-V4": 0.6787675619125366,
+    "V2-V5": 0.3393995761871338,
+    "V2-V6": 0.11762870848178864,
+    "V3-V4": 0.8812074661254883,
+    "V3-V5": 0.5886096954345703,
+    "V3-V6": 0.36688289046287537,
+    "V4-V5": 0.7994266152381897,
+    "V4-V6": 0.6079012751579285,
+    "V5-V6": 0.8736973404884338
+  },
+  "max_abs_offdiag_lead_correlation": 0.8812074661254883,
+  "II_never_in_optimum": false,
+  "II_never_in_top5": false,
+  "V2_to_V5_in_every_optimum": false,
+  "min_margin_over_clinical": 6.410177359560322,
+  "max_clinical_rank": 48,
+  "min_clinical_rank": 5,
+  "optima_seed42": {
+    "identity": "I+V1+V4",
+    "empirical_diag": "V2+V3+V5",
+    "empirical_full": "I+V2+V4",
+    "limb_artifact_x4": "V1+V2+V5",
+    "chest_artifact_x4": "I+II+V1",
+    "ar1_rho0.8": "V1+V2+V5",
+    "empirical_full_ar1": "I+V2+V4"
+  },
+  "distinct_optima_all_seeds_models": [
+    "I+II+V1",
+    "I+V1+V4",
+    "I+V1+V5",
+    "I+V2+V4",
+    "II+V2+V4",
+    "V1+V2+V4",
+    "V1+V2+V5",
+    "V2+V3+V5",
+    "V2+V4+V5"
+  ],
+  "families_seed42": {
+    "unconstrained": {
+      "identity": {
+        "best_set": "I+V1+V4",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 9.982585130369557
+      },
+      "empirical_diag": {
+        "best_set": "V2+V3+V5",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 32.34484060550736
+      },
+      "empirical_full": {
+        "best_set": "I+V2+V4",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 22.579324066628196
+      },
+      "limb_artifact_x4": {
+        "best_set": "V1+V2+V5",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 17.591854061173677
+      },
+      "chest_artifact_x4": {
+        "best_set": "I+II+V1",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 23.410027991971674
+      },
+      "ar1_rho0.8": {
+        "best_set": "V1+V2+V5",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 9.551077870868319
+      },
+      "empirical_full_ar1": {
+        "best_set": "I+V2+V4",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 21.110866153676756
+      }
+    },
+    "at_most_one_precordial": {
+      "identity": {
+        "best_set": "I+II+V1",
+        "loss_vs_optimum": -9.69273831878354,
+        "margin_over_clinical": 0.2898468115860169
+      },
+      "empirical_diag": {
+        "best_set": "I+II+V2",
+        "loss_vs_optimum": -23.404291116410462,
+        "margin_over_clinical": 8.940549489096895
+      },
+      "empirical_full": {
+        "best_set": "I+II+V2",
+        "loss_vs_optimum": -20.36401692087275,
+        "margin_over_clinical": 2.215307145755446
+      },
+      "limb_artifact_x4": {
+        "best_set": "I+II+V1",
+        "loss_vs_optimum": -36.649743784951426,
+        "margin_over_clinical": -19.05788972377775
+      },
+      "chest_artifact_x4": {
+        "best_set": "I+II+V1",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 23.410027991971674
+      },
+      "ar1_rho0.8": {
+        "best_set": "I+II+V1",
+        "loss_vs_optimum": -10.026420662398088,
+        "margin_over_clinical": -0.4753427915297692
+      },
+      "empirical_full_ar1": {
+        "best_set": "I+II+V2",
+        "loss_vs_optimum": -18.95918218422567,
+        "margin_over_clinical": 2.151683969451085
+      }
+    },
+    "precordial_only": {
+      "identity": {
+        "best_set": "V1+V2+V5",
+        "loss_vs_optimum": -0.4449393466435936,
+        "margin_over_clinical": 9.537645783725964
+      },
+      "empirical_diag": {
+        "best_set": "V2+V3+V5",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 32.34484060550736
+      },
+      "empirical_full": {
+        "best_set": "V1+V2+V4",
+        "loss_vs_optimum": -5.457101724316615,
+        "margin_over_clinical": 17.12222234231158
+      },
+      "limb_artifact_x4": {
+        "best_set": "V1+V2+V5",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 17.591854061173677
+      },
+      "chest_artifact_x4": {
+        "best_set": "V1+V2+V5",
+        "loss_vs_optimum": -28.703922941999195,
+        "margin_over_clinical": -5.293894950027521
+      },
+      "ar1_rho0.8": {
+        "best_set": "V1+V2+V5",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 9.551077870868319
+      },
+      "empirical_full_ar1": {
+        "best_set": "V1+V2+V4",
+        "loss_vs_optimum": -4.891575802581002,
+        "margin_over_clinical": 16.219290351095754
+      }
+    },
+    "contains_II": {
+      "identity": {
+        "best_set": "II+V1+V4",
+        "loss_vs_optimum": -7.577803029807825,
+        "margin_over_clinical": 2.4047821005617322
+      },
+      "empirical_diag": {
+        "best_set": "II+V2+V5",
+        "loss_vs_optimum": -11.077633964878942,
+        "margin_over_clinical": 21.267206640628416
+      },
+      "empirical_full": {
+        "best_set": "II+V2+V4",
+        "loss_vs_optimum": -3.918513612297488,
+        "margin_over_clinical": 18.660810454330708
+      },
+      "limb_artifact_x4": {
+        "best_set": "II+V1+V4",
+        "loss_vs_optimum": -15.378210268291724,
+        "margin_over_clinical": 2.2136437928819532
+      },
+      "chest_artifact_x4": {
+        "best_set": "I+II+V1",
+        "loss_vs_optimum": 0.0,
+        "margin_over_clinical": 23.410027991971674
+      },
+      "ar1_rho0.8": {
+        "best_set": "II+V1+V4",
+        "loss_vs_optimum": -7.261173216538374,
+        "margin_over_clinical": 2.289904654329945
+      },
+      "empirical_full_ar1": {
+        "best_set": "II+V2+V4",
+        "loss_vs_optimum": -2.1915741327537184,
+        "margin_over_clinical": 18.919292020923038
+      }
+    }
+  }
+}

@@ -110,8 +110,14 @@ def main():
     _scaler_for_dec = None
     if cfg.get("scaled_derivation", False):
         _scaler_for_dec = {"median": data["scaler_median"], "iqr": data["scaler_iqr"]}
+    # structural ablations (Reviewer 3): both keys absent in the published configs
+    if not cfg.get("graph_delays", True):
+        from igraphecg.models.surrogate_decoder import ParamSpace
+        ParamSpace.GRAPH_DELAYS = False
     dec = SurrogateDecoder(n_t=signals.shape[2], leadfield_rank=cfg["leadfield_rank"],
-                           scaler=_scaler_for_dec).to(device)
+                           scaler=_scaler_for_dec, direct_12_leads=cfg.get("direct_12_leads", False),
+                           graph_delays=cfg.get("graph_delays", True),
+                           leadfield_init_scale=cfg.get("leadfield_init_scale", 0.3)).to(device)
     masks = {k: v.to(device) for k, v in build_masks(dec.t).items()}
     w = cfg["loss_weights"]
 
@@ -158,7 +164,8 @@ def main():
                 z = enc(xb)
                 yhat, aux = dec.forward_from_z(z)
                 loss, comps = total_loss(xb, yhat, z, aux["theta"], dec.H_ind, masks, w,
-                                         recon_rows=recon_rows)
+                                         recon_rows=recon_rows,
+                                         precordial_rows=dec.precordial_rows)
             gscaler.scale(loss).backward()
             # --- stabilization 2: gradient clipping (disabled when grad_clip<=0) ---
             if grad_clip and grad_clip > 0:

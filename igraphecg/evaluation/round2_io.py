@@ -48,7 +48,15 @@ def load_encoder_decoder(ckpt_path: str | Path, n_t: int, rank: int = 3, device=
     if bool(cfg_ck.get("scaled_derivation", False)):
         dec_scaler = scaler if scaler is not None else _resolve_scaler_from_cfg(cfg_ck)
     enc = PhysEncoder(in_ch=12, out_dim=PARAM_DIM).to(device)
-    dec = SurrogateDecoder(n_t=n_t, leadfield_rank=rank, scaler=dec_scaler).to(device)
+    # structural-ablation checkpoints (Reviewer 3) carry these keys; the published ones do not
+    graph_delays = bool(cfg_ck.get("graph_delays", True))
+    if not graph_delays:
+        from igraphecg.models.surrogate_decoder import ParamSpace
+        ParamSpace.GRAPH_DELAYS = False
+    rank_ck = int(cfg_ck.get("leadfield_rank", rank))
+    dec = SurrogateDecoder(n_t=n_t, leadfield_rank=rank_ck, scaler=dec_scaler,
+                           direct_12_leads=bool(cfg_ck.get("direct_12_leads", False)),
+                           graph_delays=graph_delays).to(device)
     enc.load_state_dict(ck["encoder"]); dec.load_state_dict(ck["decoder"])
     enc.eval(); dec.eval()
     return enc, dec

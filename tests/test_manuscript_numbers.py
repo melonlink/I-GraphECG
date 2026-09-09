@@ -100,7 +100,7 @@ def checks():
     c.append(("NRMSE", f"{fmt(s42s.median_nrmse, 3)}$ (${pm([r.median_nrmse for r in sc], 3)}"))
     c.append(("corr", f"{fmt(s42s.median_corr, 3)}$ (${pm([r.median_corr for r in sc], 3)}"))
     c.append(("QRS NRMSE", f"{fmt(s42s.qrs_nrmse, 3)}$ (${pm([r.qrs_nrmse for r in sc], 3)}"))
-    c.append(("ST MAE mV", f"{fmt(s42p.st_mean_abs_err, 3)}$ mV (${pm([r.st_mean_abs_err for r in ph], 4)}"))
+    c.append(("ST MAE mV", f"{fmt(s42p.st_mean_abs_err, 4)}$~mV (${pm([r.st_mean_abs_err for r in ph], 4)}"))
     c.append(("boundary rate", f"{fmt(s42s.boundary_rate, 3)}$ (${pm([r.boundary_rate for r in sc], 3)}"))
     c.append(("Table 2 ST window", f"{fmt(s42s.st_nrmse, 3)}$ & ${pm([r.st_nrmse for r in sc], 3)}"))
     c.append(("Table 2 T window", f"{fmt(s42s.t_nrmse, 3)}$ & ${pm([r.t_nrmse for r in sc], 3)}"))
@@ -161,7 +161,7 @@ def checks():
     c.append(("smallest theta p", f"smallest uncorrected $p$ is ${fmt(p_theta, 2)}$"))
     ops = pd.read_csv(STATS / "w1d_mi_operating_points.csv").set_index("rule")
     a = ops.loc["argmax (paper)"]
-    c.append(("per-class recall", f"NORM ${fmt(a.recall_NORM, 2)}$, STTC ${fmt(a.recall_STTC, 2)}$, CD ${fmt(a.recall_CD, 2)}$, and MI only ${fmt(a.recall_MI, 2)}$ (balanced accuracy ${fmt(a.balanced_accuracy, 3)}$)"))
+    c.append(("per-class recall", f"NORM ${fmt(a.recall_NORM, 2)}$, STTC ${fmt(a.recall_STTC, 2)}$, CD ${fmt(a.recall_CD, 2)}$, MI ${fmt(a.recall_MI, 2)}$; balanced accuracy ${fmt(a.balanced_accuracy, 3)}$)"))
     c.append(("MI->NORM count", f"Of the {int(a.MI_total)} MI test records, {int(a.MI_to_NORM)} (about ${round(100 * a.MI_to_NORM / a.MI_total)}\\%$) were assigned to NORM"))
     c.append(("MI precision", f"precision ${fmt(a.precision_MI, 2)}$"))
     mc, sd = pd.read_csv(STATS / "w1i_mean_confusion.csv", index_col=0), pd.read_csv(STATS / "w1i_sd_confusion.csv", index_col=0)
@@ -263,7 +263,7 @@ def checks():
     byc = {s: pd.read_csv(OUT / "runs" / f"v1fix_byclass_s{s}" / "tables" / "byclass_optimal_DAE.csv") for s in [42]}
     assert set(byc[42].D_opt) == {"I+V1+V4"}
     mg = pd.read_csv(OUT / "runs" / "v1fix_byclass_s42" / "tables" / "optimal_set_marginal_contrib.csv").set_index("lead_dropped").marginal_gain_of_lead
-    c.append(("marginal contributions", f"(V1 $+{fmt(mg['V1'], 1)}$, V4 $+{fmt(mg['V4'], 1)}$, I $+{fmt(mg['I'], 1)}$)"))
+    c.append(("marginal contributions", f"(V1 $+{fmt(mg['V1'], 1)}$, V4 $+{fmt(mg['V4'], 1)}$, I $+{fmt(mg['I'], 1)}$;"))
     lj = pd.read_csv(STATS / "W1J_leadsets_by_noise_model.csv")
     idn = lj[lj.noise_model == "identity"]
     second = -idn[idn["rank"] == 2].set_index("seed").delta_logdet_vs_rank1
@@ -286,8 +286,8 @@ def checks():
     c.append(("design-fold margin spread", f"moves by at most ${fmt(spread, 2)}$ $\\log\\det$ units"))
     ch = json.load(open(STATS / "W1J_chance_reference.json"))
     c.append(("chance precordial", f"contains ${fmt(ch['expected_n_precordial_random_triple'], 2)}$ precordial leads on average and is all-precordial with probability ${ch['count_by_n_precordial']['3']}/{ch['n_three_lead_subsets']}={fmt(ch['prob_all_three_precordial'], 2)}$"))
-    c.append(("observed precordial means", f"average exactly ${fmt(ch['observed']['identity']['mean_n_precordial_over_seeds'], 1)}$ precordial leads"))
-    c.append(("empirical precordial mean", f"average ${fmt(ch['observed']['empirical_sigma_inv']['mean_n_precordial_over_seeds'], 1)}$"))
+    c.append(("observed precordial means", f"average ${fmt(ch['observed']['identity']['mean_n_precordial_over_seeds'], 1)}$ precordial leads (below chance)"))
+    c.append(("empirical precordial mean", f"the empirical-noise optima ${fmt(ch['observed']['empirical_sigma_inv']['mean_n_precordial_over_seeds'], 1)}$ (above it)"))
     # the chance probability of an all-precordial triple is stated in the base-rate sentence
     c.append(("all-precordial chance", f"is all-precordial with probability ${ch['count_by_n_precordial']['3']}/{ch['n_three_lead_subsets']}={fmt(ch['prob_all_three_precordial'], 2)}$"))
     tf = pd.read_csv(STATS / "W1O_teacherfree_contrast.csv").set_index("lead_set")
@@ -340,6 +340,79 @@ def checks():
     return c, ext
 
 
+def _reviewer3_checks():
+    """Numbers added for Reviewer 3: further noise models and wearable families (W1U, Table S22
+    and Section 3.6), the structural ablation (W1T, Table S20 and Section 3.3), the null-direction
+    perturbation and alternative inverse (W1S, Table S21 and Section 3.6) and the paired lead-set
+    contrasts (W1V, Table S23 and Section 3.6)."""
+    c = []
+    nm = pd.read_csv(STATS / "W1U_noise_models.csv")
+    fam = pd.read_csv(STATS / "W1U_families.csv")
+    uh = json.load(open(STATS / "W1U_headline.json"))
+    c.append(("noise models: distinct optima", f"(${len(uh['distinct_optima_all_seeds_models'])}$ distinct optima across seven models and five seeds)"))
+    c.append(("noise models: clinical rank floor", f"II+V1+V5 is never better than {int(nm.clinical_rank_of_56.min())}th of $56$"))
+    c.append(("noise models: margin range", f"its margin to the optimum is ${fmt(nm.margin_over_clinical.min(), 1)}$--${fmt(nm.margin_over_clinical.max(), 1)}$ $\\log\\det$ units"))
+    c.append(("noise models: lead correlation", f"off-diagonal lead correlations up to ${fmt(uh['max_abs_offdiag_lead_correlation'], 2)}$"))
+    assert set(nm[nm.noise_model == "chest_artifact_x4"].optimal_set) == {"I+II+V1"}
+    other_ii = nm[(nm.noise_model != "chest_artifact_x4") & nm.II_in_optimum]
+    assert len(other_ii) == 1 and other_ii.noise_model.iloc[0] == "empirical_full_ar1"
+    full = nm[nm.noise_model == "empirical_full"].optimal_set
+    assert full.nunique() == 1
+    c.append(("noise models: full covariance optimum", f"Under the full lead covariance the optimum is {full.iloc[0]} at all five seeds"))
+    f42 = fam[(fam.seed == 42) & (fam.noise_model == "identity")].set_index("family")
+    po, op, ii = f42.loc["precordial_only"], f42.loc["at_most_one_precordial"], f42.loc["contains_II"]
+    c.append(("families: precordial only", f"a chest-only triple ({po.best_set}) lies within ${fmt(abs(po.loss_vs_unconstrained_optimum), 2)}$ $\\log\\det$ units"))
+    c.append(("families: one precordial", f"(best {op.best_set}) loses ${fmt(abs(op.loss_vs_unconstrained_optimum), 1)}$ units and barely exceeds the clinical set ($+{fmt(op.margin_over_clinical, 2)}$)"))
+    c.append(("families: contains II", f"requiring lead II ({ii.best_set}) costs ${fmt(abs(ii.loss_vs_unconstrained_optimum), 1)}$ units"))
+    # W1S: perturbation along Fisher eigendirections and the per-record alternative inverse
+    sh = json.load(open(STATS / "W1S_headline.json"))
+    pert = pd.read_csv(STATS / "W1S_perturbation.csv").set_index(["condition", "step_radius_units"])
+    r6, r24, rc = pert.loc[("least informative 6", 0.25)], pert.loc[("least informative 24", 0.5)], pert.loc[("most informative 6", 0.25)]
+    pct = lambda x: f"{100 * x:.0f}"
+    c.append(("null-6 delta NRMSE", f"changes the reconstruction by a median ${fmt(r6.median_abs_delta_nrmse, 4)}$ NRMSE"))
+    c.append(("null-6 C5 flips", f"yet flips ${pct(r6.C5_flip_rate)}\\%$ of the C5 decisions and lowers its macro-AUROC by ${fmt(-r6.C5_delta_macro_auroc, 3)}$"))
+    c.append(("null-24 step 0.5", f"the reconstruction changes by ${fmt(r24.median_abs_delta_nrmse, 2)}$ and ${pct(r24.C5_flip_rate)}\\%$ of the decisions flip"))
+    c.append(("informative control", f"destroys the reconstruction (${fmt(rc.median_abs_delta_nrmse, 2)}$) while flipping ${pct(rc.C5_flip_rate)}\\%$"))
+    ai = sh["alternative_inverse"]
+    c.append(("refit NRMSE", f"(median NRMSE ${fmt(ai['median_nrmse_refit'], 3)}$ against ${fmt(sh['baseline']['median_nrmse'], 3)}$)"))
+    tiers = ai["median_param_r_by_tier"]
+    c.append(("refit tier agreement", f"(median Pearson $r={fmt(tiers['A_strongly_identifiable'], 2)}$ across records) but not Tiers B and C (${fmt(tiers['B_weakly_identifiable'], 2)}$ and ${fmt(tiers['C_primarily_regularized'], 2)}$)"))
+    c.append(("refit C5", f"its features score ${fmt(ai['C5_macro_auroc_refit_features'], 3)}$ macro-AUROC under the encoder-trained C5 with ${pct(ai['C5_argmax_agreement'])}\\%$ argmax agreement"))
+    # W1V: paired patient-clustered contrasts between the lead-set models
+    pc = pd.read_csv(STATS / "W1V_leadset_paired_contrasts.csv")
+
+    def _row(a, b):
+        r = pc[(pc.model_a == a) & (pc.model_b == b)]
+        assert len(r) == 1, (a, b)
+        return r.iloc[0]
+
+    r12c, r12o, rci, roi, roc = _row("12 leads", "II+V1+V5"), _row("12 leads", "I+V1+V4"), _row("II+V1+V5", "II"), _row("I+V1+V4", "II"), _row("I+V1+V4", "II+V1+V5")
+    assert int(pc.sig_bh_05.sum()) == 5 and not bool(roc.sig_bh_05)
+    c.append(("paired 12 vs clinical", f"exceeding the clinical set by ${fmt(r12c.delta, 4)}$ $[+{fmt(r12c.ci_lo, 4)},+{fmt(r12c.ci_hi, 4)}]$"))
+    c.append(("paired 12 vs optimal", f"the observability-optimal set by ${fmt(r12o.delta, 4)}$ $[+{fmt(r12o.ci_lo, 4)},+{fmt(r12o.ci_hi, 4)}]$"))
+    c.append(("paired vs lead II", f"exceeding lead II alone by ${fmt(rci.delta, 4)}$ and ${fmt(roi.delta, 4)}$"))
+    c.append(("paired optimal vs clinical", f"(${roc.delta:+.4f}$ $[{roc.ci_lo:+.4f},{roc.ci_hi:+.4f}]$, $p={fmt(roc.p_raw, 3)}$)"))
+    vh = json.load(open(STATS / "W1V_headline.json"))
+    # the retrained lead-set encoders must reproduce the AUROCs of Table 6 to three decimals
+    for name, cell in (("12 leads", "0.901"), ("II+V1+V5", "0.887"), ("I+V1+V4", "0.878"), ("II", "0.844")):
+        assert fmt(vh["models"][name]["macro_auroc"], 3) == cell, (name, vh["models"][name]["macro_auroc"])
+    # W1T: structural ablation (Section 3.3, Table S20)
+    t = pd.read_csv(STATS / "W1T_structural_ablation.csv").set_index("variant")
+    L, R1, R5, R8, NP, PD, D12, FD = (t.loc[v] for v in ("locked", "rank1", "rank5", "rank8", "nophys", "physderiv", "direct12", "freedelays"))
+    assert fmt(L.test_median_nrmse_scaled, 4) == "0.4009" and fmt(L.C5_macro_auroc, 4) == "0.9014", "locked row must reproduce the paper"
+    c.append(("ablation rank 1", f"cannot represent the data (median NRMSE ${fmt(R1.test_median_nrmse_scaled, 3)}$, C5 macro-AUROC ${fmt(R1.C5_macro_auroc, 3)}$)"))
+    c.append(("ablation rank 5", f"(${fmt(R5.test_median_nrmse_scaled, 3)}$ against ${fmt(L.test_median_nrmse_scaled, 3)}$) at a classification inside the locked interval (${fmt(R5.C5_macro_auroc, 3)}$) with a 12-lead effective rank of ${fmt(R5.fim_effrank_12, 2)}$"))
+    c.append(("ablation rank 8", f"the unconstrained rank 8 reaches ${fmt(R8.test_median_nrmse_scaled, 3)}$ and ${fmt(R8.C5_macro_auroc, 3)}$"))
+    c.append(("ablation C5 of the three", f"(C5 ${fmt(NP.C5_macro_auroc, 3)}$, ${fmt(D12.C5_macro_auroc, 3)}$ and ${fmt(FD.C5_macro_auroc, 3)}$)"))
+    c.append(("ablation boundary rate", f"without the physics loss ${pct(NP.boundary_rate)}\\%$ of the parameters sit on their bounds (${pct(L.boundary_rate)}\\%$ in the locked model)"))
+    c.append(("ablation limb relations", f"by ${pct(D12.limb_relation_rel_error)}\\%$ relative error (${pct(PD.limb_relation_rel_error)}\\%$ when the physical coefficients"))
+    c.append(("ablation activation order", f"in ${pct(FD.activation_order_violation_rate)}\\%$ of test records, so the activation parameters"))
+    for v in ("rank5", "rank8", "nophys", "physderiv", "direct12", "freedelays"):
+        assert L.C5_auroc_ci_lo <= t.loc[v].C5_macro_auroc <= L.C5_auroc_ci_hi, f"{v}: the text says every variant but rank 1 classifies inside the locked interval"
+    c.append(("free-delay effective ranks", f"(Table S20: ${fmt(FD.fim_effrank_12, 2)}$ against ${fmt(L.fim_effrank_12, 2)}$ at 12 leads, ${fmt(FD.fim_effrank_II, 2)}$ against ${fmt(L.fim_effrank_II, 2)}$ for lead II)"))
+    return c
+
+
 def _external_checks(ext):
     """External-cohort numbers; the JSON layout is discovered from the files themselves."""
     c = []
@@ -361,6 +434,7 @@ def _external_checks(ext):
 def test_manuscript_numbers_match_outputs():
     c, ext = checks()
     c += _external_checks(ext)
+    c += _reviewer3_checks()
     missing = [(label, s) for label, s in c if not stated(s)]
     assert not missing, "manuscript does not state:\n" + "\n".join(f"  {l}: {s}" for l, s in missing)
     assert len(c) >= 90, len(c)

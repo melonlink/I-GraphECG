@@ -87,6 +87,12 @@ PY=<myPyTorch python>; export PYTHONUTF8=1
 "$PY" scripts/stats/W1J_leadsets_by_noise_model.py # exhaustive 56-subset selection -> Fig 7
 "$PY" scripts/stats/W1J_precision_audit.py
 "$PY" scripts/stats/W1R_design_fold_check.py     # design-fold check of the selection -> Table S18
+"$PY" scripts/stats/W1S_nullspace_perturbation.py  # Fisher null-direction perturbation + per-record refit -> Table S21
+"$PY" scripts/stats/W1U_noise_models.py            # five further noise models, wearable families -> Table S22
+"$PY" scripts/stats/W1V_leadset_paired_contrasts.py  # paired contrasts of the lead-set models -> Table S23 (retrains 3 encoders)
+# Structural ablation (Table S20): seven retrained variants (configs/ablation/), each analysed by
+# scripts 40-43; the checkpoints and run directories are by-products, the summary is registered.
+"$PY" scripts/stats/W1T_structural_ablation.py --train --analyze
 "$PY" scripts/stats/W1M_scaled_derivation.py       # scaled-space Einthoven coefficients
 "$PY" scripts/stats/W1O_teacherfree_leadsets.py    # teacher-free control, Section 3.6
 "$PY" scripts/stats/W1O_summarize.py
@@ -144,7 +150,7 @@ for C in r3_s42_pwin r3_s42_pwin2; do for S in 40_descriptors 41_stability 42_cl
 - Table 7 and Supplementary Tables S6 and S19: `v1fix/external/` (Georgia, CPSC2018; zero-shot) and
   `runs/v7rev_stats/W1K_*` (cohort label composition; the PTB-XL column of Table S9 is
   `W1K_ptbxl_sttc_families.csv`, computed over the 2,400 clean STTC records).
-- Supplementary Tables S7–S18: `runs/v7rev_stats/` (w1d, w1e, W1K, W1M, W1G, W1C, W1F, W1P, W1O, w1h, W1J, W1R) and
+- Supplementary Tables S7–S18 and S20–S23: `runs/v7rev_stats/` (w1d, w1e, W1K, W1M, W1G, W1C, W1F, W1P, W1O, w1h, W1J, W1R, W1T, W1S, W1U, W1V) and
   `runs/v1fix_oracle_fold10/` (S14), from `scripts/stats/` and `scripts/32_oracle_fold10.py` — see the
   command list in section 5.
 

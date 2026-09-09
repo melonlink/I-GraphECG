@@ -1,0 +1,20 @@
+# W1T structural ablation 'rank1': analysis of checkpoints/abl_rank1.pt with the locked
+# model's analysis settings (configs/v1fix/r3_s42.yaml).
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+patient_metadata: ptbxl_database.csv
+encoder_ckpt: checkpoints/abl_rank1.pt
+leadfield_rank: 1
+c_rep: 2.0
+interpret_split: test
+out_dir: runs/v7rev_abl_rank1
+fim_per_class: 100
+noise_per_class: 100
+noise_levels_mV:
+- 0.005
+- 0.01
+- 0.02
+- 0.05
+noise_K: 10
+ode_per_class: 20
+classifier: auto

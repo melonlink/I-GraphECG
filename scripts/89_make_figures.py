@@ -71,15 +71,16 @@ def fig_classification(out: Path) -> None:
     au = [summ.loc[g, "macro_auroc"] for g in order]
     lo = [summ.loc[g, "auroc_ci_lo"] for g in order]
     hi = [summ.loc[g, "auroc_ci_hi"] for g in order]
-    fig, ax = plt.subplots(figsize=(4.9, 3.0))
+    # printed at 0.58 of the text width (3.17 in): draw at that width so 8 pt is 8 pt
+    fig, ax = plt.subplots(figsize=(3.3, 2.1))
     x = range(len(order))
     ax.errorbar(x, au, yerr=[[a - b for a, b in zip(au, lo)], [h - a for h, a in zip(hi, au)]],
                 fmt="o", ms=4.5, capsize=3, lw=1, color="#2f4b7c")
     ax.axhline(0.9200, ls="--", color="#888", lw=1)
     ax.axhline(0.9241, ls=":", color="#888", lw=1)
     ax.set_xlim(-0.45, 5.45)
-    ax.text(5.32, 0.9192, "hand-crafted+XGB 0.9200", fontsize=6.8, color="#666", ha="right", va="top")
-    ax.text(5.32, 0.9249, "ResNet1D 0.9241 (black-box reference)", fontsize=6.8, color="#666",
+    ax.text(5.32, 0.9192, "hand-crafted+XGB 0.9200", fontsize=7, color="#666", ha="right", va="top")
+    ax.text(5.32, 0.9249, "ResNet1D 0.9241 (black-box reference)", fontsize=7, color="#666",
             ha="right", va="bottom")
     ax.set_xticks(list(x)); ax.set_xticklabels(labels)
     ax.set_ylim(0.87, 0.93)
@@ -145,18 +146,21 @@ def figS2_recon12(out: Path) -> None:
         yh = dec.forward(torch.from_numpy(th).to(dev))[0][0].cpu().numpy()
     LE = ["I", "II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"]
     t = np.arange(100) * 10 - 300
-    fig, axes = plt.subplots(3, 4, figsize=(9.2, 5.2), sharex=True)
+    # printed at the supplement text width (5.46 in): draw at that width
+    fig, axes = plt.subplots(3, 4, figsize=(5.46, 3.1), sharex=True)
     for k, ax in enumerate(axes.ravel()):
-        ax.plot(t, scaled[i, k], color="k", lw=1.0, label="real")
-        ax.plot(t, yh[k], color="#c0392b", lw=1.0, label="reconstructed")
-        ax.text(0.03, 0.93, LE[k], transform=ax.transAxes, fontsize=9, fontweight="bold", va="top")
+        ax.plot(t, scaled[i, k], color="k", lw=0.9, label="observed")
+        ax.plot(t, yh[k], color="#c0392b", lw=0.9, label="reconstructed")
+        ax.text(0.03, 0.93, LE[k], transform=ax.transAxes, fontsize=8, fontweight="bold", va="top")
         ax.grid(alpha=0.25); ax.tick_params(labelsize=7)
-    axes[0, 0].legend(fontsize=7, loc="upper right")
+    h, l = axes[0, 0].get_legend_handles_labels()
+    fig.legend(h, l, loc="upper center", ncol=2, fontsize=7.5, frameon=False,
+               bbox_to_anchor=(0.5, 1.0))
     for ax in axes[-1]:
-        ax.set_xlabel("time from R peak (ms)", fontsize=8)
+        ax.set_xlabel("time from R peak (ms)", fontsize=7.5)
     for r in range(3):
-        axes[r, 0].set_ylabel("scaled amplitude", fontsize=8)
-    fig.tight_layout()
+        axes[r, 0].set_ylabel("scaled amplitude", fontsize=7.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
     fig.savefig(out / "figS2_recon12.png", dpi=300, facecolor="white")
     plt.close(fig)
 

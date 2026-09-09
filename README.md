@@ -52,7 +52,8 @@ PTB-XL and PTB are never read, so the external cohorts stay disjoint from traini
 ```
 igraphecg/          the package: models, evaluation, data handling, external cohorts
 scripts/            the pipeline, numbered in execution order (see REPRODUCIBILITY.md)
-configs/            YAML for each stage; configs/v1fix/ is the reported analysis lineage
+configs/            YAML for each stage; configs/v1fix/ is the reported analysis lineage,
+                    configs/ablation/ the structural-ablation variants (Supplementary Table S20)
 tests/              runs with no data present; test_manuscript_numbers.py checks every headline
                     number of the manuscript against the shipped output tables (when the
                     manuscript sources sit beside the code as paper/; otherwise it skips)

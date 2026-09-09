@@ -1,0 +1,20 @@
+# W1T structural ablation 'direct12': analysis of checkpoints/abl_direct12.pt with the locked
+# model's analysis settings (configs/v1fix/r3_s42.yaml).
+seed: 42
+npz: data/processed/ptbxl_medianbeat_clean_100hz.npz
+patient_metadata: ptbxl_database.csv
+encoder_ckpt: checkpoints/abl_direct12.pt
+leadfield_rank: 3
+c_rep: 2.0
+interpret_split: test
+out_dir: runs/v7rev_abl_direct12
+fim_per_class: 100
+noise_per_class: 100
+noise_levels_mV:
+- 0.005
+- 0.01
+- 0.02
+- 0.05
+noise_K: 10
+ode_per_class: 20
+classifier: auto

@@ -44,8 +44,11 @@ ROOT = Path(__file__).resolve().parents[1]
 FIG = repro.outputs() / "v1fix/runs/fig34"
 W1J = repro.runs() / "v7rev_stats"
 
-mpl.rcParams.update({"font.family": "Arial", "font.size": 10, "pdf.fonttype": 42,
-                     "axes.titlesize": 10})
+# Drawn at the printed width (the 13.86 cm text width), so point sizes here are the point
+# sizes on the page.
+mpl.rcParams.update({"font.family": "Arial", "font.size": 8, "pdf.fonttype": 42,
+                     "axes.titlesize": 8, "axes.labelsize": 8, "xtick.labelsize": 7.5,
+                     "ytick.labelsize": 7.5})
 
 BLUE, RED, GREEN, GREY = "#4c72b0", "#c0392b", "#55a868", "#9aa0a6"
 # parameter-group tick labels in the manuscript's notation (Section 2.3)
@@ -57,15 +60,15 @@ GROUP_LABELS = {"delta_root": "$\\delta_{\\mathrm{root}}$", "edge_prox": "$d_1$,
 
 def panel_marks(fig, xs, y=0.005):
     for x, lab in zip(xs, ("(a)", "(b)")):
-        fig.text(x, y, lab, ha="center", va="bottom", fontsize=11, fontweight="bold")
+        fig.text(x, y, lab, ha="center", va="bottom", fontsize=9, fontweight="bold")
 
 
 def fig_identifiability(out: Path):
     pA = pd.read_csv(FIG / "panelA_degradation.csv").set_index("lead_set")
     pB = pd.read_csv(FIG / "panelB_group_identifiability.csv")
 
-    fig = plt.figure(figsize=(9.2, 4.4))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.15, 1.0], wspace=0.30)
+    fig = plt.figure(figsize=(5.46, 2.6))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.1, 1.0], wspace=0.38)
 
     # ---------------- (a) effective rank against the NUMBER of leads ----------------
     ax = fig.add_subplot(gs[0, 0])
@@ -83,7 +86,7 @@ def fig_identifiability(out: Path):
     three = [mv(k)[0] for k in ("II+V1+V5", "I+II+V5", "I+V1+V4")]
     ax.annotate("", xy=(4.55, max(three)), xytext=(4.55, min(three)),
                 arrowprops=dict(arrowstyle="<->", color=RED, lw=1.1, alpha=.8), zorder=2)
-    ax.text(4.9, sum(three) / 3, "same count,\ndifferent choice", fontsize=7.2,
+    ax.text(4.9, sum(three) / 3, "same count,\ndifferent choice", fontsize=7,
             color=RED, va="center", ha="left")
 
     offsets = {"II+V1+V5": (-0.62, (-9, 9), "right"),
@@ -95,22 +98,22 @@ def fig_identifiability(out: Path):
         mk, ms = ("*", 16) if k == "I+V1+V4" else ("o", 6)
         ax.errorbar([3 + dx], [m], yerr=[s], fmt=mk, color=col, ms=ms, capsize=4, zorder=3)
         ax.annotate(k, xy=(3 + dx, m), xytext=txt_off, textcoords="offset points",
-                    ha=ha, fontsize=7.4, color=col, zorder=4)
+                    ha=ha, fontsize=7, color=col, zorder=4)
     for k in ("12", "II"):
         m, s = mv(k)
         ax.errorbar([pts[k]], [m], yerr=[s], fmt="o", color=BLUE, ms=6, capsize=4, zorder=3)
 
     ax.set_xscale("log")
     ax.set_xticks([1, 3, 12])
-    ax.set_xticklabels(["1\n(lead II)", "3", "12\n(all)"], fontsize=9)
+    ax.set_xticklabels(["1\n(lead II)", "3", "12\n(all)"], fontsize=7.5)
     ax.set_xlim(0.75, 17)
     ax.set_xlabel("number of leads")
     ax.set_ylabel("FIM effective rank")
-    ax.set_title("Effective rank vs lead count\n(mean$\\pm$SD, $n=5$ seeds)")
+    ax.set_title("Effective rank vs lead count (mean$\\pm$SD, $n=5$ seeds)")
     ax.grid(alpha=.3, axis="y")
     ax.plot([], [], color=BLUE, alpha=.40, lw=1.3, label="nested reductions")
     ax.plot([], [], "*", color=RED, ms=13, ls="none", label="identity-noise optimum")
-    ax.legend(fontsize=7.2, frameon=False, loc="lower right")
+    ax.legend(fontsize=7, frameon=False, loc="upper left")
     ax.set_xlim(0.75, 22)
 
     # ---------------- (b) group identifiability, with a legend ----------------
@@ -123,20 +126,22 @@ def fig_identifiability(out: Path):
     axB.set_yscale("log")
     axB.set_xticks(range(len(groups)))
     axB.set_xticklabels([GROUP_LABELS.get(g, g) for g in groups], rotation=45, ha="right",
-                        fontsize=8)
+                        fontsize=7)
     axB.set_ylabel("identifiability score (log scale)")
     axB.set_title("Identifiability by parameter group")
     axB.grid(alpha=.3, axis="y", which="both")
     handles = [plt.Rectangle((0, 0), 1, 1, color=c, alpha=.85) for c in (GREEN, BLUE, RED)]
+    axB.set_ylim(top=max(m + s for m, s in zip(gm, gsd)) * 12)
     axB.legend(handles, ["conduction delays", "repolarization / source",
-                         "internal ST source"], fontsize=7, frameon=False, loc="lower left")
+                         "internal ST source"], fontsize=7, frameon=False, loc="upper left",
+                ncol=1, handlelength=1.2, borderaxespad=0.3)
     lo = min(gm) - min(gsd)
     axB.annotate("", xy=(len(groups) - 1.5, min(gm)), xytext=(len(groups) - 1.5, 8.0),
                  arrowprops=dict(arrowstyle="<->", color="0.35", lw=1))
-    axB.text(len(groups) - 1.42, 1.5, "1.5–2\norders", fontsize=7, color="0.25", ha="left")
+    axB.text(len(groups) - 1.58, 1.5, "1.5–2\norders", fontsize=7, color="0.25", ha="right")
 
-    panel_marks(fig, [0.27, 0.77])
-    fig.subplots_adjust(bottom=0.20)
+    panel_marks(fig, [0.30, 0.80])
+    fig.subplots_adjust(bottom=0.26, top=0.90, left=0.08, right=0.99)
     for ext in ("pdf", "png"):
         fig.savefig(out / f"fig_identifiability_ab.{ext}", dpi=300, bbox_inches="tight",
                     facecolor="white")
@@ -154,8 +159,8 @@ def fig_selection(out: Path):
     clin = ident[ident.leads == "II+V1+V5"].iloc[0]
     b = boot[(boot.seed == 42) & (boot.noise_model == "identity")].iloc[0]
 
-    fig = plt.figure(figsize=(8.6, 4.4))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.12, 0.88], wspace=0.34)
+    fig = plt.figure(figsize=(5.46, 2.6))
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.25, 0.75], wspace=0.38)
 
     # ---------------- (a) top three against the clinical set, honest axis ----------
     ax = fig.add_subplot(gs[0, 0])
@@ -166,22 +171,20 @@ def fig_selection(out: Path):
     # uncertainty that is defined is that of a paired difference (title); one-decimal labels
     ax.bar(range(4), vals, color=cols, alpha=.9)
     for i, v in enumerate(vals):
-        ax.text(i, v + 0.35, f"{v:.1f}", ha="center", fontsize=8)
-    ax.set_ylim(min(vals) - 3.0, max(vals) + 2.4)
+        ax.text(i, v + 0.35, f"{v:.1f}", ha="center", fontsize=7)
+    ax.set_ylim(min(vals) - 3.0, max(vals) + 3.4)
     ax.set_xticks(range(4))
-    ax.set_xticklabels(names, rotation=18, fontsize=8, ha="right")
+    ax.set_xticklabels(names, rotation=18, fontsize=7, ha="right")
     ax.set_ylabel("D-optimality  log det $F_\\lambda$")
-    ax.set_title("Three-lead selection, identity noise\n"
-                 f"margin over clinical $+{b.boot_margin_mean:.1f}$ "
-                 f"[{b.boot_margin_ci_lo:.1f}, {b.boot_margin_ci_hi:.1f}] (bootstrap)")
+    ax.set_title("Three-lead selection, identity noise")
     ax.grid(alpha=.3, axis="y")
-    ax.set_xlim(-0.72, 4.15)
-    ax.annotate("", xy=(3.62, vals[0]), xytext=(3.62, vals[3]),
+    ax.set_xlim(-0.72, 4.7)
+    ax.annotate("", xy=(4.3, vals[0]), xytext=(4.3, vals[3]),
                 arrowprops=dict(arrowstyle="<->", color=RED, lw=1.2))
-    ax.text(3.52, (vals[0] + vals[3]) / 2, "the gap that\nreplicates", fontsize=7.4,
-            color=RED, va="center", ha="right")
-    ax.text(1.0, max(vals) + 1.25, "first-to-second margin 0.45,\nof the order of its between-seed variation",
-            fontsize=7.4, color="0.3", ha="center")
+    ax.text(4.18, (vals[0] + vals[3]) / 2,
+            f"margin over clinical\n$+{b.boot_margin_mean:.1f}$ [{b.boot_margin_ci_lo:.1f}, {b.boot_margin_ci_hi:.1f}]\n(bootstrap);\nthe gap that replicates",
+            fontsize=7, color=RED, va="center", ha="right")
+    ax.text(1.0, max(vals) + 1.9, "first-to-second margin 0.45", fontsize=7, color="0.3", ha="center")
 
     # ---------------- (b) marginal contribution ----------------
     axB = fig.add_subplot(gs[0, 1])
@@ -189,16 +192,17 @@ def fig_selection(out: Path):
     mv = [pC2.loc[k, "marginal_logdet"] for k in mk]
     axB.bar(range(3), mv, color="#2f6f4f", alpha=.9)
     for i, v in enumerate(mv):
-        axB.text(i, v + 0.7, f"+{v:.1f}", ha="center", fontsize=8)
+        axB.text(i, v + 0.7, f"+{v:.1f}", ha="center", fontsize=7)
+    axB.set_ylim(0, max(mv) * 1.12)
     axB.set_xticks(range(3))
-    axB.set_xticklabels(mk, fontsize=9)
+    axB.set_xticklabels(mk, fontsize=7.5)
     axB.set_xlabel("lead")
     axB.set_ylabel("marginal log det gain")
     axB.set_title("Marginal contribution within\nthe identity-noise optimum")
     axB.grid(alpha=.3, axis="y")
 
-    panel_marks(fig, [0.29, 0.79])
-    fig.subplots_adjust(bottom=0.22)
+    panel_marks(fig, [0.33, 0.83])
+    fig.subplots_adjust(bottom=0.26, top=0.90, left=0.09, right=0.99)
     for ext in ("pdf", "png"):
         fig.savefig(out / f"fig_selection_cd.{ext}", dpi=300, bbox_inches="tight",
                     facecolor="white")

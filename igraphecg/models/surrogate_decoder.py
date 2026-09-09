@@ -51,17 +51,30 @@ _SEG = [("delta_root", 1), ("edge_delay", N_EDGE), ("APD", N_NODES), ("tau_dep",
 PARAM_DIM = sum(n for _, n in _SEG)        # 1 + 7 + 8*4 + 6 + 1 = 47
 
 
-def _bounds() -> tuple[list[float], list[float]]:
-    """Return (lo, hi), the lower/upper parameter bounds of length PARAM_DIM, in _SEG order."""
+# Absolute activation-time window of the free-delay ablation (graph_delays=False): the seven
+# edge_delay slots then hold the activation times of nodes 1..7 directly, and this window
+# covers every time the graph parameterization can produce (-0.24+0.045 .. -0.12+0.33 s).
+FREE_DELTA_BOUNDS = (-0.20, 0.25)
+
+
+def _bounds(graph_delays: bool = True) -> tuple[list[float], list[float]]:
+    """Return (lo, hi), the lower/upper parameter bounds of length PARAM_DIM, in _SEG order.
+
+    graph_delays=False is the structural ablation without the conduction graph: the edge_delay
+    slots become free absolute activation times of nodes 1..7 with the window FREE_DELTA_BOUNDS,
+    so no ordering is imposed. The published lineage never sets it."""
     lo: list[float] = []
     hi: list[float] = []
     # delta_root (onset of atrial/SA activation, s): same as the former delta0
     lo += [-0.24]; hi += [-0.12]
     # edge_delay (conduction delay, s, >=0), ordered as in EDGES:
     #   e0:0->1 includes AV-nodal delay (longest); e1:1->2 His->septum; e2..e6:2->{3,4,5,6,7}
-    lo += [0.04];      hi += [0.20]        # e0 (0->1)
-    lo += [0.005];     hi += [0.06]        # e1 (1->2)
-    lo += [0.005] * 5; hi += [0.07] * 5    # e2..e6 (2->j)
+    if graph_delays:
+        lo += [0.04];      hi += [0.20]        # e0 (0->1)
+        lo += [0.005];     hi += [0.06]        # e1 (1->2)
+        lo += [0.005] * 5; hi += [0.07] * 5    # e2..e6 (2->j)
+    else:
+        lo += [FREE_DELTA_BOUNDS[0]] * N_EDGE; hi += [FREE_DELTA_BOUNDS[1]] * N_EDGE
     # APD (action-potential duration, s): shorter for atria/AV node, longer for ventricles
     apd_lo = [0.08, 0.08, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18]
     apd_hi = [0.18, 0.18, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45]
@@ -79,10 +92,18 @@ def _bounds() -> tuple[list[float], list[float]]:
 
 
 class ParamSpace:
-    """Map z (unbounded) <-> theta (bounded); also unpacks segments and reports boundary rate."""
+    """Map z (unbounded) <-> theta (bounded); also unpacks segments and reports boundary rate.
 
-    def __init__(self, device=None):
-        lo, hi = _bounds()
+    GRAPH_DELAYS is the process-wide default read by the static ``unpack`` (used by the feature
+    and loss code, which see theta without a decoder). The checkpoint loader sets it from the
+    checkpoint's config, so a free-delay ablation checkpoint is unpacked consistently everywhere;
+    the published lineage leaves it True."""
+
+    GRAPH_DELAYS = True
+
+    def __init__(self, device=None, graph_delays: bool | None = None):
+        self.graph_delays = ParamSpace.GRAPH_DELAYS if graph_delays is None else bool(graph_delays)
+        lo, hi = _bounds(self.graph_delays)
         lo_t = torch.tensor(lo, dtype=torch.float32)
         hi_t = torch.tensor(hi, dtype=torch.float32)
         self.center = ((lo_t + hi_t) / 2.0)
@@ -106,16 +127,20 @@ class ParamSpace:
             return float((torch.tanh(z).abs() > thresh).float().mean().item())
 
     @staticmethod
-    def unpack(theta: torch.Tensor) -> dict[str, torch.Tensor]:
+    def unpack(theta: torch.Tensor, graph_delays: bool | None = None) -> dict[str, torch.Tensor]:
         """Split theta into named segments. alpha_ST expands to 8 nodes (0 for atria/AV node)."""
         out, i = {}, 0
         for name, n in _SEG:
             out[name] = theta[..., i:i + n]
             i += n
-        # Graph eikonal propagation: delta_j = delta_root + sum_{e in path(root->j)} edge_delay_e
-        # edge_delay>=0 (enforced by bounds) -> delta_child > delta_parent holds by construction.
-        M = PATH_M.to(theta.device, theta.dtype)                  # [8,7]
-        out["delta"] = out["delta_root"] + torch.einsum("ne,...e->...n", M, out["edge_delay"])
+        if ParamSpace.GRAPH_DELAYS if graph_delays is None else graph_delays:
+            # Graph eikonal propagation: delta_j = delta_root + sum_{e in path(root->j)} edge_delay_e
+            # edge_delay>=0 (enforced by bounds) -> delta_child > delta_parent holds by construction.
+            M = PATH_M.to(theta.device, theta.dtype)                  # [8,7]
+            out["delta"] = out["delta_root"] + torch.einsum("ne,...e->...n", M, out["edge_delay"])
+        else:
+            # Structural ablation: node 0 at delta_root, nodes 1..7 at free absolute times.
+            out["delta"] = torch.cat([out["delta_root"], out["edge_delay"]], dim=-1)
         # alpha_ST covers ventricular nodes only -> expand to [..., 8]
         B = theta.shape[:-1]
         full = torch.zeros(*B, N_NODES, device=theta.device, dtype=theta.dtype)
@@ -133,7 +158,8 @@ class SurrogateDecoder(nn.Module):
     """
 
     def __init__(self, n_t: int = 100, t0: float = -0.30, t1: float = 0.69,
-                 leadfield_rank: int = 3, scaler=None):
+                 leadfield_rank: int = 3, scaler=None, direct_12_leads: bool = False,
+                 graph_delays: bool | None = None, leadfield_init_scale: float = 0.3):
         """scaler: if given (RobustLeadScaler / {"median","iqr"} / (median, iqr)), the decoder
         output is read as **lead-wise robust-scaled** coordinates and the derived leads use the
         affine coefficients of the scaled space. With None, the textbook Einthoven-Goldberger
@@ -142,16 +168,29 @@ class SurrogateDecoder(nn.Module):
         Note: the training target is the scaled signal, so a scaler **should** be passed at
         training and inference time; omitting it applies the physical coefficients in scaled
         coordinates (quantified in B1: III/aVL/aVF residuals degrade from 4-11% to 8-34%).
+
+        Structural ablations (Reviewer 3): direct_12_leads=True replaces the [8, rank] lead field
+        plus exact limb-lead relations by a [12, rank] lead field that projects onto all twelve
+        displayed leads directly; graph_delays=False drops the conduction graph (free node
+        activation times, see ParamSpace). Both default to the published behaviour.
         """
         super().__init__()
         self.n_t = n_t
         self.scaler = scaler
+        self.direct_12_leads = bool(direct_12_leads)
+        self.graph_delays = ParamSpace.GRAPH_DELAYS if graph_delays is None else bool(graph_delays)
+        # rows of H holding V1..V6, for the smoothness term of the lead-field regulariser
+        self.precordial_rows = slice(6, 12) if self.direct_12_leads else slice(2, 8)
         t = torch.linspace(t0, t1, n_t)
         self.register_buffer("t", t)
         # Low-rank lead field (globally shared parameters)
-        self.A = nn.Parameter(torch.randn(8, leadfield_rank) * 0.3)
-        self.B = nn.Parameter(torch.randn(leadfield_rank, N_NODES) * 0.3)
-        self.pspace = ParamSpace()
+        # leadfield_init_scale: 0.3 in the published lineage (rank 3). An [8, r] @ [r, 8] product of
+        # N(0, s^2) entries has entry variance r s^4, so a rank ablation keeps the initial lead-field
+        # norm of the locked recipe with s = 0.3 (3 / r)^(1/4) (Reviewer 3, structural ablation).
+        s0 = float(leadfield_init_scale)
+        self.A = nn.Parameter(torch.randn(12 if self.direct_12_leads else 8, leadfield_rank) * s0)
+        self.B = nn.Parameter(torch.randn(leadfield_rank, N_NODES) * s0)
+        self.pspace = ParamSpace(graph_delays=self.graph_delays)
 
     def to(self, *args, **kwargs):
         super().to(*args, **kwargs)
@@ -161,11 +200,11 @@ class SurrogateDecoder(nn.Module):
 
     @property
     def H_ind(self) -> torch.Tensor:
-        return self.A @ self.B  # [8, 8]
+        return self.A @ self.B  # [8, 8] ([12, 8] with direct_12_leads)
 
     def node_sources(self, theta: torch.Tensor) -> tuple[torch.Tensor, dict]:
         """Compute the node source terms s:[B,8,T] from theta."""
-        p = ParamSpace.unpack(theta)
+        p = ParamSpace.unpack(theta, self.graph_delays)
         t = self.t.view(1, 1, -1)                 # [1,1,T]
         delta = p["delta"].unsqueeze(-1)          # [B,8,1]
         apd = p["APD"].unsqueeze(-1)
@@ -188,6 +227,10 @@ class SurrogateDecoder(nn.Module):
         s, p = self.node_sources(theta)
         y_ind = torch.einsum("ln,bnt->blt", self.H_ind, s)   # [B,8,T] ordered I,II,V1..V6
         y_ind = y_ind * p["global_gain"].view(-1, 1, 1)
+        if self.direct_12_leads:
+            # ablation: the twelve displayed leads are projected directly ([B,12,T]), and the
+            # limb-lead relations are left to the data
+            return y_ind, {"s": s, "y_ind": y_ind, **p}
         y12 = derive_12leads_from_independent(y_ind, scaler=self.scaler)   # [B,12,T]
         return y12, {"s": s, "y_ind": y_ind, **p}
 

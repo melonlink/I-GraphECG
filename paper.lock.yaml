@@ -425,6 +425,17 @@ runs:
       - W1O_teacherfree_summary.csv
       - W1P_pwindow_control.csv
       - W1R_design_fold_check.csv
+      - W1S_alt_inverse_params.csv
+      - W1S_headline.json
+      - W1S_perturbation.csv
+      - W1T_headline.json
+      - W1T_structural_ablation.csv
+      - W1U_all56_by_model.csv
+      - W1U_families.csv
+      - W1U_headline.json
+      - W1U_noise_models.csv
+      - W1V_headline.json
+      - W1V_leadset_paired_contrasts.csv
       - w1d_mi_operating_points.csv
       - w1e_mi_subclass_by_convention.csv
       - w1e_prior_full.npy

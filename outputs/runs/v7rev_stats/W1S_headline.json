@@ -1,0 +1,39 @@
+{
+  "test_records": 1594,
+  "design_subset": 400,
+  "lambda": 0.001,
+  "fim_eigenvalues_smallest_6": [
+    0.02090892895488621,
+    0.053962672237274,
+    0.1255744078458014,
+    1.0155468546217852,
+    1.5364119971825283,
+    1.6091060983122276
+  ],
+  "fim_eigenvalues_largest_6": [
+    17286.973802559878,
+    20672.085005609177,
+    25758.919512503213,
+    26843.8928140531,
+    39697.77905627786,
+    331496.0195319207
+  ],
+  "baseline": {
+    "C0_macro_auroc": 0.9010728824440076,
+    "C5_macro_auroc": 0.9013955569166965,
+    "median_nrmse": 0.4009280204772949
+  },
+  "alternative_inverse": {
+    "median_nrmse_refit": 0.3902254104614258,
+    "epochs": 1175,
+    "C0_macro_auroc_refit_features": 0.7110279184446533,
+    "C5_macro_auroc_refit_features": 0.7154764517569152,
+    "C0_argmax_agreement": 0.34880803011292344,
+    "C5_argmax_agreement": 0.2691342534504391,
+    "median_param_r_by_tier": {
+      "A_strongly_identifiable": 0.715640870049284,
+      "B_weakly_identifiable": 0.35132587735000936,
+      "C_primarily_regularized": 0.40515908017707647
+    }
+  }
+}

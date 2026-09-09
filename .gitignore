@@ -38,3 +38,8 @@ Thumbs.db
 /outputs/runs/v1fix_pwin*/
 /outputs/checkpoints/*pwin*
 
+# By-products of the structural ablation (scripts/stats/W1T_structural_ablation.py summarizes
+# them into runs/v7rev_stats/W1T_structural_ablation.csv, the only registered file)
+/outputs/runs/v7rev_abl_*/
+/outputs/checkpoints/abl_*
+
