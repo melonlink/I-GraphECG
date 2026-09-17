@@ -7,7 +7,25 @@ import numpy as np
 
 
 def load_processed(npz_path: str | Path) -> dict:
-    """Load a processed .npz file and return its fields as a dict."""
+    """Load a processed .npz file and return its fields as a dict.
+
+    The derived median-beat caches are not part of the code archive -- they are rebuilt from the
+    raw recordings, which are not redistributable -- so a fresh clone reaches this function with
+    nothing on disk. Say which command produces the file rather than letting numpy report a bare
+    missing path.
+    """
+    npz_path = Path(npz_path)
+    if not npz_path.exists():
+        raise FileNotFoundError(
+            f"{npz_path} is missing.\n"
+            "  The median-beat cache is derived from the raw recordings and is not shipped with "
+            "the code.\n"
+            "  Rebuild it with scripts/10_prepare_ptbxl.py (clean single-label subset) or "
+            "scripts/11_prepare_ptbxl_multilabel.py\n"
+            "  after pointing ECG_DATA_DIR at the extracted PTB-XL release, or set "
+            "ECG_PROCESSED_DIR to a directory that already holds it.\n"
+            "  README.md, section 'Getting the data', lists the downloads; the analyses that need "
+            "no raw data run from outputs/ alone.")
     data = np.load(npz_path, allow_pickle=True)
     return {k: data[k] for k in data.files}
 

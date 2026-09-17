@@ -54,4 +54,7 @@ torch = ["torch>=2.4"]
 include = ["igraphecg*"]
 
 [tool.setuptools.package-data]
-igraphecg = ["artifacts/*", "labels/*.csv", "labels/*.json"]
+# Recursive: the label map and the signal scaler sit one level below igraphecg/artifacts/
+# (label_maps/, scalers/), which "artifacts/*" does not match, so `pip install .` dropped them
+# while `pip install -e .` kept working. tests/test_package_data.py guards the patterns.
+igraphecg = ["artifacts/**/*.csv", "artifacts/**/*.json", "artifacts/**/*.pkl"]

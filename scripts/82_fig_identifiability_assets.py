@@ -29,7 +29,7 @@ from igraphecg.data.ptbxl_loader import CANONICAL_LEADS
 from igraphecg.evaluation.identifiability import lead_rows, fim_metrics, identifiability_scores, group_scores, PARAM_GROUPS
 from igraphecg.evaluation.round2_io import load_encoder_decoder, infer_theta
 
-mpl.rcParams.update({"font.family": "Arial", "font.size": 9, "pdf.fonttype": 42, "svg.fonttype": "path",
+mpl.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "Nimbus Sans", "DejaVu Sans"], "font.size": 9, "pdf.fonttype": 42, "svg.fonttype": "path",
                      "axes.titlesize": 9})
 LAM = 1e-3
 SEEDS = [42, 1, 2, 3, 4]

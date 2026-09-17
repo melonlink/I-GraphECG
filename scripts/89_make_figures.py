@@ -53,7 +53,7 @@ def _style():
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib as mpl
-    mpl.rcParams.update({"font.family": "Arial", "font.size": 8, "pdf.fonttype": 42})
+    mpl.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "Nimbus Sans", "DejaVu Sans"], "font.size": 8, "pdf.fonttype": 42})
 
 
 # ---- figures drawn here ---------------------------------------------------------------

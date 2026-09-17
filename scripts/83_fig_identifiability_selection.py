@@ -46,7 +46,7 @@ W1J = repro.runs() / "v7rev_stats"
 
 # Drawn at the printed width (the 13.86 cm text width), so point sizes here are the point
 # sizes on the page.
-mpl.rcParams.update({"font.family": "Arial", "font.size": 8, "pdf.fonttype": 42,
+mpl.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "Nimbus Sans", "DejaVu Sans"], "font.size": 8, "pdf.fonttype": 42,
                      "axes.titlesize": 8, "axes.labelsize": 8, "xtick.labelsize": 7.5,
                      "ytick.labelsize": 7.5})
 

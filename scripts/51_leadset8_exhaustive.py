@@ -34,7 +34,7 @@ from igraphecg.data.ptbxl_loader import CANONICAL_LEADS
 from igraphecg.evaluation.identifiability import lead_rows, PARAM_GROUPS
 from igraphecg.evaluation.round2_io import load_encoder_decoder, infer_theta
 
-mpl.rcParams.update({"font.family": "Arial", "font.size": 9, "axes.titlesize": 9})
+mpl.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Arial", "Helvetica", "Nimbus Sans", "DejaVu Sans"], "font.size": 9, "axes.titlesize": 9})
 LAM = 1e-3
 IND = [CANONICAL_LEADS.index(x) for x in ("I", "II", "V1", "V2", "V3", "V4", "V5", "V6")]
 INAME = {l: CANONICAL_LEADS[l] for l in IND}
