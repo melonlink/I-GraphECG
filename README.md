@@ -4,7 +4,8 @@ Code, configurations, trained encoder checkpoints and derived per-record tables 
 
 > **I-GraphECG: Observability-Based Lead Selection and Interpretable Disease Prediction
 > from the 12-Lead ECG Using a Gray-Box Graph Electrophysiology Surrogate.**
-> Limin Zhao, Hongtao Xu, Pengjian Wang, Weicheng Fu, Ningning Zhang. *Sensors*, 2026.
+> Limin Zhao, Hongtao Xu, Pengjian Wang, Weicheng Fu, Ningning Zhang. *Sensors*, 2026
+> (accepted; in press).
 
 An encoder maps a 12-lead median beat to a bounded 47-dimensional set of equivalent
 electrophysiological descriptors. A constrained eight-node conduction-graph decoder --
@@ -95,4 +96,5 @@ data/               empty; see data/README.md for what belongs where
 
 ## Citation
 
-See `CITATION.cff`, or cite the paper above.
+See `CITATION.cff`, or cite the paper above. Release `1.0` is the state of this repository at
+acceptance: the code, checkpoints and output tables behind every number in the published article.

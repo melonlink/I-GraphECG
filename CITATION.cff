@@ -10,7 +10,8 @@ abstract: >-
 type: software
 version: 1.0.0
 license: MIT
-repository-artifact: "https://doi.org/[DOI to be inserted on acceptance]"
+date-released: "2026-09-17"
+repository-code: "https://github.com/melonlink/I-GraphECG"
 authors:
   - family-names: Zhao
     given-names: Limin
@@ -46,6 +47,7 @@ preferred-citation:
     from the 12-Lead ECG Using a Gray-Box Graph Electrophysiology Surrogate
   journal: Sensors
   year: 2026
+  status: in-press
   authors:
     - family-names: Zhao
       given-names: Limin
