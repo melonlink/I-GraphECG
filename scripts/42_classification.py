@@ -82,17 +82,12 @@ def patient_groups(df: pd.DataFrame, cfg: dict) -> np.ndarray:
         if root is not None and (root / Path(cfg["patient_metadata"]).name).exists():
             metadata = root / Path(cfg["patient_metadata"]).name
     if not metadata.exists():
-        # Last resort: the two-column subset shipped with this archive. The paper states
-        # that every classification result reproduces from the archive alone, without the
-        # raw recordings -- and the patient-clustered bootstrap needs this mapping, so
-        # without the fallback that claim fails on the first bootstrap.
-        shipped = PROJECT_ROOT / "results" / "patient_map.csv"
-        if shipped.exists():
-            metadata = shipped
-    if not metadata.exists():
+        # The archive ships no dataset file, not even this two-column subset: the
+        # patient-clustered bootstrap reads the mapping from the user's PTB-XL copy.
         raise FileNotFoundError(
-            f"patient metadata not found: {cfg['patient_metadata']}. Set "
-            "ECG_DATA_DIR to the directory holding ptbxl_database.csv.")
+            f"patient metadata not found: {cfg['patient_metadata']}. Place the PTB-XL v1.0.3 "
+            "release under data/ptbxl/raw/ (see data/README.md) or set ECG_DATA_DIR to the "
+            "directory holding ptbxl_database.csv.")
     db = pd.read_csv(metadata, usecols=["ecg_id", "patient_id"]).set_index("ecg_id")
     patient = db.reindex(df["record_id"].to_numpy())["patient_id"]
     if patient.isna().any():

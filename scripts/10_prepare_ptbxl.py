@@ -27,7 +27,7 @@ from igraphecg.data.ptbxl_loader import CANONICAL_LEADS, LEAD_TO_IDX
 from igraphecg.evaluation.plots import plot_median_beat
 from igraphecg.utils.config import parse_args_with_config, save_config
 from igraphecg.utils.logging import get_logger
-from igraphecg.utils.paths import (FIGURES_DIR, PROCESSED_DIR, PROJECT_ROOT, TABLES_DIR,
+from igraphecg.utils.paths import (FIGURES_DIR, PROCESSED_DIR, PROJECT_ROOT, RAW_DIR, TABLES_DIR,
                              ensure_dirs, find_ptbxl_root)
 from igraphecg.utils.seed import set_seed
 
@@ -44,7 +44,8 @@ def main():
 
     ptbxl_root = find_ptbxl_root()
     if ptbxl_root is None:
-        log.error("PTB-XL not found (no ptbxl_database.csv under data/raw). Unpack the dataset first.")
+        log.error(f"PTB-XL not found: no ptbxl_database.csv under {RAW_DIR}. Unpack PTB-XL v1.0.3 "
+                  "there or set ECG_DATA_DIR (README.md, section 'Data').")
         sys.exit(2)
     log.info(f"PTB-XL root: {ptbxl_root}")
 

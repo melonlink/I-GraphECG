@@ -48,10 +48,7 @@ def _resolve_patient_csv() -> Path | None:
     root = find_ptbxl_root()
     if root is not None and (root / "ptbxl_database.csv").exists():
         return root / "ptbxl_database.csv"
-    # the two-column subset shipped with this archive, so the lead-set results
-    # reproduce without the raw dataset
-    shipped = ROOT / "results" / "patient_map.csv"
-    return shipped if shipped.exists() else None
+    return None
 
 
 PATIENT_CSV = _resolve_patient_csv()
@@ -181,7 +178,8 @@ def main(out=None):
     if PATIENT_CSV is None:
         raise FileNotFoundError(
             "PTB-XL patient metadata (ptbxl_database.csv) not found under the data root. "
-            "Set ECG_DATA_DIR to the directory holding it.")
+            "Place the PTB-XL v1.0.3 release under data/ptbxl/raw/ (see data/README.md) "
+            "or set ECG_DATA_DIR to the directory holding it.")
     db = pd.read_csv(PATIENT_CSV, usecols=["ecg_id", "patient_id"]).set_index("ecg_id")
     patient_s = db.reindex(record_id)["patient_id"]
     if patient_s.isna().any():

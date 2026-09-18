@@ -24,8 +24,7 @@ def load_processed(npz_path: str | Path) -> dict:
             "scripts/11_prepare_ptbxl_multilabel.py\n"
             "  after pointing ECG_DATA_DIR at the extracted PTB-XL release, or set "
             "ECG_PROCESSED_DIR to a directory that already holds it.\n"
-            "  README.md, section 'Getting the data', lists the downloads; the analyses that need "
-            "no raw data run from outputs/ alone.")
+            "  README.md, section 'Data', lists the downloads and where they go.")
     data = np.load(npz_path, allow_pickle=True)
     return {k: data[k] for k in data.files}
 

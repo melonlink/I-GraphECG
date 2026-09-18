@@ -33,7 +33,7 @@ from igraphecg.data import ptbxl_loader as pl
 from igraphecg.data.preprocess import bandpass_filter, check_quality
 from igraphecg.data.ptbxl_loader import CANONICAL_LEADS, LEAD_TO_IDX
 from igraphecg.utils.logging import get_logger
-from igraphecg.utils.paths import PROJECT_ROOT, find_ptbxl_root
+from igraphecg.utils.paths import PROJECT_ROOT, RAW_DIR, find_ptbxl_root
 from igraphecg.utils.seed import set_seed
 
 log = get_logger("w1f_prepare")
@@ -57,7 +57,8 @@ def main():
     set_seed(42)
     root = find_ptbxl_root()
     if root is None:
-        log.error("PTB-XL not found; set ECG_DATA_DIR")
+        log.error(f"PTB-XL not found: no ptbxl_database.csv under {RAW_DIR}. Unpack PTB-XL v1.0.3 "
+                  "there or set ECG_DATA_DIR (README.md, section 'Data').")
         sys.exit(2)
     log.info(f"PTB-XL root: {root}")
 
@@ -146,7 +147,8 @@ def main():
         r_peak_quality=np.asarray(quals, dtype=np.float32),
         lead_names=np.asarray(CANONICAL_LEADS),
         scaler_median=scaler_median, scaler_iqr=scaler_iqr,
-        scaler_source=np.asarray(str(FROZEN_NPZ)),
+        # repository-relative, so the cache is byte-identical wherever the checkout lives
+        scaler_source=np.asarray(FROZEN_NPZ.relative_to(PROJECT_ROOT).as_posix()),
         is_clean=np.asarray(is_clean, dtype=bool),
         clean_label=np.asarray(clean_lab, dtype=np.int64),
         window_pre_ms=np.float32(PRE_MS), window_post_ms=np.float32(POST_MS),

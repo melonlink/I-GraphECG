@@ -70,6 +70,10 @@ def main():
     a = ap.parse_args()
     if a.checkpoint is None:
         a.checkpoint = str(default_checkpoint())
+    if not Path(a.data_dir).is_dir():
+        # Fail before anything is written: an empty result would overwrite the registered one.
+        raise SystemExit(f"--data_dir {a.data_dir} does not exist. Place the Challenge-2021 "
+                         "training cohorts under data/challenge_2021/training/ (see data/README.md).")
 
     import torch
     from ..inference import load_model, predict_theta, reconstruct, assert_inference_only
@@ -88,12 +92,10 @@ def main():
                                                   exclude=exclude, max_records=a.max_records)
     manifest["seconds_preprocess"] = round(time.time() - t0, 1)
     result = {"dataset": a.dataset, "manifest": manifest}
-    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-
     if len(beats) == 0:
-        result["note"] = "no records kept"
-        Path(a.out).write_text(json.dumps(result, indent=2, ensure_ascii=False))
-        print(json.dumps(result, indent=2, ensure_ascii=False)); return
+        raise SystemExit(f"no records kept from {a.data_dir} ({manifest['n_scanned']} scanned, "
+                         f"drops {manifest['drop_reasons']}); nothing written to {a.out}")
+    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
 
     enc, dec = load_model(beats.shape[2], ckpt_path=a.checkpoint, device=dev)
     assert_inference_only(enc); assert_inference_only(dec)

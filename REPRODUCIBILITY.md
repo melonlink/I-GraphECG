@@ -6,11 +6,13 @@ root. All reported numbers come from one model lineage: five encoders (seeds 42,
 (`d1s_r3_s{42,1,2,3,4}`); seed 42 is the locked model.
 
 ## 1. Data
-- PTB-XL v1.0.3 (PhysioNet), 100 Hz (`records100`). Place the extracted archive under the
-  shared data root (`ECG_DATA_DIR`), containing `ptbxl_database.csv`, `scp_statements.csv`,
-  `records100/`.
-- External cohorts (inference only): PhysioNet/CinC Challenge 2021 `training/georgia` and
-  `training/cpsc_2018`. The Challenge copies of PTB-XL/PTB are never used (no leakage).
+The repository ships no dataset material; `README.md`, section *Data*, gives sources and
+requirements, and `data/README.md` the layout.
+- PTB-XL v1.0.3 (PhysioNet), 100 Hz (`records100`), extracted to `data/ptbxl/raw/`:
+  `ptbxl_database.csv`, `scp_statements.csv`, `records100/`. `ECG_DATA_DIR` overrides.
+- External cohorts (inference only): PhysioNet/CinC Challenge 2021 v1.0.3 `training/georgia`
+  and `training/cpsc_2018`, under `data/challenge_2021/training/`. The Challenge copies of
+  PTB-XL/PTB are never used (no leakage).
 
 ## 2. Clean subset
 Records matching exactly one target superclass in {NORM, MI, STTC, CD};
