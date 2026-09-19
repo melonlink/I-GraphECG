@@ -55,7 +55,12 @@ preferred-citation:
     from the 12-Lead ECG Using a Gray-Box Graph Electrophysiology Surrogate
   journal: Sensors
   year: 2026
-  status: in-press
+  month: 9
+  volume: 26
+  issue: 18
+  start: 5933
+  doi: "10.3390/s26185933"
+  url: "https://doi.org/10.3390/s26185933"
   authors:
     - family-names: Zhao
       given-names: Limin
