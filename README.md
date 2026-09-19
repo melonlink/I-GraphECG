@@ -1,5 +1,7 @@
 # I-GraphECG
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22840835.svg)](https://doi.org/10.5281/zenodo.22840835)
+
 Code, configurations, trained encoder checkpoints and derived per-record tables for:
 
 > **I-GraphECG: Observability-Based Lead Selection and Interpretable Disease Prediction

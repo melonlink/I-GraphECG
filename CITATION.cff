@@ -10,8 +10,16 @@ abstract: >-
 type: software
 version: 1.0.0
 license: MIT
+doi: "10.5281/zenodo.22840835"
 date-released: "2026-09-17"
 repository-code: "https://github.com/melonlink/I-GraphECG"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22840835"
+    description: Concept DOI, always resolving to the latest archived version
+  - type: doi
+    value: "10.5281/zenodo.22840836"
+    description: Archived snapshot of release 1.0
 authors:
   - family-names: Zhao
     given-names: Limin
