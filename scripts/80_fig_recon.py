@@ -160,7 +160,7 @@ def main(compare: bool, out=None) -> None:
     t_ms = dec.t.cpu().numpy() * 1000
     cols = [CANONICAL_LEADS.index(k) for k, _ in SHOW]
 
-    from matplotlib.ticker import FormatStrFormatter, MaxNLocator
+    from matplotlib.ticker import FuncFormatter, MaxNLocator
 
     fig, axes = plt.subplots(4, 4, figsize=(FIG_W_IN, FIG_H_IN), sharex=True,
                              layout="constrained")
@@ -186,9 +186,12 @@ def main(compare: bool, out=None) -> None:
             # Panels keep their own y range (the amplitudes genuinely differ), but the tick
             # count is bounded so the grid reads as one figure rather than 16 unrelated plots.
             # steps excludes 2.5 so every tick is exact at one decimal (a 0.25 step would be
-            # mislabelled by the %.1f formatter).
+            # mislabelled by the one-decimal formatter).
             ax.yaxis.set_major_locator(MaxNLocator(nbins=4, steps=[1, 2, 5, 10]))
-            ax.yaxis.set_major_formatter(FormatStrFormatter("%.1f"))
+            # %-formatting emits an ASCII hyphen, which the x axis (left to the default
+            # formatter) sets as U+2212; the journal requires the true minus sign on both axes.
+            ax.yaxis.set_major_formatter(
+                FuncFormatter(lambda v, _pos: f"{v:.1f}".replace("-", "\N{MINUS SIGN}")))
             if r == 0:
                 ax.set_title(title, fontsize=9, pad=2.5)
             if c == 0:
